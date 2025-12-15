@@ -2,636 +2,347 @@
 
 import { useState, useMemo } from 'react';
 
-type Step = 'purpose' | 'aesthetic' | 'constraints' | 'generate';
-
-interface FormData {
-  purpose: string;
-  industry: string;
-  targetAudience: string;
-  aesthetic: string;
-  mood: string;
-  colorPreference: 'dark' | 'light' | 'either';
-  typography: string;
-  hasProduct: boolean;
-  avoidList: string[];
-  techStack: string;
-  priority: 'speed' | 'uniqueness' | 'accessibility';
+interface PatternChoice {
+  id: string;
+  label: string;
+  category: 'layout' | 'color' | 'typography' | 'interaction' | 'component';
+  slop: string;
+  alternative: string;
+  promptText: string;
 }
 
-const aestheticOptions = [
-  { 
-    id: 'premium-dark', 
-    name: 'Premium Dark',
-    description: 'Deep blacks, single accent glow, technical precision',
-    examples: ['linear.app', 'vercel.com', 'stripe.com/atlas'],
-    colors: ['#0a0a0a', '#00d4ff', '#ffffff'],
+const patterns: PatternChoice[] = [
+  // Layout patterns
+  {
+    id: 'hero-centered',
+    label: 'Hero Layout',
+    category: 'layout',
+    slop: 'Center-aligned hero with H1 → Subtext → CTA',
+    alternative: 'Asymmetric hero with content left, visual right',
+    promptText: 'Use an asymmetric hero layout with grid-cols-[1.2fr,1fr]. Left-align the headline and CTA. Place a product screenshot or visual on the right side.',
   },
-  { 
-    id: 'editorial', 
-    name: 'Editorial / Magazine',
-    description: 'Serif headlines, warm neutrals, intentional typography',
-    examples: ['airbnb.design', 'stripe.com/press'],
-    colors: ['#FAF7F2', '#2D2A26', '#C4A574'],
+  {
+    id: 'card-grid',
+    label: 'Card Grid',
+    category: 'layout',
+    slop: 'Uniform 3-column grid of identical cards',
+    alternative: 'Varied card sizes or list layout',
+    promptText: 'Avoid uniform card grids. Use varied card sizes, or a list layout with horizontal cards showing thumbnail + content side by side.',
   },
-  { 
-    id: 'neo-brutalist', 
-    name: 'Neo-Brutalist',
-    description: 'Sharp corners, thick borders, high contrast',
-    examples: ['gumroad.com', 'poolsuite.net'],
-    colors: ['#FFFFFF', '#000000', '#FF0000'],
+  {
+    id: 'section-rhythm',
+    label: 'Section Rhythm',
+    category: 'layout',
+    slop: 'Alternating content+image sections',
+    alternative: 'Distinct section styles with varying layouts',
+    promptText: 'Each section should have a distinct layout. Avoid the pattern of alternating image-left/image-right. Use full-bleed sections, split layouts, or editorial columns.',
   },
-  { 
-    id: 'minimal', 
-    name: 'Extreme Minimal',
-    description: 'Maximum whitespace, typography-first, nothing extraneous',
-    examples: ['berkeleygraphics.com', 'apple.com'],
-    colors: ['#FFFFFF', '#111111', '#666666'],
+  
+  // Color patterns
+  {
+    id: 'gradient-hero',
+    label: 'Hero Background',
+    category: 'color',
+    slop: 'Purple-to-blue gradient background',
+    alternative: 'Solid color or subtle texture',
+    promptText: 'NO gradient backgrounds, especially purple/indigo. Use solid colors: either deep black (#0a0a0a) with one accent color, or warm off-white (#f5f2eb) with dark text.',
   },
-  { 
-    id: 'playful', 
-    name: 'Playful / Energetic',
-    description: 'Bold colors, bouncy animations, delightful interactions',
-    examples: ['notion.so', 'figma.com'],
-    colors: ['#FF5722', '#00BCD4', '#FFF8E1'],
+  {
+    id: 'color-palette',
+    label: 'Color Palette',
+    category: 'color',
+    slop: 'Blue primary, gray secondary, white background',
+    alternative: 'Intentional palette with 2-3 colors max',
+    promptText: 'Limit the palette to 2-3 colors. Choose ONE accent color (not blue) and use it consistently for interactive elements. Avoid gray text on white—use warm tones.',
   },
-  { 
-    id: 'immersive', 
-    name: '3D / Immersive',
-    description: 'WebGL, scroll-driven, experiential',
-    examples: ['apple.com/airpods', 'linear.app'],
-    colors: ['#0a0a0a', '#00d4ff', '#ff00ff'],
+  {
+    id: 'contrast',
+    label: 'Text Contrast',
+    category: 'color',
+    slop: 'Light gray text (text-gray-400)',
+    alternative: 'High contrast with readable body text',
+    promptText: 'Ensure all text meets WCAG AA contrast (4.5:1 minimum). Body text should be at least 60% opacity on its background, not lighter.',
   },
-];
-
-const avoidOptions = [
-  { id: 'purple-gradient', label: 'Purple/indigo gradients' },
-  { id: 'generic-copy', label: 'Generic marketing copy ("Transform your...")' },
-  { id: 'rounded-xl', label: 'Over-rounded corners (rounded-3xl everywhere)' },
-  { id: 'shadow-lg', label: 'Heavy drop shadows' },
-  { id: 'inter-font', label: 'Inter font as sole typeface' },
-  { id: 'centered-hero', label: 'Center-aligned hero layouts' },
-  { id: 'glassmorphism', label: 'Glassmorphism/blur effects everywhere' },
-  { id: 'stock-photos', label: 'Generic stock photography' },
-];
-
-const moodOptions = [
-  'Professional & trustworthy',
-  'Cutting-edge & technical',
-  'Warm & approachable',
-  'Bold & confident',
-  'Quiet & refined',
-  'Playful & energetic',
-];
-
-const typographyOptions = [
-  { id: 'serif-sans', label: 'Serif headlines + Sans body', example: 'Instrument Serif + Inter' },
-  { id: 'geometric', label: 'Geometric sans throughout', example: 'Space Grotesk, Anybody' },
-  { id: 'mono-accent', label: 'Sans with mono accents', example: 'Inter + JetBrains Mono' },
-  { id: 'editorial', label: 'Classic editorial pairing', example: 'Playfair Display + Source Serif' },
-  { id: 'modern-grotesque', label: 'Modern grotesque', example: 'Söhne, Untitled Sans' },
+  
+  // Typography patterns
+  {
+    id: 'font-single',
+    label: 'Font Choice',
+    category: 'typography',
+    slop: 'Inter for everything',
+    alternative: 'Intentional font pairing (serif + sans)',
+    promptText: 'Use a serif font for headlines (like Instrument Serif, Fraunces, or Playfair) paired with a geometric sans for body text. This creates visual hierarchy beyond just size.',
+  },
+  {
+    id: 'type-scale',
+    label: 'Type Scale',
+    category: 'typography',
+    slop: 'Tailwind default sizes (text-xl, text-2xl)',
+    alternative: 'Custom scale with clear hierarchy',
+    promptText: 'Body text must be at least 16px. Headlines should be dramatically larger (48-72px for heroes). Use letter-spacing: -0.02em on large headlines.',
+  },
+  {
+    id: 'copy-generic',
+    label: 'Copywriting',
+    category: 'typography',
+    slop: '"Transform your workflow" generic copy',
+    alternative: 'Specific, concrete value propositions',
+    promptText: 'NO generic marketing phrases like "Transform," "Supercharge," or "Revolutionize." Write specific copy that names the user and describes concrete benefits.',
+  },
+  
+  // Interaction patterns
+  {
+    id: 'hover-color',
+    label: 'Hover States',
+    category: 'interaction',
+    slop: 'Just background color change on hover',
+    alternative: 'Multi-property transitions (translate + shadow)',
+    promptText: 'Hover states should use multiple properties: translateY(-2px) to -4px, plus either shadow or an offset pseudo-element. Include active states that move the element back.',
+  },
+  {
+    id: 'button-style',
+    label: 'Button Design',
+    category: 'interaction',
+    slop: 'Rounded pill buttons with gradient',
+    alternative: 'Sharp or slightly rounded with solid fill',
+    promptText: 'Buttons should have sharp corners (border-radius: 0) or very slight rounding (4px max). Use solid colors, not gradients. Include visible pressed/active states.',
+  },
+  {
+    id: 'focus-states',
+    label: 'Focus States',
+    category: 'interaction',
+    slop: 'No visible focus indicators',
+    alternative: 'Clear, high-contrast focus rings',
+    promptText: 'All interactive elements MUST have visible focus states using :focus-visible. Use a 3px outline with offset, in a contrasting color like blue (#0066cc).',
+  },
+  
+  // Component patterns
+  {
+    id: 'card-rounded',
+    label: 'Card Styling',
+    category: 'component',
+    slop: 'rounded-xl shadow-lg border-0',
+    alternative: 'Sharp corners with thick borders',
+    promptText: 'Cards should NOT use rounded-xl or shadow-lg. Use sharp corners (border-radius: 0) with 2-3px solid borders. For hover, use translate + offset shadow, not box-shadow.',
+  },
+  {
+    id: 'input-style',
+    label: 'Form Inputs',
+    category: 'component',
+    slop: 'Rounded inputs with subtle borders',
+    alternative: 'Sharp inputs with visible borders',
+    promptText: 'Form inputs should have sharp corners and thick borders (2-3px). Placeholder text should have sufficient contrast. Focus states should change border color.',
+  },
+  {
+    id: 'nav-glass',
+    label: 'Navigation',
+    category: 'component',
+    slop: 'Glassmorphism navbar with blur',
+    alternative: 'Solid background with clear border',
+    promptText: 'Navigation should have a solid background and a visible bottom border (2-3px). Avoid backdrop-blur glassmorphism. Links should have clear hover and focus states.',
+  },
 ];
 
 export default function PromptsPage() {
-  const [step, setStep] = useState<Step>('purpose');
-  const [formData, setFormData] = useState<FormData>({
-    purpose: '',
-    industry: '',
-    targetAudience: '',
-    aesthetic: '',
-    mood: '',
-    colorPreference: 'either',
-    typography: '',
-    hasProduct: true,
-    avoidList: ['purple-gradient', 'generic-copy', 'rounded-xl'],
-    techStack: 'React + Tailwind',
-    priority: 'uniqueness',
-  });
+  const [selectedPatterns, setSelectedPatterns] = useState<Set<string>>(new Set());
+  const [projectType, setProjectType] = useState('');
   const [copied, setCopied] = useState(false);
-
-  const updateForm = (updates: Partial<FormData>) => {
-    setFormData(prev => ({ ...prev, ...updates }));
+  
+  const categories = ['layout', 'color', 'typography', 'interaction', 'component'] as const;
+  
+  const togglePattern = (id: string) => {
+    setSelectedPatterns(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
   };
-
-  const toggleAvoid = (id: string) => {
-    setFormData(prev => ({
-      ...prev,
-      avoidList: prev.avoidList.includes(id)
-        ? prev.avoidList.filter(x => x !== id)
-        : [...prev.avoidList, id],
-    }));
+  
+  const selectAll = () => {
+    setSelectedPatterns(new Set(patterns.map(p => p.id)));
   };
-
+  
+  const clearAll = () => {
+    setSelectedPatterns(new Set());
+  };
+  
+  // Generate prompt from selected patterns
   const generatedPrompt = useMemo(() => {
-    const aesthetic = aestheticOptions.find(a => a.id === formData.aesthetic);
-    const typography = typographyOptions.find(t => t.id === formData.typography);
-    
-    const parts: string[] = [];
-    
-    // Header
-    parts.push(`Create a ${formData.purpose || '[describe your project]'} website.`);
-    if (formData.industry) {
-      parts.push(`Industry: ${formData.industry}.`);
+    if (selectedPatterns.size === 0) {
+      return 'Select patterns above to generate a prompt.';
     }
-    if (formData.targetAudience) {
-      parts.push(`Target audience: ${formData.targetAudience}.`);
-    }
+    
+    const selected = patterns.filter(p => selectedPatterns.has(p.id));
+    
+    const parts = [
+      projectType 
+        ? `Create a ${projectType} with the following anti-slop design requirements:`
+        : 'Create a website with the following anti-slop design requirements:',
+      '',
+      '## Design Constraints',
+      '',
+    ];
+    
+    categories.forEach(cat => {
+      const catPatterns = selected.filter(p => p.category === cat);
+      if (catPatterns.length > 0) {
+        parts.push(`### ${cat.charAt(0).toUpperCase() + cat.slice(1)}`);
+        catPatterns.forEach(p => {
+          parts.push(`- ${p.promptText}`);
+        });
+        parts.push('');
+      }
+    });
+    
+    parts.push('## Things to AVOID (Slop Patterns)');
+    parts.push('');
+    selected.forEach(p => {
+      parts.push(`- NO: ${p.slop}`);
+    });
     parts.push('');
     
-    // Aesthetic
-    if (aesthetic) {
-      parts.push(`AESTHETIC: ${aesthetic.name}`);
-      parts.push(aesthetic.description);
-      parts.push(`Reference sites: ${aesthetic.examples.join(', ')}`);
-      parts.push(`Color palette: ${aesthetic.colors.join(', ')}`);
-      parts.push('');
-    }
-    
-    // Mood
-    if (formData.mood) {
-      parts.push(`MOOD: ${formData.mood}`);
-      parts.push('');
-    }
-    
-    // Color preference
-    parts.push(`COLOR SCHEME: ${
-      formData.colorPreference === 'dark' 
-        ? 'Dark mode - use #0a0a0a to #111111 backgrounds, high contrast text'
-        : formData.colorPreference === 'light'
-        ? 'Light mode - use off-white (#FAF7F2 or similar), not pure white'
-        : 'Designer\'s choice based on aesthetic'
-    }`);
-    parts.push('');
-    
-    // Typography
-    if (typography) {
-      parts.push(`TYPOGRAPHY: ${typography.label}`);
-      parts.push(`Suggestion: ${typography.example}`);
-      parts.push('- Headlines should have visual weight and character');
-      parts.push('- Body text: 16-18px, 1.5-1.7 line height');
-      parts.push('- Consider a monospace font for technical elements');
-      parts.push('');
-    }
-    
-    // Layout
-    parts.push('LAYOUT REQUIREMENTS:');
-    if (formData.hasProduct) {
-      parts.push('- Asymmetric hero with product screenshot/visual on one side');
-      parts.push('- Use grid ratios like 1.2fr:1fr for subtle imbalance');
-    } else {
-      parts.push('- Text-focused hero with strong typographic hierarchy');
-    }
-    parts.push('- Left-align primary content for natural reading flow');
-    parts.push('- Generous whitespace (py-16 to py-24 for sections)');
-    parts.push('- Sticky navigation with subtle blur effect');
-    parts.push('');
-    
-    // Interactions
-    parts.push('INTERACTIONS:');
-    parts.push('- Multi-property hover states (transform + shadow, not just color)');
-    parts.push('- Subtle scroll-triggered animations');
-    parts.push('- Active/pressed states on buttons');
-    parts.push('- Focus states visible for keyboard navigation');
-    parts.push('');
-    
-    // Anti-slop
-    if (formData.avoidList.length > 0) {
-      parts.push('ANTI-SLOP (STRICTLY AVOID):');
-      formData.avoidList.forEach(id => {
-        const option = avoidOptions.find(o => o.id === id);
-        if (option) {
-          parts.push(`• NO ${option.label}`);
-        }
-      });
-      parts.push('');
-    }
-    
-    // Accessibility
-    parts.push('ACCESSIBILITY REQUIREMENTS:');
-    parts.push('- Minimum 4.5:1 color contrast ratio for text');
-    parts.push('- Focus-visible outlines on all interactive elements');
-    parts.push('- Semantic HTML structure (proper heading hierarchy)');
-    parts.push('- Skip link for keyboard users');
-    parts.push('- Alt text for all images');
-    parts.push('');
-    
-    // Tech stack
-    if (formData.techStack) {
-      parts.push(`TECH STACK: ${formData.techStack}`);
-      parts.push('');
-    }
-    
-    // Priority
-    parts.push(`OPTIMIZATION PRIORITY: ${
-      formData.priority === 'speed' 
-        ? 'Performance - minimize JS, optimize images, fast load times'
-        : formData.priority === 'accessibility'
-        ? 'Accessibility - WCAG 2.1 AA compliance, screen reader tested'
-        : 'Uniqueness - distinctive design that stands out from templates'
-    }`);
+    parts.push('## Accessibility Requirements');
+    parts.push('- Minimum 4.5:1 color contrast ratio for all text');
+    parts.push('- Visible focus states on all interactive elements');
+    parts.push('- Semantic HTML with proper heading hierarchy');
+    parts.push('- Skip link for keyboard navigation');
     
     return parts.join('\n');
-  }, [formData]);
-
+  }, [selectedPatterns, projectType]);
+  
   const copyPrompt = async () => {
     await navigator.clipboard.writeText(generatedPrompt);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const steps = [
-    { id: 'purpose', label: '1. Purpose', complete: !!formData.purpose },
-    { id: 'aesthetic', label: '2. Aesthetic', complete: !!formData.aesthetic },
-    { id: 'constraints', label: '3. Constraints', complete: true },
-    { id: 'generate', label: '4. Generate', complete: false },
-  ];
-
   return (
     <>
-      {/* Hero */}
-      <section className="border-b-2 border-ink">
-        <div className="max-w-[1600px] mx-auto px-6 lg:px-10 py-16 lg:py-20">
-          <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-wider text-vermilion mb-4">
-              Prompt Lab
-            </p>
-            <h1 className="font-display text-4xl lg:text-5xl mb-6">
-              Generate AI prompts that<br/>
-              <span className="italic">actually</span> avoid slop.
-            </h1>
-            <p className="text-lg text-ink-60 leading-relaxed">
-              Answer a few questions about your project, and we'll generate a comprehensive 
-              prompt with built-in anti-slop constraints. Copy it into Claude, ChatGPT, 
-              or Cursor and start building something distinctive.
-            </p>
-          </div>
+      {/* Header */}
+      <section className="border-b-3 border-ink">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-10">
+          <h1 className="font-display text-3xl lg:text-4xl mb-4">
+            Pattern-Based Prompt Builder
+          </h1>
+          <p className="text-ink-60 max-w-2xl">
+            Build AI prompts by selecting specific design patterns to include or avoid. 
+            Each selection adds concrete instructions, not vague descriptions.
+          </p>
         </div>
       </section>
       
-      {/* Step indicator */}
-      <section className="border-b-2 border-border bg-paper-warm">
-        <div className="max-w-[1600px] mx-auto px-6 lg:px-10">
-          <div className="flex">
-            {steps.map((s, i) => (
-              <button
-                key={s.id}
-                onClick={() => setStep(s.id as Step)}
-                className={`flex-1 py-4 text-sm font-semibold uppercase tracking-wider border-b-3 transition-colors ${
-                  step === s.id 
-                    ? 'border-vermilion text-ink' 
-                    : s.complete 
-                    ? 'border-teal text-ink-60 hover:text-ink'
-                    : 'border-transparent text-ink-40 hover:text-ink-60'
-                }`}
-              >
-                {s.label}
-                {s.complete && s.id !== 'generate' && (
-                  <span className="ml-2 text-teal">✓</span>
-                )}
+      <div className="max-w-[1400px] mx-auto">
+        <div className="grid lg:grid-cols-[1fr,400px]">
+          {/* Pattern selection */}
+          <section className="p-6 lg:p-8 border-r-3 border-ink">
+            {/* Project type */}
+            <div className="mb-8">
+              <label className="block text-sm font-semibold uppercase tracking-wider text-ink-60 mb-3">
+                Project Type (optional)
+              </label>
+              <input
+                type="text"
+                value={projectType}
+                onChange={(e) => setProjectType(e.target.value)}
+                placeholder="e.g., SaaS landing page, portfolio, documentation"
+                className="w-full max-w-md"
+              />
+            </div>
+            
+            {/* Quick actions */}
+            <div className="flex gap-4 mb-8">
+              <button onClick={selectAll} className="btn btn-small btn-outline">
+                Select All
               </button>
-            ))}
-          </div>
-        </div>
-      </section>
-      
-      {/* Form content */}
-      <section className="max-w-[1600px] mx-auto px-6 lg:px-10 py-12">
-        <div className="grid lg:grid-cols-[1fr,400px] gap-12">
-          {/* Form */}
-          <div>
-            {step === 'purpose' && (
-              <div className="space-y-8 animate-fade-in">
-                <div>
-                  <label className="block text-sm font-semibold uppercase tracking-wider text-ink-60 mb-3">
-                    What are you building? *
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.purpose}
-                    onChange={(e) => updateForm({ purpose: e.target.value })}
-                    placeholder="e.g., SaaS landing page, portfolio, documentation site"
-                    className="w-full px-4 py-3 bg-paper-bright border-2 border-ink focus:outline-none focus:border-vermilion text-lg"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-semibold uppercase tracking-wider text-ink-60 mb-3">
-                    Industry / Domain
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.industry}
-                    onChange={(e) => updateForm({ industry: e.target.value })}
-                    placeholder="e.g., Developer tools, Healthcare, Finance, Creative agency"
-                    className="w-full px-4 py-3 bg-paper-bright border-2 border-ink focus:outline-none focus:border-vermilion"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-semibold uppercase tracking-wider text-ink-60 mb-3">
-                    Target Audience
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.targetAudience}
-                    onChange={(e) => updateForm({ targetAudience: e.target.value })}
-                    placeholder="e.g., Seed-stage startup founders, Enterprise developers, Design teams"
-                    className="w-full px-4 py-3 bg-paper-bright border-2 border-ink focus:outline-none focus:border-vermilion"
-                  />
-                  <p className="mt-2 text-sm text-ink-40">
-                    Be specific. "Developers" is generic; "Backend engineers at Series A startups" is distinctive.
-                  </p>
-                </div>
-                
-                <div className="flex items-center gap-4">
-                  <input
-                    type="checkbox"
-                    id="hasProduct"
-                    checked={formData.hasProduct}
-                    onChange={(e) => updateForm({ hasProduct: e.target.checked })}
-                    className="w-5 h-5 border-2 border-ink accent-vermilion"
-                  />
-                  <label htmlFor="hasProduct" className="text-sm">
-                    I have a product visual (screenshot, mockup, demo) to showcase
-                  </label>
-                </div>
-                
-                <button
-                  onClick={() => setStep('aesthetic')}
-                  disabled={!formData.purpose}
-                  className="btn-hard disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Continue to Aesthetic →
-                </button>
-              </div>
-            )}
+              <button onClick={clearAll} className="btn btn-small btn-outline">
+                Clear All
+              </button>
+              <span className="text-sm text-ink-60 self-center">
+                {selectedPatterns.size} of {patterns.length} selected
+              </span>
+            </div>
             
-            {step === 'aesthetic' && (
-              <div className="space-y-8 animate-fade-in">
-                <div>
-                  <label className="block text-sm font-semibold uppercase tracking-wider text-ink-60 mb-4">
-                    Choose an aesthetic direction *
-                  </label>
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    {aestheticOptions.map(option => (
-                      <button
-                        key={option.id}
-                        onClick={() => updateForm({ aesthetic: option.id })}
-                        className={`anti-card text-left p-5 transition-all ${
-                          formData.aesthetic === option.id 
-                            ? 'border-vermilion bg-vermilion/5' 
-                            : 'hover:border-ink-60'
-                        }`}
-                      >
-                        <div className="flex gap-2 mb-3">
-                          {option.colors.map((color, i) => (
-                            <div
-                              key={i}
-                              className="w-5 h-5 border border-ink"
-                              style={{ backgroundColor: color }}
-                            />
-                          ))}
-                        </div>
-                        <h3 className="font-semibold mb-1">{option.name}</h3>
-                        <p className="text-sm text-ink-60 mb-2">{option.description}</p>
-                        <p className="text-xs text-ink-40 font-mono">
-                          {option.examples.join(' · ')}
-                        </p>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-semibold uppercase tracking-wider text-ink-60 mb-3">
-                    Mood / Personality
-                  </label>
-                  <div className="flex flex-wrap gap-2">
-                    {moodOptions.map(mood => (
-                      <button
-                        key={mood}
-                        onClick={() => updateForm({ mood })}
-                        className={`tag transition-colors ${
-                          formData.mood === mood 
-                            ? 'bg-ink text-paper' 
-                            : 'tag-primary hover:bg-ink hover:text-paper'
-                        }`}
-                      >
-                        {mood}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-semibold uppercase tracking-wider text-ink-60 mb-3">
-                    Color scheme preference
-                  </label>
-                  <div className="flex gap-4">
-                    {(['dark', 'light', 'either'] as const).map(pref => (
-                      <button
-                        key={pref}
-                        onClick={() => updateForm({ colorPreference: pref })}
-                        className={`px-6 py-3 border-2 font-semibold uppercase tracking-wider text-sm transition-colors ${
-                          formData.colorPreference === pref
-                            ? 'bg-ink text-paper border-ink'
-                            : 'border-ink hover:bg-ink hover:text-paper'
-                        }`}
-                      >
-                        {pref === 'either' ? "Designer's choice" : `${pref} mode`}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-semibold uppercase tracking-wider text-ink-60 mb-4">
-                    Typography style
-                  </label>
-                  <div className="space-y-2">
-                    {typographyOptions.map(option => (
-                      <button
-                        key={option.id}
-                        onClick={() => updateForm({ typography: option.id })}
-                        className={`w-full text-left p-4 border-2 transition-colors ${
-                          formData.typography === option.id
-                            ? 'border-vermilion bg-vermilion/5'
-                            : 'border-ink hover:bg-paper-warm'
-                        }`}
-                      >
-                        <span className="font-semibold">{option.label}</span>
-                        <span className="text-ink-40 ml-3 font-mono text-sm">
-                          {option.example}
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                
-                <div className="flex gap-4">
-                  <button
-                    onClick={() => setStep('purpose')}
-                    className="btn-ghost"
-                  >
-                    ← Back
-                  </button>
-                  <button
-                    onClick={() => setStep('constraints')}
-                    disabled={!formData.aesthetic}
-                    className="btn-hard disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    Continue to Constraints →
-                  </button>
-                </div>
-              </div>
-            )}
-            
-            {step === 'constraints' && (
-              <div className="space-y-8 animate-fade-in">
-                <div>
-                  <label className="block text-sm font-semibold uppercase tracking-wider text-ink-60 mb-4">
-                    What should the AI avoid? (Anti-slop checklist)
-                  </label>
-                  <div className="grid sm:grid-cols-2 gap-3">
-                    {avoidOptions.map(option => (
-                      <button
-                        key={option.id}
-                        onClick={() => toggleAvoid(option.id)}
-                        className={`flex items-center gap-3 p-4 border-2 text-left transition-colors ${
-                          formData.avoidList.includes(option.id)
-                            ? 'border-vermilion bg-vermilion/5'
-                            : 'border-ink-20 hover:border-ink'
-                        }`}
-                      >
-                        <span className={`w-5 h-5 border-2 flex items-center justify-center text-xs ${
-                          formData.avoidList.includes(option.id)
-                            ? 'border-vermilion bg-vermilion text-paper'
+            {/* Patterns by category */}
+            {categories.map(category => (
+              <div key={category} className="mb-8">
+                <h2 className="font-display text-xl mb-4 capitalize">
+                  {category}
+                </h2>
+                <div className="space-y-3">
+                  {patterns.filter(p => p.category === category).map(pattern => (
+                    <button
+                      key={pattern.id}
+                      onClick={() => togglePattern(pattern.id)}
+                      className={`w-full text-left border-3 p-4 transition-colors ${
+                        selectedPatterns.has(pattern.id)
+                          ? 'border-teal bg-teal/5'
+                          : 'border-ink hover:bg-paper-bright'
+                      }`}
+                    >
+                      <div className="flex items-start gap-4">
+                        <span className={`w-5 h-5 border-2 flex items-center justify-center text-xs flex-shrink-0 mt-0.5 ${
+                          selectedPatterns.has(pattern.id)
+                            ? 'border-teal bg-teal text-paper'
                             : 'border-ink'
                         }`}>
-                          {formData.avoidList.includes(option.id) && '✕'}
+                          {selectedPatterns.has(pattern.id) && '✓'}
                         </span>
-                        <span className="text-sm">{option.label}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-semibold uppercase tracking-wider text-ink-60 mb-3">
-                    Tech stack
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.techStack}
-                    onChange={(e) => updateForm({ techStack: e.target.value })}
-                    placeholder="e.g., Next.js + Tailwind, Astro, Vue + UnoCSS"
-                    className="w-full px-4 py-3 bg-paper-bright border-2 border-ink focus:outline-none focus:border-vermilion"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-semibold uppercase tracking-wider text-ink-60 mb-3">
-                    Optimization priority
-                  </label>
-                  <div className="flex flex-wrap gap-4">
-                    {([
-                      { id: 'uniqueness', label: 'Uniqueness', desc: 'Stand out from templates' },
-                      { id: 'speed', label: 'Performance', desc: 'Fast load times' },
-                      { id: 'accessibility', label: 'Accessibility', desc: 'WCAG compliant' },
-                    ] as const).map(pref => (
-                      <button
-                        key={pref.id}
-                        onClick={() => updateForm({ priority: pref.id })}
-                        className={`flex-1 min-w-[150px] p-4 border-2 text-left transition-colors ${
-                          formData.priority === pref.id
-                            ? 'border-teal bg-teal/5'
-                            : 'border-ink hover:bg-paper-warm'
-                        }`}
-                      >
-                        <span className="font-semibold block">{pref.label}</span>
-                        <span className="text-sm text-ink-60">{pref.desc}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                
-                <div className="flex gap-4">
-                  <button
-                    onClick={() => setStep('aesthetic')}
-                    className="btn-ghost"
-                  >
-                    ← Back
-                  </button>
-                  <button
-                    onClick={() => setStep('generate')}
-                    className="btn-hard"
-                  >
-                    Generate Prompt →
-                  </button>
+                        <div>
+                          <p className="font-semibold mb-1">{pattern.label}</p>
+                          <div className="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                              <p className="text-vermilion font-mono text-xs mb-1">AVOID:</p>
+                              <p className="text-ink-60">{pattern.slop}</p>
+                            </div>
+                            <div>
+                              <p className="text-teal font-mono text-xs mb-1">USE:</p>
+                              <p className="text-ink-60">{pattern.alternative}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </button>
+                  ))}
                 </div>
               </div>
-            )}
-            
-            {step === 'generate' && (
-              <div className="space-y-8 animate-fade-in">
-                <div className="flex items-center justify-between">
-                  <h2 className="font-display text-2xl">Your Custom Prompt</h2>
-                  <button
-                    onClick={copyPrompt}
-                    className={`btn-hard ${
-                      copied ? 'bg-teal border-teal' : ''
-                    }`}
-                  >
-                    {copied ? '✓ Copied!' : 'Copy Prompt'}
-                  </button>
-                </div>
-                
-                <div className="code-block p-6">
-                  <pre className="whitespace-pre-wrap text-sm">{generatedPrompt}</pre>
-                </div>
-                
-                <div className="p-6 bg-paper-warm border-l-4 border-vermilion">
-                  <h3 className="font-semibold mb-2">How to use this prompt</h3>
-                  <ol className="text-sm text-ink-60 space-y-2">
-                    <li><span className="font-mono text-vermilion">1.</span> Copy the prompt above</li>
-                    <li><span className="font-mono text-vermilion">2.</span> Paste into Claude, ChatGPT, or Cursor</li>
-                    <li><span className="font-mono text-vermilion">3.</span> Add any additional context about your specific features</li>
-                    <li><span className="font-mono text-vermilion">4.</span> If the AI generates slop anyway, point it back to the ANTI-SLOP section</li>
-                  </ol>
-                </div>
-                
-                <button
-                  onClick={() => setStep('purpose')}
-                  className="btn-ghost"
-                >
-                  ← Start Over
-                </button>
-              </div>
-            )}
-          </div>
+            ))}
+          </section>
           
-          {/* Live preview sidebar */}
-          <div className="hidden lg:block">
-            <div className="sticky top-32">
-              <div className="anti-card p-6">
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-ink-60 mb-4">
-                  Live Preview
-                </h3>
-                <div className="code-block p-4 text-xs max-h-[500px] overflow-y-auto">
-                  <pre className="whitespace-pre-wrap">{generatedPrompt}</pre>
-                </div>
-              </div>
-              
-              <div className="mt-6 p-4 border-l-4 border-teal">
-                <p className="text-sm text-ink-60">
-                  <strong className="text-ink">Pro tip:</strong> The more specific you are about 
-                  your audience and purpose, the better the AI will understand how to differentiate 
-                  your design.
-                </p>
-              </div>
+          {/* Generated prompt */}
+          <section className="p-6 lg:p-8 bg-paper-bright lg:sticky lg:top-14 lg:h-[calc(100vh-3.5rem)] lg:overflow-y-auto">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="font-display text-xl">Generated Prompt</h2>
+              <button
+                onClick={copyPrompt}
+                disabled={selectedPatterns.size === 0}
+                className={`btn btn-small ${copied ? 'bg-teal border-teal' : ''} disabled:opacity-50`}
+              >
+                {copied ? '✓ Copied' : 'Copy'}
+              </button>
             </div>
-          </div>
+            
+            <div className="code-block p-4 text-sm min-h-[300px]">
+              <pre className="whitespace-pre-wrap">{generatedPrompt}</pre>
+            </div>
+            
+            {selectedPatterns.size > 0 && (
+              <div className="mt-6 p-4 border-3 border-ink">
+                <h3 className="font-semibold text-sm mb-2">How to use</h3>
+                <ol className="text-sm text-ink-60 space-y-2">
+                  <li>1. Copy the prompt above</li>
+                  <li>2. Paste into Claude, ChatGPT, or Cursor</li>
+                  <li>3. Add specifics about your content and features</li>
+                  <li>4. If AI generates slop anyway, point it to the "AVOID" section</li>
+                </ol>
+              </div>
+            )}
+          </section>
         </div>
-      </section>
+      </div>
     </>
   );
 }

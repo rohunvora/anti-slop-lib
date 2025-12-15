@@ -7,44 +7,37 @@
 @tailwind utilities;
 
 /* ============================================
-   ANTI-SLOP: A distinctive design system
-   that practices what it preaches.
+   ANTI-SLOP DESIGN SYSTEM
    
-   NO generic purple gradients.
-   NO Inter everywhere.
-   NO rounded-xl shadow-lg on everything.
-   NO white backgrounds with neutral grays.
+   This site practices what it preaches:
+   - NO shadows (we use borders)
+   - NO rounded corners (sharp edges only)
+   - NO gradient backgrounds
+   - Visible focus states for accessibility
+   - High contrast text (4.5:1 minimum)
    ============================================ */
 
 :root {
-  /* Core palette: Ink & Paper with surgical accents */
+  /* Core palette - high contrast */
   --ink: #0d0c0b;
-  --ink-90: #1a1918;
   --ink-80: #2d2b29;
-  --ink-60: #5c5856;
-  --ink-40: #8b8783;
-  --ink-20: #bab6b0;
+  --ink-60: #4d4a47;
+  --ink-40: #7d7975;
   
-  --paper: #e8e4dc;
-  --paper-warm: #f5f2eb;
-  --paper-bright: #faf8f4;
+  --paper: #f5f2eb;
+  --paper-bright: #fdfcfa;
   
-  /* Accent: Vermilion - not purple, not blue */
-  --vermilion: #e63312;
-  --vermilion-dark: #c42a0e;
-  --vermilion-glow: rgba(230, 51, 18, 0.15);
+  /* Accent: Vermilion - passes contrast on both light and dark */
+  --vermilion: #c42a0e;
+  --vermilion-light: #e84a2e;
   
-  /* Secondary accent: Electric teal */
-  --teal: #00a89d;
-  --teal-dark: #008a81;
+  /* Secondary: Deep teal */
+  --teal: #0a6e66;
+  --teal-light: #0d918a;
   
   /* Functional */
-  --code-bg: #1c1b1a;
-  --border: #d4d0c8;
-  --border-dark: #3d3b38;
-  
-  /* Spacing rhythm */
-  --space-unit: 8px;
+  --code-bg: #1a1918;
+  --focus-ring: #0066cc;
 }
 
 * {
@@ -60,208 +53,66 @@ body {
   font-weight: 400;
   background: var(--paper);
   color: var(--ink);
-  line-height: 1.5;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 /* ============================================
-   TYPOGRAPHY: Intentional hierarchy
-   Serif for editorial weight,
-   Geometric sans for precision,
-   Mono for technical honesty.
+   TYPOGRAPHY
    ============================================ */
 
 .font-display {
   font-family: 'Instrument Serif', Georgia, serif;
-  font-weight: 400;
 }
 
-.font-technical {
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
 }
 
 h1, h2, h3 {
   font-family: 'Instrument Serif', Georgia, serif;
   font-weight: 400;
   letter-spacing: -0.02em;
-  line-height: 1.1;
+  line-height: 1.15;
 }
 
 /* ============================================
-   CUSTOM COMPONENTS
-   Sharp edges. Thick borders. No shadows.
-   Every element earns its place.
+   ACCESSIBLE FOCUS STATES
+   Visible on all interactive elements
    ============================================ */
 
-/* The Anti-Card: Sharp corners, thick borders, no shadow */
-.anti-card {
-  background: var(--paper-bright);
-  border: 2px solid var(--ink);
-  transition: transform 0.15s ease, border-color 0.15s ease;
+*:focus {
+  outline: none;
 }
-
-.anti-card:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: 3px 3px 0 var(--ink);
-}
-
-/* Hard button - brutalist interaction */
-.btn-hard {
-  background: var(--ink);
-  color: var(--paper);
-  border: 2px solid var(--ink);
-  padding: 12px 24px;
-  font-family: 'Anybody', sans-serif;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-size: 13px;
-  transition: all 0.1s ease;
-  cursor: pointer;
-}
-
-.btn-hard:hover {
-  background: var(--vermilion);
-  border-color: var(--vermilion);
-  transform: translate(-2px, -2px);
-  box-shadow: 2px 2px 0 var(--ink);
-}
-
-.btn-hard:active {
-  transform: translate(0, 0);
-  box-shadow: none;
-}
-
-/* Ghost button variant */
-.btn-ghost {
-  background: transparent;
-  color: var(--ink);
-  border: 2px solid var(--ink);
-  padding: 12px 24px;
-  font-family: 'Anybody', sans-serif;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-size: 13px;
-  transition: all 0.1s ease;
-  cursor: pointer;
-}
-
-.btn-ghost:hover {
-  background: var(--ink);
-  color: var(--paper);
-}
-
-/* Code blocks with personality */
-.code-block {
-  background: var(--code-bg);
-  color: #e8e4dc;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-  line-height: 1.6;
-  border: 2px solid var(--border-dark);
-  overflow-x: auto;
-}
-
-.code-block code {
-  font-family: inherit;
-}
-
-/* Tag pills - sharp, not rounded */
-.tag {
-  display: inline-block;
-  padding: 4px 10px;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border: 1.5px solid currentColor;
-  background: transparent;
-}
-
-.tag-primary {
-  color: var(--ink);
-  border-color: var(--ink);
-}
-
-.tag-accent {
-  color: var(--vermilion);
-  border-color: var(--vermilion);
-}
-
-.tag-teal {
-  color: var(--teal);
-  border-color: var(--teal);
-}
-
-/* ============================================
-   LAYOUT UTILITIES
-   Breaking the grid intentionally
-   ============================================ */
-
-.asymmetric-hero {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: calc(var(--space-unit) * 8);
-}
-
-@media (max-width: 1024px) {
-  .asymmetric-hero {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Offset grid for visual tension */
-.offset-grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: calc(var(--space-unit) * 3);
-}
-
-/* ============================================
-   SCROLLBAR: Sharp and intentional
-   ============================================ */
-
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--paper);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--ink);
-  border: 2px solid var(--paper);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--vermilion);
-}
-
-/* ============================================
-   ACCESSIBILITY FOCUS STATES
-   Visible, high-contrast focus rings
-   ============================================ */
 
 *:focus-visible {
-  outline: 3px solid var(--vermilion);
+  outline: 3px solid var(--focus-ring);
   outline-offset: 2px;
 }
 
-/* Skip link for keyboard users */
+/* High contrast focus for buttons */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[role="button"]:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px rgba(0, 102, 204, 0.2);
+}
+
+/* Skip link */
 .skip-link {
   position: absolute;
   top: -100%;
   left: 16px;
   z-index: 9999;
   padding: 12px 24px;
-  background: var(--vermilion);
-  color: white;
+  background: var(--ink);
+  color: var(--paper);
   font-weight: 600;
   text-decoration: none;
+  border: 3px solid var(--vermilion);
 }
 
 .skip-link:focus {
@@ -269,7 +120,193 @@ h1, h2, h3 {
 }
 
 /* ============================================
-   SELECTION & HIGHLIGHTS
+   CARDS: Sharp corners, thick borders, NO shadows
+   ============================================ */
+
+.card {
+  background: var(--paper-bright);
+  border: 3px solid var(--ink);
+  /* NO border-radius */
+  /* NO box-shadow */
+  transition: transform 0.1s ease, border-color 0.1s ease;
+}
+
+.card:hover {
+  transform: translate(-4px, -4px);
+  /* Offset shadow using pseudo-element, not box-shadow */
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: -4px;
+  bottom: -4px;
+  background: var(--ink);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+.card:hover::after {
+  opacity: 1;
+}
+
+/* Card that's positioned relative for the pseudo-element */
+.card-hoverable {
+  position: relative;
+}
+
+/* ============================================
+   BUTTONS: No rounded corners
+   ============================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-family: 'Anybody', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 3px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  cursor: pointer;
+  transition: all 0.1s ease;
+  /* NO border-radius */
+}
+
+.btn:hover {
+  background: var(--vermilion);
+  border-color: var(--vermilion);
+}
+
+.btn:active {
+  transform: translate(2px, 2px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--ink);
+}
+
+.btn-outline:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.btn-small {
+  padding: 8px 16px;
+  font-size: 12px;
+}
+
+/* ============================================
+   TAGS: No rounded corners
+   ============================================ */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 2px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  /* NO border-radius */
+}
+
+.tag-filled {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.tag-vermilion {
+  border-color: var(--vermilion);
+  color: var(--vermilion);
+}
+
+.tag-teal {
+  border-color: var(--teal);
+  color: var(--teal);
+}
+
+/* ============================================
+   FORM INPUTS: Sharp corners
+   ============================================ */
+
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="number"],
+textarea,
+select {
+  padding: 12px 16px;
+  font-family: inherit;
+  font-size: 16px;
+  background: var(--paper-bright);
+  border: 3px solid var(--ink);
+  color: var(--ink);
+  /* NO border-radius */
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--ink-40);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--focus-ring);
+}
+
+/* ============================================
+   CODE BLOCKS
+   ============================================ */
+
+.code-block {
+  background: var(--code-bg);
+  color: #e8e4dc;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  border: 3px solid var(--ink-80);
+  /* NO border-radius */
+  overflow-x: auto;
+}
+
+/* ============================================
+   CUSTOM SCROLLBAR
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--paper);
+  border-left: 3px solid var(--ink);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ink);
+  border: 3px solid var(--paper);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--vermilion);
+}
+
+/* ============================================
+   SELECTION
    ============================================ */
 
 ::selection {
@@ -279,7 +316,6 @@ h1, h2, h3 {
 
 /* ============================================
    DARK SECTIONS
-   For contrast and visual rhythm
    ============================================ */
 
 .dark-section {
@@ -287,60 +323,114 @@ h1, h2, h3 {
   color: var(--paper);
 }
 
-.dark-section .anti-card {
-  background: var(--ink-90);
-  border-color: var(--ink-60);
+.dark-section .card {
+  background: var(--ink-80);
+  border-color: var(--ink-40);
 }
 
-.dark-section .anti-card:hover {
-  border-color: var(--vermilion);
-  box-shadow: 3px 3px 0 var(--vermilion);
+.dark-section input,
+.dark-section textarea,
+.dark-section select {
+  background: var(--ink-80);
+  border-color: var(--ink-40);
+  color: var(--paper);
 }
 
 /* ============================================
-   ANIMATION: Purposeful, not gratuitous
+   UTILITY CLASSES
    ============================================ */
 
-@keyframes slide-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.border-thick {
+  border-width: 3px;
 }
 
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.no-rounded {
+  border-radius: 0 !important;
 }
 
-.animate-slide-up {
-  animation: slide-up 0.5s ease forwards;
+/* ============================================
+   INTERACTIVE PLAYGROUND SPECIFIC
+   ============================================ */
+
+.playground-preview {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: repeating-linear-gradient(
+    45deg,
+    var(--paper),
+    var(--paper) 10px,
+    var(--paper-bright) 10px,
+    var(--paper-bright) 20px
+  );
+  border: 3px solid var(--ink);
 }
 
-.animate-fade-in {
-  animation: fade-in 0.3s ease forwards;
+/* Range input styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  background: var(--ink-40);
+  border: none;
+  cursor: pointer;
 }
 
-/* Stagger children animations */
-.stagger-children > * {
-  opacity: 0;
-  animation: slide-up 0.4s ease forwards;
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--ink);
+  border: 3px solid var(--paper);
+  cursor: pointer;
 }
 
-.stagger-children > *:nth-child(1) { animation-delay: 0s; }
-.stagger-children > *:nth-child(2) { animation-delay: 0.05s; }
-.stagger-children > *:nth-child(3) { animation-delay: 0.1s; }
-.stagger-children > *:nth-child(4) { animation-delay: 0.15s; }
-.stagger-children > *:nth-child(5) { animation-delay: 0.2s; }
-.stagger-children > *:nth-child(6) { animation-delay: 0.25s; }
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: var(--vermilion);
+}
+
+input[type="range"]:focus-visible {
+  outline: 3px solid var(--focus-ring);
+}
+
+/* Color input styling */
+input[type="color"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 3px solid var(--ink);
+  cursor: pointer;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+}
+
+/* ============================================
+   CONTRAST CHECKER SPECIFIC
+   ============================================ */
+
+.contrast-pass {
+  border-color: var(--teal);
+  background: rgba(10, 110, 102, 0.1);
+}
+
+.contrast-fail {
+  border-color: var(--vermilion);
+  background: rgba(196, 42, 14, 0.1);
+}
 
 /* ============================================
    PRINT STYLES
-   Because good design considers all contexts
    ============================================ */
 
 @media print {
