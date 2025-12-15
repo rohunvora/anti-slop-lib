@@ -1,501 +1,637 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
-interface StylePrompt {
-  id: string;
-  name: string;
-  vibe: string;
-  description: string;
-  prompt: string;
-  antiSlop: string[];
-  colors: string[];
-  fonts: string[];
-  examples: string[];
+type Step = 'purpose' | 'aesthetic' | 'constraints' | 'generate';
+
+interface FormData {
+  purpose: string;
+  industry: string;
+  targetAudience: string;
+  aesthetic: string;
+  mood: string;
+  colorPreference: 'dark' | 'light' | 'either';
+  typography: string;
+  hasProduct: boolean;
+  avoidList: string[];
+  techStack: string;
+  priority: 'speed' | 'uniqueness' | 'accessibility';
 }
 
-const stylePrompts: StylePrompt[] = [
-  {
-    id: 'godly-dark',
+const aestheticOptions = [
+  { 
+    id: 'premium-dark', 
     name: 'Premium Dark',
-    vibe: 'Technical, precise, premium',
-    description: 'Deep blacks, single accent glow, refined interactions. Think Linear, Vercel, Stripe.',
-    prompt: `Create a PREMIUM DARK website with intentional, sophisticated design.
-
-COLORS:
-- Background: #0a0a0a (deep black) to #111111
-- Surfaces: #141414 with subtle rgba(255,255,255,0.05) borders
-- Accent: ONE vibrant color with glow effect (choose: electric blue #00d4ff, lime #84ff00, or violet #8b5cf6)
-- Text: #ffffff for headings, #a1a1a1 for body
-
-TYPOGRAPHY:
-- Headlines: Geist or Inter, tight tracking (-0.02em), bold weights
-- Body: Inter or system-ui, 15-16px, relaxed line-height
-- Accents: JetBrains Mono for technical elements
-
-LAYOUT:
-- Generous whitespace (py-24 to py-32 for sections)
-- Asymmetric hero with product screenshot
-- Cards with subtle borders, no heavy shadows
-- Sticky navigation with backdrop-blur
-
-EFFECTS:
-- Subtle hover lift (translateY -2px)
-- Gradient glow behind key elements
-- Smooth scroll-triggered animations
-- Noise texture overlay (optional)
-
-ANTI-SLOP:
-- NO purple gradients
-- NO generic "Transform your business" copy
-- NO rounded-3xl everything
-- NO gradient text on dark backgrounds`,
-    antiSlop: [
-      'Purple/indigo gradients',
-      'Generic marketing copy',
-      'Over-rounded corners',
-      'Gradient text abuse',
-    ],
+    description: 'Deep blacks, single accent glow, technical precision',
+    examples: ['linear.app', 'vercel.com', 'stripe.com/atlas'],
     colors: ['#0a0a0a', '#00d4ff', '#ffffff'],
-    fonts: ['Geist', 'Inter', 'JetBrains Mono'],
-    examples: ['linear.app', 'vercel.com', 'stripe.com'],
   },
-  {
-    id: 'editorial',
+  { 
+    id: 'editorial', 
     name: 'Editorial / Magazine',
-    vibe: 'Refined, intellectual, timeless',
-    description: 'Serif headlines, warm neutrals, intentional typography. Think luxury publications.',
-    prompt: `Create an EDITORIAL website with magazine-quality typography and layout.
-
-COLORS:
-- Background: #FAF7F2 (warm off-white) or #F5F1EB
-- Text: #2D2A26 (warm black) for headlines
-- Body: #5C5751 (warm gray)
-- Accent: #C4A574 (muted gold) or #8B7355 (warm brown)
-
-TYPOGRAPHY:
-- Headlines: Serif font (Fraunces, Playfair Display, or Editorial New)
-- Tight headlines, large sizes (48-72px)
-- Body: 18px, generous line-height (1.7-1.8)
-- Pull quotes with oversized quotation marks
-
-LAYOUT:
-- Column-based layouts with intentional asymmetry
-- Large hero images with editorial crop
-- Text wrapping around images
-- Generous margins (max-w-3xl for reading)
-
-EFFECTS:
-- Subtle parallax on images
-- Elegant page transitions
-- Hover underline animations on links
-- No flashy animations
-
-ANTI-SLOP:
-- NO sans-serif everything
-- NO centered everything
-- NO stock photography vibes
-- NO blue CTAs on cream backgrounds`,
-    antiSlop: [
-      'Sans-serif only typography',
-      'Everything centered',
-      'Stock photo aesthetic',
-      'Bright blue buttons',
-    ],
+    description: 'Serif headlines, warm neutrals, intentional typography',
+    examples: ['airbnb.design', 'stripe.com/press'],
     colors: ['#FAF7F2', '#2D2A26', '#C4A574'],
-    fonts: ['Fraunces', 'Editorial New', 'Inter'],
-    examples: ['stripe.com/press', 'airbnb.design'],
   },
-  {
-    id: 'brutalist',
+  { 
+    id: 'neo-brutalist', 
     name: 'Neo-Brutalist',
-    vibe: 'Bold, raw, unapologetic',
-    description: 'Sharp corners, heavy borders, high contrast. Intentionally rough aesthetics.',
-    prompt: `Create a NEO-BRUTALIST website with bold, intentional rawness.
-
-COLORS:
-- Background: #FFFFFF or solid saturated colors
-- Borders: #000000, 2-4px thick
-- Accents: Bold primaries (#FF0000, #0000FF, #FFFF00)
-- Use solid fills, no gradients
-
-TYPOGRAPHY:
-- Headlines: Heavy weight (800-900), ALL CAPS optional
-- Monospace accents (Space Mono, JetBrains Mono)
-- Sharp, geometric fonts (Space Grotesk, Archivo Black)
-- Large type, 64px+ for heroes
-
-LAYOUT:
-- Hard grid with visible structure
-- Cards with thick black borders, no shadows
-- Overlapping elements intentionally
-- Boxes inside boxes
-
-EFFECTS:
-- Hard drop shadows (4px 4px 0 #000)
-- No hover transitions OR very fast (100ms)
-- Click feedback with background color swap
-- Cursor changes on interactive elements
-
-ANTI-SLOP:
-- NO subtle anything
-- NO rounded corners (border-radius: 0)
-- NO gradients or glows
-- NO glass effects or blur`,
-    antiSlop: [
-      'Subtle design choices',
-      'Rounded corners',
-      'Gradients',
-      'Blur/glass effects',
-    ],
+    description: 'Sharp corners, thick borders, high contrast',
+    examples: ['gumroad.com', 'poolsuite.net'],
     colors: ['#FFFFFF', '#000000', '#FF0000'],
-    fonts: ['Space Grotesk', 'Space Mono', 'Archivo Black'],
-    examples: ['gumroad.com', 'hicetnunc.xyz'],
   },
-  {
-    id: 'playful',
-    name: 'Playful / Fun',
-    vibe: 'Energetic, delightful, memorable',
-    description: 'Bold colors, bouncy animations, unexpected interactions. Joy in every pixel.',
-    prompt: `Create a PLAYFUL website that delights and surprises users.
-
-COLORS:
-- Bright, saturated palette (not pastel)
-- Primary: Bold choice (#FF5722, #00BCD4, #E91E63)
-- Background: Light but not white (#FFF8E1, #E8F5E9)
-- Mix 3-4 accent colors confidently
-
-TYPOGRAPHY:
-- Rounded or friendly fonts (Nunito, Quicksand, DM Sans)
-- Variable font weights for expression
-- Emoji and icons as design elements
-- Playful copywriting tone
-
-LAYOUT:
-- Organic shapes (blob backgrounds, wavy dividers)
-- Cards that tilt or bounce on hover
-- Scattered/rotated elements
-- Generous whitespace for breathing room
-
-EFFECTS:
-- Bouncy spring animations (framer-motion)
-- Confetti or particle effects on actions
-- Cursor trails or custom cursors
-- Sound effects (optional, toggle-able)
-- Micro-interactions everywhere
-
-ANTI-SLOP:
-- NO corporate blue/gray
-- NO stiff grid layouts
-- NO serious/formal tone
-- NO generic icons`,
-    antiSlop: [
-      'Corporate color schemes',
-      'Rigid grid layouts',
-      'Formal tone',
-      'Generic iconography',
-    ],
-    colors: ['#FF5722', '#00BCD4', '#FFF8E1'],
-    fonts: ['Nunito', 'Quicksand', 'DM Sans'],
-    examples: ['notion.so', 'figma.com'],
-  },
-  {
-    id: 'minimal',
+  { 
+    id: 'minimal', 
     name: 'Extreme Minimal',
-    vibe: 'Quiet, focused, essential',
-    description: 'Maximum whitespace, typography-first, nothing extraneous.',
-    prompt: `Create an EXTREME MINIMAL website where every element earns its place.
-
-COLORS:
-- Background: #FFFFFF or #FAFAFA
-- Text: #111111 for headlines, #666666 for body
-- Accent: ONE color, used sparingly (single link color)
-- Maximum 3 colors total
-
-TYPOGRAPHY:
-- One font family only (exceptional choice matters)
-- Suggested: Söhne, Untitled Sans, or high-quality system font
-- Limited weights (regular + medium only)
-- Size hierarchy through spacing, not scale
-
-LAYOUT:
-- Extreme whitespace (50%+ of viewport)
-- Single column where possible
-- No cards - content flows naturally
-- Navigation as simple text links
-
-EFFECTS:
-- No animations OR single subtle transition
-- Hover states: underline or slight opacity change
-- No shadows, no borders (or 1px max)
-- Focus on content, not container
-
-ANTI-SLOP:
-- NO decorative elements
-- NO colorful accents
-- NO rounded buttons
-- NO card-based layouts
-- NO icons if text works`,
-    antiSlop: [
-      'Decorative elements',
-      'Multiple accent colors',
-      'Heavy UI chrome',
-      'Unnecessary icons',
-    ],
+    description: 'Maximum whitespace, typography-first, nothing extraneous',
+    examples: ['berkeleygraphics.com', 'apple.com'],
     colors: ['#FFFFFF', '#111111', '#666666'],
-    fonts: ['Söhne', 'Untitled Sans', 'System UI'],
-    examples: ['apple.com', 'berkeleygraphics.com'],
   },
-  {
-    id: 'immersive',
+  { 
+    id: 'playful', 
+    name: 'Playful / Energetic',
+    description: 'Bold colors, bouncy animations, delightful interactions',
+    examples: ['notion.so', 'figma.com'],
+    colors: ['#FF5722', '#00BCD4', '#FFF8E1'],
+  },
+  { 
+    id: 'immersive', 
     name: '3D / Immersive',
-    vibe: 'Experiential, cutting-edge, memorable',
-    description: 'WebGL, Three.js, scroll-driven experiences. Push browser limits.',
-    prompt: `Create an IMMERSIVE website with 3D elements and scroll-driven storytelling.
-
-TECHNICAL:
-- Three.js or React Three Fiber for 3D
-- GSAP ScrollTrigger for scroll animations
-- Canvas or WebGL background
-- Lenis for smooth scrolling
-
-VISUAL:
-- 3D product visualization or environment
-- Parallax depth layers
-- Dynamic lighting effects
-- Particle systems or volumetric effects
-
-COLORS:
-- Dark mode preferred (3D pops better)
-- Accent colors as light sources
-- Depth through color gradients
-- Atmospheric haze effects
-
-INTERACTION:
-- Mouse-driven camera or element movement
-- Scroll-triggered scene changes
-- Progressive reveal of 3D elements
-- Loading state as part of experience
-
-PERFORMANCE:
-- Lazy load 3D assets
-- Fallback for low-end devices
-- Preload critical textures
-- 60fps target, graceful degradation
-
-ANTI-SLOP:
-- NO gratuitous 3D (must serve content)
-- NO slow/janky scroll
-- NO blocking the page with loading
-- NO mobile-unfriendly only`,
-    antiSlop: [
-      'Gratuitous 3D effects',
-      'Janky scroll performance',
-      'Blocking loading screens',
-      'Desktop-only experiences',
-    ],
+    description: 'WebGL, scroll-driven, experiential',
+    examples: ['apple.com/airpods', 'linear.app'],
     colors: ['#0a0a0a', '#00d4ff', '#ff00ff'],
-    fonts: ['Geist', 'Inter'],
-    examples: ['linear.app', 'apple.com/airpods'],
   },
 ];
 
+const avoidOptions = [
+  { id: 'purple-gradient', label: 'Purple/indigo gradients' },
+  { id: 'generic-copy', label: 'Generic marketing copy ("Transform your...")' },
+  { id: 'rounded-xl', label: 'Over-rounded corners (rounded-3xl everywhere)' },
+  { id: 'shadow-lg', label: 'Heavy drop shadows' },
+  { id: 'inter-font', label: 'Inter font as sole typeface' },
+  { id: 'centered-hero', label: 'Center-aligned hero layouts' },
+  { id: 'glassmorphism', label: 'Glassmorphism/blur effects everywhere' },
+  { id: 'stock-photos', label: 'Generic stock photography' },
+];
+
+const moodOptions = [
+  'Professional & trustworthy',
+  'Cutting-edge & technical',
+  'Warm & approachable',
+  'Bold & confident',
+  'Quiet & refined',
+  'Playful & energetic',
+];
+
+const typographyOptions = [
+  { id: 'serif-sans', label: 'Serif headlines + Sans body', example: 'Instrument Serif + Inter' },
+  { id: 'geometric', label: 'Geometric sans throughout', example: 'Space Grotesk, Anybody' },
+  { id: 'mono-accent', label: 'Sans with mono accents', example: 'Inter + JetBrains Mono' },
+  { id: 'editorial', label: 'Classic editorial pairing', example: 'Playfair Display + Source Serif' },
+  { id: 'modern-grotesque', label: 'Modern grotesque', example: 'Söhne, Untitled Sans' },
+];
+
 export default function PromptsPage() {
-  const [selectedPrompt, setSelectedPrompt] = useState<StylePrompt | null>(null);
+  const [step, setStep] = useState<Step>('purpose');
+  const [formData, setFormData] = useState<FormData>({
+    purpose: '',
+    industry: '',
+    targetAudience: '',
+    aesthetic: '',
+    mood: '',
+    colorPreference: 'either',
+    typography: '',
+    hasProduct: true,
+    avoidList: ['purple-gradient', 'generic-copy', 'rounded-xl'],
+    techStack: 'React + Tailwind',
+    priority: 'uniqueness',
+  });
   const [copied, setCopied] = useState(false);
 
-  const copyPrompt = async (prompt: string) => {
-    await navigator.clipboard.writeText(prompt);
+  const updateForm = (updates: Partial<FormData>) => {
+    setFormData(prev => ({ ...prev, ...updates }));
+  };
+
+  const toggleAvoid = (id: string) => {
+    setFormData(prev => ({
+      ...prev,
+      avoidList: prev.avoidList.includes(id)
+        ? prev.avoidList.filter(x => x !== id)
+        : [...prev.avoidList, id],
+    }));
+  };
+
+  const generatedPrompt = useMemo(() => {
+    const aesthetic = aestheticOptions.find(a => a.id === formData.aesthetic);
+    const typography = typographyOptions.find(t => t.id === formData.typography);
+    
+    const parts: string[] = [];
+    
+    // Header
+    parts.push(`Create a ${formData.purpose || '[describe your project]'} website.`);
+    if (formData.industry) {
+      parts.push(`Industry: ${formData.industry}.`);
+    }
+    if (formData.targetAudience) {
+      parts.push(`Target audience: ${formData.targetAudience}.`);
+    }
+    parts.push('');
+    
+    // Aesthetic
+    if (aesthetic) {
+      parts.push(`AESTHETIC: ${aesthetic.name}`);
+      parts.push(aesthetic.description);
+      parts.push(`Reference sites: ${aesthetic.examples.join(', ')}`);
+      parts.push(`Color palette: ${aesthetic.colors.join(', ')}`);
+      parts.push('');
+    }
+    
+    // Mood
+    if (formData.mood) {
+      parts.push(`MOOD: ${formData.mood}`);
+      parts.push('');
+    }
+    
+    // Color preference
+    parts.push(`COLOR SCHEME: ${
+      formData.colorPreference === 'dark' 
+        ? 'Dark mode - use #0a0a0a to #111111 backgrounds, high contrast text'
+        : formData.colorPreference === 'light'
+        ? 'Light mode - use off-white (#FAF7F2 or similar), not pure white'
+        : 'Designer\'s choice based on aesthetic'
+    }`);
+    parts.push('');
+    
+    // Typography
+    if (typography) {
+      parts.push(`TYPOGRAPHY: ${typography.label}`);
+      parts.push(`Suggestion: ${typography.example}`);
+      parts.push('- Headlines should have visual weight and character');
+      parts.push('- Body text: 16-18px, 1.5-1.7 line height');
+      parts.push('- Consider a monospace font for technical elements');
+      parts.push('');
+    }
+    
+    // Layout
+    parts.push('LAYOUT REQUIREMENTS:');
+    if (formData.hasProduct) {
+      parts.push('- Asymmetric hero with product screenshot/visual on one side');
+      parts.push('- Use grid ratios like 1.2fr:1fr for subtle imbalance');
+    } else {
+      parts.push('- Text-focused hero with strong typographic hierarchy');
+    }
+    parts.push('- Left-align primary content for natural reading flow');
+    parts.push('- Generous whitespace (py-16 to py-24 for sections)');
+    parts.push('- Sticky navigation with subtle blur effect');
+    parts.push('');
+    
+    // Interactions
+    parts.push('INTERACTIONS:');
+    parts.push('- Multi-property hover states (transform + shadow, not just color)');
+    parts.push('- Subtle scroll-triggered animations');
+    parts.push('- Active/pressed states on buttons');
+    parts.push('- Focus states visible for keyboard navigation');
+    parts.push('');
+    
+    // Anti-slop
+    if (formData.avoidList.length > 0) {
+      parts.push('ANTI-SLOP (STRICTLY AVOID):');
+      formData.avoidList.forEach(id => {
+        const option = avoidOptions.find(o => o.id === id);
+        if (option) {
+          parts.push(`• NO ${option.label}`);
+        }
+      });
+      parts.push('');
+    }
+    
+    // Accessibility
+    parts.push('ACCESSIBILITY REQUIREMENTS:');
+    parts.push('- Minimum 4.5:1 color contrast ratio for text');
+    parts.push('- Focus-visible outlines on all interactive elements');
+    parts.push('- Semantic HTML structure (proper heading hierarchy)');
+    parts.push('- Skip link for keyboard users');
+    parts.push('- Alt text for all images');
+    parts.push('');
+    
+    // Tech stack
+    if (formData.techStack) {
+      parts.push(`TECH STACK: ${formData.techStack}`);
+      parts.push('');
+    }
+    
+    // Priority
+    parts.push(`OPTIMIZATION PRIORITY: ${
+      formData.priority === 'speed' 
+        ? 'Performance - minimize JS, optimize images, fast load times'
+        : formData.priority === 'accessibility'
+        ? 'Accessibility - WCAG 2.1 AA compliance, screen reader tested'
+        : 'Uniqueness - distinctive design that stands out from templates'
+    }`);
+    
+    return parts.join('\n');
+  }, [formData]);
+
+  const copyPrompt = async () => {
+    await navigator.clipboard.writeText(generatedPrompt);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const steps = [
+    { id: 'purpose', label: '1. Purpose', complete: !!formData.purpose },
+    { id: 'aesthetic', label: '2. Aesthetic', complete: !!formData.aesthetic },
+    { id: 'constraints', label: '3. Constraints', complete: true },
+    { id: 'generate', label: '4. Generate', complete: false },
+  ];
+
   return (
-    <div className="max-w-6xl mx-auto px-6 py-12">
-      {/* Header */}
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">Style Prompts</h1>
-        <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
-          Copy-paste these prompts into Claude, ChatGPT, or Cursor to generate distinctive, anti-slop designs.
-        </p>
-      </div>
-
-      {/* Grid of style cards */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        {stylePrompts.map((style) => (
-          <button
-            key={style.id}
-            onClick={() => setSelectedPrompt(style)}
-            className={`text-left p-6 rounded-2xl border-2 transition-all hover:shadow-lg ${
-              selectedPrompt?.id === style.id
-                ? 'border-neutral-900 bg-neutral-50'
-                : 'border-neutral-200 hover:border-neutral-300'
-            }`}
-          >
-            {/* Color swatches */}
-            <div className="flex gap-1.5 mb-4">
-              {style.colors.map((color, i) => (
-                <div
-                  key={i}
-                  className="w-6 h-6 rounded-full border border-neutral-200"
-                  style={{ backgroundColor: color }}
-                />
-              ))}
-            </div>
-            
-            <h3 className="font-semibold text-lg mb-1">{style.name}</h3>
-            <p className="text-sm text-neutral-500 mb-3">{style.vibe}</p>
-            <p className="text-sm text-neutral-600 line-clamp-2">{style.description}</p>
-            
-            {/* Font tags */}
-            <div className="mt-4 flex flex-wrap gap-1.5">
-              {style.fonts.slice(0, 2).map((font) => (
-                <span 
-                  key={font}
-                  className="px-2 py-0.5 text-xs bg-neutral-100 rounded-full"
+    <>
+      {/* Hero */}
+      <section className="border-b-2 border-ink">
+        <div className="max-w-[1600px] mx-auto px-6 lg:px-10 py-16 lg:py-20">
+          <div className="max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-wider text-vermilion mb-4">
+              Prompt Lab
+            </p>
+            <h1 className="font-display text-4xl lg:text-5xl mb-6">
+              Generate AI prompts that<br/>
+              <span className="italic">actually</span> avoid slop.
+            </h1>
+            <p className="text-lg text-ink-60 leading-relaxed">
+              Answer a few questions about your project, and we'll generate a comprehensive 
+              prompt with built-in anti-slop constraints. Copy it into Claude, ChatGPT, 
+              or Cursor and start building something distinctive.
+            </p>
+          </div>
+        </div>
+      </section>
+      
+      {/* Step indicator */}
+      <section className="border-b-2 border-border bg-paper-warm">
+        <div className="max-w-[1600px] mx-auto px-6 lg:px-10">
+          <div className="flex">
+            {steps.map((s, i) => (
+              <button
+                key={s.id}
+                onClick={() => setStep(s.id as Step)}
+                className={`flex-1 py-4 text-sm font-semibold uppercase tracking-wider border-b-3 transition-colors ${
+                  step === s.id 
+                    ? 'border-vermilion text-ink' 
+                    : s.complete 
+                    ? 'border-teal text-ink-60 hover:text-ink'
+                    : 'border-transparent text-ink-40 hover:text-ink-60'
+                }`}
+              >
+                {s.label}
+                {s.complete && s.id !== 'generate' && (
+                  <span className="ml-2 text-teal">✓</span>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Form content */}
+      <section className="max-w-[1600px] mx-auto px-6 lg:px-10 py-12">
+        <div className="grid lg:grid-cols-[1fr,400px] gap-12">
+          {/* Form */}
+          <div>
+            {step === 'purpose' && (
+              <div className="space-y-8 animate-fade-in">
+                <div>
+                  <label className="block text-sm font-semibold uppercase tracking-wider text-ink-60 mb-3">
+                    What are you building? *
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.purpose}
+                    onChange={(e) => updateForm({ purpose: e.target.value })}
+                    placeholder="e.g., SaaS landing page, portfolio, documentation site"
+                    className="w-full px-4 py-3 bg-paper-bright border-2 border-ink focus:outline-none focus:border-vermilion text-lg"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-semibold uppercase tracking-wider text-ink-60 mb-3">
+                    Industry / Domain
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.industry}
+                    onChange={(e) => updateForm({ industry: e.target.value })}
+                    placeholder="e.g., Developer tools, Healthcare, Finance, Creative agency"
+                    className="w-full px-4 py-3 bg-paper-bright border-2 border-ink focus:outline-none focus:border-vermilion"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-semibold uppercase tracking-wider text-ink-60 mb-3">
+                    Target Audience
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.targetAudience}
+                    onChange={(e) => updateForm({ targetAudience: e.target.value })}
+                    placeholder="e.g., Seed-stage startup founders, Enterprise developers, Design teams"
+                    className="w-full px-4 py-3 bg-paper-bright border-2 border-ink focus:outline-none focus:border-vermilion"
+                  />
+                  <p className="mt-2 text-sm text-ink-40">
+                    Be specific. "Developers" is generic; "Backend engineers at Series A startups" is distinctive.
+                  </p>
+                </div>
+                
+                <div className="flex items-center gap-4">
+                  <input
+                    type="checkbox"
+                    id="hasProduct"
+                    checked={formData.hasProduct}
+                    onChange={(e) => updateForm({ hasProduct: e.target.checked })}
+                    className="w-5 h-5 border-2 border-ink accent-vermilion"
+                  />
+                  <label htmlFor="hasProduct" className="text-sm">
+                    I have a product visual (screenshot, mockup, demo) to showcase
+                  </label>
+                </div>
+                
+                <button
+                  onClick={() => setStep('aesthetic')}
+                  disabled={!formData.purpose}
+                  className="btn-hard disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {font}
-                </span>
-              ))}
-            </div>
-          </button>
-        ))}
-      </div>
-
-      {/* Selected prompt detail */}
-      {selectedPrompt && (
-        <div className="border border-neutral-200 rounded-2xl overflow-hidden">
-          <div className="flex items-center justify-between px-6 py-4 bg-neutral-50 border-b border-neutral-200">
-            <div>
-              <h2 className="font-semibold text-xl">{selectedPrompt.name}</h2>
-              <p className="text-sm text-neutral-500">{selectedPrompt.vibe}</p>
-            </div>
-            <button
-              onClick={() => copyPrompt(selectedPrompt.prompt)}
-              className={`flex items-center gap-2 px-4 py-2 font-medium rounded-lg transition-colors ${
-                copied
-                  ? 'bg-green-500 text-white'
-                  : 'bg-neutral-900 text-white hover:bg-neutral-800'
-              }`}
-            >
-              {copied ? (
-                <>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  Copied!
-                </>
-              ) : (
-                <>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
-                  Copy Prompt
-                </>
-              )}
-            </button>
+                  Continue to Aesthetic →
+                </button>
+              </div>
+            )}
+            
+            {step === 'aesthetic' && (
+              <div className="space-y-8 animate-fade-in">
+                <div>
+                  <label className="block text-sm font-semibold uppercase tracking-wider text-ink-60 mb-4">
+                    Choose an aesthetic direction *
+                  </label>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    {aestheticOptions.map(option => (
+                      <button
+                        key={option.id}
+                        onClick={() => updateForm({ aesthetic: option.id })}
+                        className={`anti-card text-left p-5 transition-all ${
+                          formData.aesthetic === option.id 
+                            ? 'border-vermilion bg-vermilion/5' 
+                            : 'hover:border-ink-60'
+                        }`}
+                      >
+                        <div className="flex gap-2 mb-3">
+                          {option.colors.map((color, i) => (
+                            <div
+                              key={i}
+                              className="w-5 h-5 border border-ink"
+                              style={{ backgroundColor: color }}
+                            />
+                          ))}
+                        </div>
+                        <h3 className="font-semibold mb-1">{option.name}</h3>
+                        <p className="text-sm text-ink-60 mb-2">{option.description}</p>
+                        <p className="text-xs text-ink-40 font-mono">
+                          {option.examples.join(' · ')}
+                        </p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-semibold uppercase tracking-wider text-ink-60 mb-3">
+                    Mood / Personality
+                  </label>
+                  <div className="flex flex-wrap gap-2">
+                    {moodOptions.map(mood => (
+                      <button
+                        key={mood}
+                        onClick={() => updateForm({ mood })}
+                        className={`tag transition-colors ${
+                          formData.mood === mood 
+                            ? 'bg-ink text-paper' 
+                            : 'tag-primary hover:bg-ink hover:text-paper'
+                        }`}
+                      >
+                        {mood}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-semibold uppercase tracking-wider text-ink-60 mb-3">
+                    Color scheme preference
+                  </label>
+                  <div className="flex gap-4">
+                    {(['dark', 'light', 'either'] as const).map(pref => (
+                      <button
+                        key={pref}
+                        onClick={() => updateForm({ colorPreference: pref })}
+                        className={`px-6 py-3 border-2 font-semibold uppercase tracking-wider text-sm transition-colors ${
+                          formData.colorPreference === pref
+                            ? 'bg-ink text-paper border-ink'
+                            : 'border-ink hover:bg-ink hover:text-paper'
+                        }`}
+                      >
+                        {pref === 'either' ? "Designer's choice" : `${pref} mode`}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-semibold uppercase tracking-wider text-ink-60 mb-4">
+                    Typography style
+                  </label>
+                  <div className="space-y-2">
+                    {typographyOptions.map(option => (
+                      <button
+                        key={option.id}
+                        onClick={() => updateForm({ typography: option.id })}
+                        className={`w-full text-left p-4 border-2 transition-colors ${
+                          formData.typography === option.id
+                            ? 'border-vermilion bg-vermilion/5'
+                            : 'border-ink hover:bg-paper-warm'
+                        }`}
+                      >
+                        <span className="font-semibold">{option.label}</span>
+                        <span className="text-ink-40 ml-3 font-mono text-sm">
+                          {option.example}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => setStep('purpose')}
+                    className="btn-ghost"
+                  >
+                    ← Back
+                  </button>
+                  <button
+                    onClick={() => setStep('constraints')}
+                    disabled={!formData.aesthetic}
+                    className="btn-hard disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Continue to Constraints →
+                  </button>
+                </div>
+              </div>
+            )}
+            
+            {step === 'constraints' && (
+              <div className="space-y-8 animate-fade-in">
+                <div>
+                  <label className="block text-sm font-semibold uppercase tracking-wider text-ink-60 mb-4">
+                    What should the AI avoid? (Anti-slop checklist)
+                  </label>
+                  <div className="grid sm:grid-cols-2 gap-3">
+                    {avoidOptions.map(option => (
+                      <button
+                        key={option.id}
+                        onClick={() => toggleAvoid(option.id)}
+                        className={`flex items-center gap-3 p-4 border-2 text-left transition-colors ${
+                          formData.avoidList.includes(option.id)
+                            ? 'border-vermilion bg-vermilion/5'
+                            : 'border-ink-20 hover:border-ink'
+                        }`}
+                      >
+                        <span className={`w-5 h-5 border-2 flex items-center justify-center text-xs ${
+                          formData.avoidList.includes(option.id)
+                            ? 'border-vermilion bg-vermilion text-paper'
+                            : 'border-ink'
+                        }`}>
+                          {formData.avoidList.includes(option.id) && '✕'}
+                        </span>
+                        <span className="text-sm">{option.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-semibold uppercase tracking-wider text-ink-60 mb-3">
+                    Tech stack
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.techStack}
+                    onChange={(e) => updateForm({ techStack: e.target.value })}
+                    placeholder="e.g., Next.js + Tailwind, Astro, Vue + UnoCSS"
+                    className="w-full px-4 py-3 bg-paper-bright border-2 border-ink focus:outline-none focus:border-vermilion"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-semibold uppercase tracking-wider text-ink-60 mb-3">
+                    Optimization priority
+                  </label>
+                  <div className="flex flex-wrap gap-4">
+                    {([
+                      { id: 'uniqueness', label: 'Uniqueness', desc: 'Stand out from templates' },
+                      { id: 'speed', label: 'Performance', desc: 'Fast load times' },
+                      { id: 'accessibility', label: 'Accessibility', desc: 'WCAG compliant' },
+                    ] as const).map(pref => (
+                      <button
+                        key={pref.id}
+                        onClick={() => updateForm({ priority: pref.id })}
+                        className={`flex-1 min-w-[150px] p-4 border-2 text-left transition-colors ${
+                          formData.priority === pref.id
+                            ? 'border-teal bg-teal/5'
+                            : 'border-ink hover:bg-paper-warm'
+                        }`}
+                      >
+                        <span className="font-semibold block">{pref.label}</span>
+                        <span className="text-sm text-ink-60">{pref.desc}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => setStep('aesthetic')}
+                    className="btn-ghost"
+                  >
+                    ← Back
+                  </button>
+                  <button
+                    onClick={() => setStep('generate')}
+                    className="btn-hard"
+                  >
+                    Generate Prompt →
+                  </button>
+                </div>
+              </div>
+            )}
+            
+            {step === 'generate' && (
+              <div className="space-y-8 animate-fade-in">
+                <div className="flex items-center justify-between">
+                  <h2 className="font-display text-2xl">Your Custom Prompt</h2>
+                  <button
+                    onClick={copyPrompt}
+                    className={`btn-hard ${
+                      copied ? 'bg-teal border-teal' : ''
+                    }`}
+                  >
+                    {copied ? '✓ Copied!' : 'Copy Prompt'}
+                  </button>
+                </div>
+                
+                <div className="code-block p-6">
+                  <pre className="whitespace-pre-wrap text-sm">{generatedPrompt}</pre>
+                </div>
+                
+                <div className="p-6 bg-paper-warm border-l-4 border-vermilion">
+                  <h3 className="font-semibold mb-2">How to use this prompt</h3>
+                  <ol className="text-sm text-ink-60 space-y-2">
+                    <li><span className="font-mono text-vermilion">1.</span> Copy the prompt above</li>
+                    <li><span className="font-mono text-vermilion">2.</span> Paste into Claude, ChatGPT, or Cursor</li>
+                    <li><span className="font-mono text-vermilion">3.</span> Add any additional context about your specific features</li>
+                    <li><span className="font-mono text-vermilion">4.</span> If the AI generates slop anyway, point it back to the ANTI-SLOP section</li>
+                  </ol>
+                </div>
+                
+                <button
+                  onClick={() => setStep('purpose')}
+                  className="btn-ghost"
+                >
+                  ← Start Over
+                </button>
+              </div>
+            )}
           </div>
           
-          <div className="p-6">
-            <div className="grid lg:grid-cols-[1fr,300px] gap-8">
-              {/* Prompt */}
-              <div>
-                <h3 className="text-sm font-medium text-neutral-500 uppercase tracking-wider mb-3">
-                  Full Prompt
+          {/* Live preview sidebar */}
+          <div className="hidden lg:block">
+            <div className="sticky top-32">
+              <div className="anti-card p-6">
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-ink-60 mb-4">
+                  Live Preview
                 </h3>
-                <pre className="text-sm bg-neutral-900 text-neutral-300 p-4 rounded-xl overflow-x-auto whitespace-pre-wrap font-mono">
-                  {selectedPrompt.prompt}
-                </pre>
+                <div className="code-block p-4 text-xs max-h-[500px] overflow-y-auto">
+                  <pre className="whitespace-pre-wrap">{generatedPrompt}</pre>
+                </div>
               </div>
               
-              {/* Sidebar */}
-              <div className="space-y-6">
-                {/* Anti-slop */}
-                <div>
-                  <h3 className="text-sm font-medium text-neutral-500 uppercase tracking-wider mb-3">
-                    Avoid (Anti-Slop)
-                  </h3>
-                  <ul className="space-y-2">
-                    {selectedPrompt.antiSlop.map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm">
-                        <span className="text-red-500 mt-0.5">✕</span>
-                        <span className="text-neutral-600">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                
-                {/* Colors */}
-                <div>
-                  <h3 className="text-sm font-medium text-neutral-500 uppercase tracking-wider mb-3">
-                    Color Palette
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedPrompt.colors.map((color, i) => (
-                      <div key={i} className="flex items-center gap-2">
-                        <div
-                          className="w-8 h-8 rounded-lg border border-neutral-200"
-                          style={{ backgroundColor: color }}
-                        />
-                        <span className="text-xs font-mono text-neutral-500">{color}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                
-                {/* Fonts */}
-                <div>
-                  <h3 className="text-sm font-medium text-neutral-500 uppercase tracking-wider mb-3">
-                    Typography
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedPrompt.fonts.map((font) => (
-                      <span
-                        key={font}
-                        className="px-3 py-1 text-sm bg-neutral-100 rounded-full"
-                      >
-                        {font}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                
-                {/* Examples */}
-                <div>
-                  <h3 className="text-sm font-medium text-neutral-500 uppercase tracking-wider mb-3">
-                    Reference Sites
-                  </h3>
-                  <div className="space-y-1">
-                    {selectedPrompt.examples.map((site) => (
-                      <a
-                        key={site}
-                        href={`https://${site}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block text-sm text-blue-600 hover:underline"
-                      >
-                        {site} →
-                      </a>
-                    ))}
-                  </div>
-                </div>
+              <div className="mt-6 p-4 border-l-4 border-teal">
+                <p className="text-sm text-ink-60">
+                  <strong className="text-ink">Pro tip:</strong> The more specific you are about 
+                  your audience and purpose, the better the AI will understand how to differentiate 
+                  your design.
+                </p>
               </div>
             </div>
           </div>
         </div>
-      )}
-
-      {/* Usage tip */}
-      <div className="mt-12 p-6 bg-neutral-50 rounded-2xl">
-        <h3 className="font-semibold mb-2">How to use these prompts</h3>
-        <ol className="text-sm text-neutral-600 space-y-2">
-          <li>1. Select a style that matches your vision</li>
-          <li>2. Copy the prompt and paste it into your AI coding assistant (Claude, ChatGPT, Cursor)</li>
-          <li>3. Add your specific requirements: "Build a landing page for [your product] using this style"</li>
-          <li>4. Browse the <a href="/" className="text-blue-600 hover:underline">Sites gallery</a> for visual references to include</li>
-        </ol>
-      </div>
-    </div>
+      </section>
+    </>
   );
 }
-

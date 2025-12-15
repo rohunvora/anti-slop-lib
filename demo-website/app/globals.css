@@ -1,61 +1,355 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anybody:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================
+   ANTI-SLOP: A distinctive design system
+   that practices what it preaches.
+   
+   NO generic purple gradients.
+   NO Inter everywhere.
+   NO rounded-xl shadow-lg on everything.
+   NO white backgrounds with neutral grays.
+   ============================================ */
+
 :root {
-  --transition-speed: 0.2s;
-  --color-cream: #FAF7F2;
-  --color-cream-dark: #F0EBE3;
-  --color-gold: #B8860B;
-  --color-gold-light: #D4A84B;
-  --color-brown: #8B4513;
-  --color-brown-dark: #5C3A21;
-  --color-ink: #2D2A26;
-  --color-ink-light: #5C5348;
+  /* Core palette: Ink & Paper with surgical accents */
+  --ink: #0d0c0b;
+  --ink-90: #1a1918;
+  --ink-80: #2d2b29;
+  --ink-60: #5c5856;
+  --ink-40: #8b8783;
+  --ink-20: #bab6b0;
+  
+  --paper: #e8e4dc;
+  --paper-warm: #f5f2eb;
+  --paper-bright: #faf8f4;
+  
+  /* Accent: Vermilion - not purple, not blue */
+  --vermilion: #e63312;
+  --vermilion-dark: #c42a0e;
+  --vermilion-glow: rgba(230, 51, 18, 0.15);
+  
+  /* Secondary accent: Electric teal */
+  --teal: #00a89d;
+  --teal-dark: #008a81;
+  
+  /* Functional */
+  --code-bg: #1c1b1a;
+  --border: #d4d0c8;
+  --border-dark: #3d3b38;
+  
+  /* Spacing rhythm */
+  --space-unit: 8px;
 }
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  @apply antialiased;
-  font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
-  background: var(--color-cream);
-  color: var(--color-ink);
+  font-family: 'Anybody', system-ui, sans-serif;
+  font-weight: 400;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Editorial heading style */
-.heading-editorial {
-  font-family: 'Fraunces', Georgia, serif;
-  font-optical-sizing: auto;
+/* ============================================
+   TYPOGRAPHY: Intentional hierarchy
+   Serif for editorial weight,
+   Geometric sans for precision,
+   Mono for technical honesty.
+   ============================================ */
+
+.font-display {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-weight: 400;
 }
 
-/* Custom scrollbar */
+.font-technical {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+h1, h2, h3 {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+/* ============================================
+   CUSTOM COMPONENTS
+   Sharp edges. Thick borders. No shadows.
+   Every element earns its place.
+   ============================================ */
+
+/* The Anti-Card: Sharp corners, thick borders, no shadow */
+.anti-card {
+  background: var(--paper-bright);
+  border: 2px solid var(--ink);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.anti-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+/* Hard button - brutalist interaction */
+.btn-hard {
+  background: var(--ink);
+  color: var(--paper);
+  border: 2px solid var(--ink);
+  padding: 12px 24px;
+  font-family: 'Anybody', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 13px;
+  transition: all 0.1s ease;
+  cursor: pointer;
+}
+
+.btn-hard:hover {
+  background: var(--vermilion);
+  border-color: var(--vermilion);
+  transform: translate(-2px, -2px);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.btn-hard:active {
+  transform: translate(0, 0);
+  box-shadow: none;
+}
+
+/* Ghost button variant */
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  padding: 12px 24px;
+  font-family: 'Anybody', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 13px;
+  transition: all 0.1s ease;
+  cursor: pointer;
+}
+
+.btn-ghost:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* Code blocks with personality */
+.code-block {
+  background: var(--code-bg);
+  color: #e8e4dc;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  border: 2px solid var(--border-dark);
+  overflow-x: auto;
+}
+
+.code-block code {
+  font-family: inherit;
+}
+
+/* Tag pills - sharp, not rounded */
+.tag {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1.5px solid currentColor;
+  background: transparent;
+}
+
+.tag-primary {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.tag-accent {
+  color: var(--vermilion);
+  border-color: var(--vermilion);
+}
+
+.tag-teal {
+  color: var(--teal);
+  border-color: var(--teal);
+}
+
+/* ============================================
+   LAYOUT UTILITIES
+   Breaking the grid intentionally
+   ============================================ */
+
+.asymmetric-hero {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: calc(var(--space-unit) * 8);
+}
+
+@media (max-width: 1024px) {
+  .asymmetric-hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Offset grid for visual tension */
+.offset-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: calc(var(--space-unit) * 3);
+}
+
+/* ============================================
+   SCROLLBAR: Sharp and intentional
+   ============================================ */
+
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-cream);
+  background: var(--paper);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-brown);
-  border-radius: 0;
+  background: var(--ink);
+  border: 2px solid var(--paper);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-ink);
+  background: var(--vermilion);
 }
 
-/* Dark section styling (for slop example and impact ranking) */
+/* ============================================
+   ACCESSIBILITY FOCUS STATES
+   Visible, high-contrast focus rings
+   ============================================ */
+
+*:focus-visible {
+  outline: 3px solid var(--vermilion);
+  outline-offset: 2px;
+}
+
+/* Skip link for keyboard users */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 9999;
+  padding: 12px 24px;
+  background: var(--vermilion);
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 16px;
+}
+
+/* ============================================
+   SELECTION & HIGHLIGHTS
+   ============================================ */
+
+::selection {
+  background: var(--vermilion);
+  color: white;
+}
+
+/* ============================================
+   DARK SECTIONS
+   For contrast and visual rhythm
+   ============================================ */
+
 .dark-section {
-  background: #0a0a0a;
-  color: #ffffff;
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.dark-section .anti-card {
+  background: var(--ink-90);
+  border-color: var(--ink-60);
+}
+
+.dark-section .anti-card:hover {
+  border-color: var(--vermilion);
+  box-shadow: 3px 3px 0 var(--vermilion);
+}
+
+/* ============================================
+   ANIMATION: Purposeful, not gratuitous
+   ============================================ */
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s ease forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease forwards;
+}
+
+/* Stagger children animations */
+.stagger-children > * {
+  opacity: 0;
+  animation: slide-up 0.4s ease forwards;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.05s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.25s; }
+
+/* ============================================
+   PRINT STYLES
+   Because good design considers all contexts
+   ============================================ */
+
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
 }

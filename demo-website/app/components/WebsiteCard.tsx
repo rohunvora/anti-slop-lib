@@ -7,9 +7,10 @@ import type { Website } from '../data/websites';
 
 interface WebsiteCardProps {
   website: Website;
+  featured?: boolean;
 }
 
-export function WebsiteCard({ website }: WebsiteCardProps) {
+export function WebsiteCard({ website, featured = false }: WebsiteCardProps) {
   const [isHovering, setIsHovering] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -30,25 +31,30 @@ export function WebsiteCard({ website }: WebsiteCardProps) {
   };
 
   return (
-    <Link href={`/site/${website.slug}`}>
+    <Link 
+      href={`/site/${website.slug}`}
+      className={featured ? 'lg:col-span-1' : ''}
+    >
       <article 
-        className="group relative bg-neutral-50 rounded-xl overflow-hidden border border-neutral-200 hover:border-neutral-300 transition-all hover:shadow-lg"
+        className="group anti-card overflow-hidden h-full flex flex-col"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
         {/* Thumbnail / Video */}
-        <div className="relative aspect-[16/10] bg-neutral-100 overflow-hidden">
+        <div className="relative aspect-[16/10] bg-ink-20 overflow-hidden border-b-2 border-ink">
           {website.thumbnail && (
             <Image
               src={website.thumbnail}
-              alt={website.name}
+              alt={`Screenshot of ${website.name}`}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-              className={`object-cover transition-opacity duration-300 ${
+              className={`object-cover transition-all duration-300 ${
                 isHovering && website.video ? 'opacity-0' : 'opacity-100'
-              } ${imageLoaded ? '' : 'blur-sm'}`}
+              } ${imageLoaded ? '' : 'blur-sm scale-105'} ${
+                isHovering ? 'scale-105' : 'scale-100'
+              }`}
               onLoad={() => setImageLoaded(true)}
-              priority={false}
+              priority={featured}
             />
           )}
           {website.video && isHovering && (
@@ -60,18 +66,16 @@ export function WebsiteCard({ website }: WebsiteCardProps) {
               playsInline
               preload="none"
               className="absolute inset-0 w-full h-full object-cover"
+              aria-hidden="true"
             />
           )}
           {!website.thumbnail && !website.video && (
-            <div className="absolute inset-0 flex items-center justify-center text-neutral-400">
-              <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            <div className="absolute inset-0 flex items-center justify-center text-ink-40 bg-paper">
+              <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="square" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
           )}
-          
-          {/* Hover overlay */}
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
           
           {/* Visit button on hover */}
           <a
@@ -79,25 +83,40 @@ export function WebsiteCard({ website }: WebsiteCardProps) {
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-black/70 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/90"
+            className="absolute top-3 right-3 flex items-center gap-2 px-3 py-2 text-xs font-semibold uppercase tracking-wider text-paper bg-ink opacity-0 group-hover:opacity-100 transition-all duration-150 hover:bg-vermilion"
+            aria-label={`Visit ${website.name} website`}
           >
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="square" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
             Visit
           </a>
+          
+          {/* Featured badge */}
+          {featured && (
+            <div className="absolute top-3 left-3 px-2 py-1 text-xs font-bold uppercase tracking-wider bg-vermilion text-paper">
+              Featured
+            </div>
+          )}
         </div>
         
         {/* Info */}
-        <div className="p-4">
-          <h3 className="font-medium text-neutral-900 truncate">{website.name}</h3>
+        <div className="p-4 flex-1 flex flex-col">
+          <h3 className="font-semibold text-ink truncate group-hover:text-vermilion transition-colors">
+            {website.name}
+          </h3>
+          
+          {/* URL */}
+          <p className="text-xs text-ink-40 font-mono truncate mt-1">
+            {website.url.replace('https://', '').replace('www.', '')}
+          </p>
           
           {/* Tags */}
-          <div className="mt-2 flex flex-wrap gap-1.5">
-            {website.types.slice(0, 2).map((type) => (
+          <div className="mt-auto pt-4 flex flex-wrap gap-1.5">
+            {website.types.slice(0, 1).map((type) => (
               <span 
                 key={type} 
-                className="px-2 py-0.5 text-xs font-medium text-neutral-600 bg-neutral-100 rounded-full"
+                className="tag tag-primary text-[10px]"
               >
                 {type}
               </span>
@@ -105,14 +124,14 @@ export function WebsiteCard({ website }: WebsiteCardProps) {
             {website.styles.slice(0, 2).map((style) => (
               <span 
                 key={style} 
-                className="px-2 py-0.5 text-xs font-medium text-blue-600 bg-blue-50 rounded-full"
+                className="tag tag-teal text-[10px]"
               >
                 {style}
               </span>
             ))}
-            {(website.types.length + website.styles.length) > 4 && (
-              <span className="px-2 py-0.5 text-xs text-neutral-400">
-                +{website.types.length + website.styles.length - 4}
+            {(website.types.length + website.styles.length) > 3 && (
+              <span className="text-[10px] text-ink-40 uppercase font-semibold tracking-wider px-1">
+                +{website.types.length + website.styles.length - 3}
               </span>
             )}
           </div>
@@ -121,4 +140,3 @@ export function WebsiteCard({ website }: WebsiteCardProps) {
     </Link>
   );
 }
-

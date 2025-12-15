@@ -9,36 +9,70 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Warm editorial palette (good design)
-        editorial: {
-          primary: "#B8860B",
-          secondary: "#8B4513",
-          background: "#FAF7F2",
-          surface: "#FFFFFF",
-          text: "#2D2A26",
-          muted: "#6B6560",
-          accent: "#CD853F",
-          border: "#E8E4DD",
+        // Core palette: Ink & Paper
+        ink: {
+          DEFAULT: "#0d0c0b",
+          90: "#1a1918",
+          80: "#2d2b29",
+          60: "#5c5856",
+          40: "#8b8783",
+          20: "#bab6b0",
         },
-        // Slop palette (bad design)
-        slop: {
-          purple: "#8B5CF6",
-          indigo: "#6366F1",
-          pink: "#EC4899",
-          dark: "#0f0f0f",
-          slate: "#111827",
+        paper: {
+          DEFAULT: "#e8e4dc",
+          warm: "#f5f2eb",
+          bright: "#faf8f4",
+        },
+        // Accent: Vermilion
+        vermilion: {
+          DEFAULT: "#e63312",
+          dark: "#c42a0e",
+          glow: "rgba(230, 51, 18, 0.15)",
+        },
+        // Secondary: Teal
+        teal: {
+          DEFAULT: "#00a89d",
+          dark: "#008a81",
+        },
+        // Functional
+        code: "#1c1b1a",
+        border: {
+          DEFAULT: "#d4d0c8",
+          dark: "#3d3b38",
         },
       },
       fontFamily: {
-        // Good fonts
-        serif: ["Fraunces", "serif"],
-        sans: ["IBM Plex Sans", "sans-serif"],
-        // Slop fonts
-        slop: ["Inter", "sans-serif"],
+        display: ['"Instrument Serif"', 'Georgia', 'serif'],
+        body: ['Anybody', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', '"Fira Code"', 'monospace'],
+      },
+      spacing: {
+        '18': '4.5rem',
+        '22': '5.5rem',
+      },
+      borderWidth: {
+        '3': '3px',
+      },
+      transitionDuration: {
+        '150': '150ms',
+      },
+      animation: {
+        'slide-up': 'slide-up 0.5s ease forwards',
+        'fade-in': 'fade-in 0.3s ease forwards',
+      },
+      keyframes: {
+        'slide-up': {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        'fade-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
       },
     },
   },
   plugins: [],
 };
-export default config;
 
+export default config;
