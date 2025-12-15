@@ -2,18 +2,44 @@
 
 import { useState, useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { websites, allStyles } from './data/websites';
+import { websites } from './data/websites';
 import Link from 'next/link';
 import Image from 'next/image';
 
-// NOT a template: This page leads with education, not a hero CTA
-// Structure: Problem statement → Interactive diagnosis → Tool links → Curated analysis
+// Quick-access tool cards for dashboard layout
+function ToolCard({ 
+  href, 
+  number, 
+  title, 
+  description, 
+  cta 
+}: { 
+  href: string; 
+  number: string; 
+  title: string; 
+  description: string; 
+  cta: string;
+}) {
+  return (
+    <Link 
+      href={href}
+      className="group block border-3 border-ink p-6 hover:bg-paper-bright transition-colors h-full"
+    >
+      <p className="font-mono text-xs text-ink-40 mb-3">{number}</p>
+      <h2 className="font-display text-xl mb-2 group-hover:text-vermilion transition-colors">
+        {title}
+      </h2>
+      <p className="text-sm text-ink-60 mb-4">{description}</p>
+      <span className="font-mono text-sm text-vermilion">{cta}</span>
+    </Link>
+  );
+}
 
-function ContrastChecker() {
+// Inline contrast checker
+function QuickContrastCheck() {
   const [fg, setFg] = useState('#0d0c0b');
   const [bg, setBg] = useState('#f5f2eb');
   
-  // Calculate relative luminance
   const getLuminance = (hex: string) => {
     const rgb = hex.match(/[A-Za-z0-9]{2}/g)?.map(v => parseInt(v, 16) / 255) || [0, 0, 0];
     const [r, g, b] = rgb.map(v => v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4));
@@ -24,409 +50,304 @@ function ContrastChecker() {
   const l2 = getLuminance(bg);
   const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
   const passesAA = ratio >= 4.5;
-  const passesAAA = ratio >= 7;
   
   return (
-    <div className="border-3 border-ink p-6 bg-paper-bright">
-      <h3 className="font-display text-xl mb-4">Contrast Checker</h3>
-      <p className="text-ink-60 text-sm mb-6">
-        WCAG requires 4.5:1 for normal text, 3:1 for large text. Test your colors here.
-      </p>
-      
-      <div className="grid grid-cols-2 gap-4 mb-6">
-        <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-ink-60 mb-2">
-            Text Color
-          </label>
-          <div className="flex items-center gap-3">
-            <input
-              type="color"
-              value={fg}
-              onChange={(e) => setFg(e.target.value)}
-              className="w-12 h-12"
-            />
-            <input
-              type="text"
-              value={fg}
-              onChange={(e) => setFg(e.target.value)}
-              className="flex-1 font-mono text-sm px-3 py-2"
-            />
-          </div>
+    <div className="border-3 border-ink p-4">
+      <div className="flex items-center gap-4 mb-3">
+        <div className="flex items-center gap-2">
+          <input type="color" value={fg} onChange={e => setFg(e.target.value)} className="w-8 h-8" />
+          <span className="font-mono text-xs">Text</span>
         </div>
-        <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-ink-60 mb-2">
-            Background
-          </label>
-          <div className="flex items-center gap-3">
-            <input
-              type="color"
-              value={bg}
-              onChange={(e) => setBg(e.target.value)}
-            />
-            <input
-              type="text"
-              value={bg}
-              onChange={(e) => setBg(e.target.value)}
-              className="flex-1 font-mono text-sm px-3 py-2"
-            />
-          </div>
+        <div className="flex items-center gap-2">
+          <input type="color" value={bg} onChange={e => setBg(e.target.value)} className="w-8 h-8" />
+          <span className="font-mono text-xs">BG</span>
+        </div>
+        <div className={`ml-auto font-mono text-sm font-bold ${passesAA ? 'text-teal' : 'text-vermilion'}`}>
+          {ratio.toFixed(1)}:1 {passesAA ? '✓' : '✗'}
         </div>
       </div>
-      
-      {/* Preview */}
-      <div 
-        className="p-6 mb-4 border-3 border-ink"
-        style={{ backgroundColor: bg, color: fg }}
-      >
-        <p className="text-lg font-semibold">Sample Text Preview</p>
-        <p className="text-sm mt-1">This is what your text will look like.</p>
-      </div>
-      
-      {/* Results */}
-      <div className={`p-4 border-3 ${passesAA ? 'contrast-pass' : 'contrast-fail'}`}>
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="font-mono text-2xl font-bold">{ratio.toFixed(2)}:1</p>
-            <p className="text-sm text-ink-60 mt-1">Contrast ratio</p>
-          </div>
-          <div className="text-right">
-            <p className={`font-semibold ${passesAA ? 'text-teal' : 'text-vermilion'}`}>
-              {passesAA ? '✓ Passes' : '✕ Fails'} WCAG AA
-            </p>
-            <p className={`text-sm ${passesAAA ? 'text-teal' : 'text-ink-40'}`}>
-              {passesAAA ? '✓ Passes' : '○ Does not pass'} AAA
-            </p>
-          </div>
-        </div>
+      <div className="p-3 border-2 border-ink text-sm" style={{ backgroundColor: bg, color: fg }}>
+        Sample text preview
       </div>
     </div>
   );
 }
 
-function SlopDiagnosis() {
-  const [answers, setAnswers] = useState<Record<string, boolean>>({});
-  
+// Slop self-diagnosis (simplified)
+function QuickDiagnosis() {
+  const [score, setScore] = useState(0);
   const questions = [
-    { id: 'gradient', text: 'Does it use a purple-to-blue gradient?' },
-    { id: 'rounded', text: 'Are corners rounded-xl or larger?' },
-    { id: 'shadow', text: 'Does it rely on shadow-lg for depth?' },
-    { id: 'inter', text: 'Is Inter the only typeface?' },
-    { id: 'centered', text: 'Is the hero section center-aligned?' },
-    { id: 'generic', text: 'Does the copy mention "transforming" or "supercharging"?' },
+    'Purple gradient?',
+    'Inter only?', 
+    'rounded-xl?',
+    'Centered hero?',
   ];
+  const [answers, setAnswers] = useState<Record<number, boolean>>({});
   
-  const slopScore = Object.values(answers).filter(Boolean).length;
-  const totalAnswered = Object.keys(answers).length;
+  const handleAnswer = (idx: number, val: boolean) => {
+    setAnswers(prev => ({ ...prev, [idx]: val }));
+  };
+  
+  const yesCount = Object.values(answers).filter(Boolean).length;
   
   return (
-    <div className="border-3 border-ink p-6 bg-paper-bright">
-      <h3 className="font-display text-xl mb-4">Slop Diagnosis</h3>
-      <p className="text-ink-60 text-sm mb-6">
-        Answer these questions about your design. Each "yes" is a warning sign.
-      </p>
-      
-      <div className="space-y-3 mb-6">
-        {questions.map(q => (
-          <div key={q.id} className="flex items-center gap-4">
-            <div className="flex gap-2">
-              <button
-                onClick={() => setAnswers(a => ({ ...a, [q.id]: true }))}
-                className={`px-3 py-1 text-sm font-semibold border-2 ${
-                  answers[q.id] === true 
-                    ? 'bg-vermilion border-vermilion text-paper' 
-                    : 'border-ink hover:bg-ink hover:text-paper'
-                }`}
+    <div className="border-3 border-ink p-4">
+      <p className="font-mono text-xs text-ink-40 mb-3">QUICK SLOP CHECK</p>
+      <div className="space-y-2">
+        {questions.map((q, i) => (
+          <div key={i} className="flex items-center justify-between text-sm">
+            <span>{q}</span>
+            <div className="flex gap-1">
+              <button 
+                onClick={() => handleAnswer(i, true)}
+                className={`px-2 py-0.5 text-xs border-2 ${answers[i] === true ? 'bg-vermilion border-vermilion text-paper' : 'border-ink'}`}
               >
-                Yes
+                Y
               </button>
-              <button
-                onClick={() => setAnswers(a => ({ ...a, [q.id]: false }))}
-                className={`px-3 py-1 text-sm font-semibold border-2 ${
-                  answers[q.id] === false 
-                    ? 'bg-teal border-teal text-paper' 
-                    : 'border-ink hover:bg-ink hover:text-paper'
-                }`}
+              <button 
+                onClick={() => handleAnswer(i, false)}
+                className={`px-2 py-0.5 text-xs border-2 ${answers[i] === false ? 'bg-teal border-teal text-paper' : 'border-ink'}`}
               >
-                No
+                N
               </button>
             </div>
-            <span className="text-sm">{q.text}</span>
           </div>
         ))}
       </div>
-      
-      {totalAnswered > 0 && (
-        <div className={`p-4 border-3 ${slopScore >= 3 ? 'contrast-fail' : slopScore >= 1 ? 'border-ink' : 'contrast-pass'}`}>
-          <p className="font-mono text-2xl font-bold">{slopScore}/{questions.length}</p>
-          <p className="text-sm text-ink-60 mt-1">
-            {slopScore === 0 && 'Looking good! Your design avoids common slop patterns.'}
-            {slopScore >= 1 && slopScore < 3 && 'Some warning signs. Review the patterns below.'}
-            {slopScore >= 3 && 'High slop alert. Your design may look AI-generated.'}
-          </p>
-        </div>
+      {Object.keys(answers).length > 0 && (
+        <p className={`mt-3 text-sm font-semibold ${yesCount >= 2 ? 'text-vermilion' : 'text-teal'}`}>
+          {yesCount}/{questions.length} slop patterns detected
+        </p>
       )}
     </div>
   );
 }
 
 function HomeContent() {
-  const searchParams = useSearchParams();
-  const initialStyle = searchParams.get('style');
-  const [selectedStyle, setSelectedStyle] = useState<string | null>(initialStyle);
-  
-  const filteredSites = useMemo(() => {
-    if (!selectedStyle) return websites.slice(0, 6);
-    return websites.filter(w => w.styles.includes(selectedStyle)).slice(0, 6);
-  }, [selectedStyle]);
-
   return (
     <>
-      {/* Section 1: The Problem (NOT a hero with CTA) */}
+      {/* Hero: Problem + Quick Access Dashboard */}
       <section className="border-b-3 border-ink">
         <div className="max-w-[1400px] mx-auto">
-          <div className="grid lg:grid-cols-[1fr,1px,1fr]">
-            {/* Left: The problem statement */}
-            <div className="p-8 lg:p-12">
-              <p className="font-mono text-xs uppercase tracking-wider text-vermilion mb-6">
-                The problem
-              </p>
-              <h1 className="font-display text-3xl lg:text-4xl mb-6 leading-tight">
-                AI tools have created a new form of design homogeneity.
+          {/* Top bar with key message */}
+          <div className="p-6 lg:p-8 border-b-3 border-ink">
+            <div className="max-w-2xl">
+              <h1 className="font-display text-2xl lg:text-3xl mb-3">
+                AI tools create homogenized design. These tools help you escape it.
               </h1>
-              <div className="space-y-4 text-ink-60">
-                <p>
-                  <strong className="text-ink">Purple gradients.</strong> Rounded corners on everything. 
-                  Inter font. Shadow-lg. Center-aligned heroes. "Transform your workflow" copy.
-                </p>
-                <p>
-                  These patterns appear in AI-generated code because they're statistically common 
-                  in training data—not because they're good design decisions.
-                </p>
-                <p>
-                  <strong className="text-ink">This site is a tool</strong>, not a gallery. 
-                  It helps you identify slop patterns, understand why they fail, and make 
-                  intentional choices instead.
-                </p>
-              </div>
-            </div>
-            
-            {/* Divider */}
-            <div className="hidden lg:block bg-ink" />
-            
-            {/* Right: Diagnosis tool */}
-            <div className="p-8 lg:p-12 bg-paper">
-              <SlopDiagnosis />
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* Section 2: Tools (NOT metric counters) */}
-      <section className="border-b-3 border-ink">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="grid lg:grid-cols-3">
-            {/* Tool 1: Pattern Library */}
-            <Link 
-              href="/patterns" 
-              className="group p-8 lg:p-10 border-b-3 lg:border-b-0 lg:border-r-3 border-ink hover:bg-paper-bright transition-colors"
-            >
-              <p className="font-mono text-xs uppercase tracking-wider text-ink-40 mb-4">01</p>
-              <h2 className="font-display text-2xl mb-3 group-hover:text-vermilion transition-colors">
-                Pattern Library
-              </h2>
-              <p className="text-ink-60 text-sm mb-4">
-                Interactive examples of slop patterns and their alternatives. 
-                Adjust border radius, colors, and typography live.
+              <p className="text-ink-60">
+                Jump to any tool below—they're independent, not sequential steps.
               </p>
-              <span className="font-mono text-sm text-vermilion">
-                Explore patterns →
-              </span>
-            </Link>
-            
-            {/* Tool 2: Prompt Builder */}
-            <Link 
-              href="/prompts" 
-              className="group p-8 lg:p-10 border-b-3 lg:border-b-0 lg:border-r-3 border-ink hover:bg-paper-bright transition-colors"
-            >
-              <p className="font-mono text-xs uppercase tracking-wider text-ink-40 mb-4">02</p>
-              <h2 className="font-display text-2xl mb-3 group-hover:text-vermilion transition-colors">
-                Prompt Builder
-              </h2>
-              <p className="text-ink-60 text-sm mb-4">
-                Generate AI prompts by selecting specific patterns to include 
-                or avoid. Copy structured instructions, not vague descriptions.
-              </p>
-              <span className="font-mono text-sm text-vermilion">
-                Build a prompt →
-              </span>
-            </Link>
-            
-            {/* Tool 3: Contrast Checker */}
-            <div className="p-8 lg:p-10">
-              <p className="font-mono text-xs uppercase tracking-wider text-ink-40 mb-4">03</p>
-              <h2 className="font-display text-2xl mb-3">
-                Accessibility Tools
-              </h2>
-              <p className="text-ink-60 text-sm mb-4">
-                Check color contrast ratios against WCAG standards. 
-                Beautiful design must also be readable.
-              </p>
-              <ContrastChecker />
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* Section 3: Curated Analysis (NOT a card grid) */}
-      <section className="border-b-3 border-ink">
-        <div className="max-w-[1400px] mx-auto p-8 lg:p-12">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
-            <div>
-              <p className="font-mono text-xs uppercase tracking-wider text-ink-40 mb-3">
-                Curated examples
-              </p>
-              <h2 className="font-display text-2xl lg:text-3xl">
-                Sites that avoid the slop patterns
-              </h2>
-              <p className="text-ink-60 mt-2 max-w-xl">
-                Not just inspiration—analysis. Click any site to see 
-                <strong className="text-ink"> why </strong> 
-                it works and how to apply its principles.
-              </p>
-            </div>
-            
-            {/* Style filter */}
-            <div className="flex flex-wrap gap-2">
-              <button
-                onClick={() => setSelectedStyle(null)}
-                className={`tag ${!selectedStyle ? 'tag-filled' : ''}`}
-              >
-                All
-              </button>
-              {['Minimal', 'Dark', 'Editorial', 'Unusual Layout'].map(style => (
-                <button
-                  key={style}
-                  onClick={() => setSelectedStyle(style)}
-                  className={`tag ${selectedStyle === style ? 'tag-filled' : ''}`}
-                >
-                  {style}
-                </button>
-              ))}
             </div>
           </div>
           
-          {/* Sites - NOT uniform cards */}
-          <div className="grid lg:grid-cols-2 gap-6">
-            {filteredSites.map((site, i) => (
+          {/* Dashboard grid - quick access to all tools */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4">
+            <ToolCard
+              href="/patterns"
+              number="01"
+              title="Pattern Lab"
+              description="Interactive sliders for radius, colors, type. See what's sloppy vs. distinctive."
+              cta="Open playground →"
+            />
+            <ToolCard
+              href="/prompts"
+              number="02"
+              title="Prompt Builder"
+              description="Select patterns to include/avoid. Generate structured AI instructions."
+              cta="Build prompt →"
+            />
+            <ToolCard
+              href="/gallery"
+              number="03"
+              title="Site Gallery"
+              description="Curated examples with analysis of WHY they work, not just what they look like."
+              cta="Browse sites →"
+            />
+            <ToolCard
+              href="/microinteractions"
+              number="04"
+              title="Microinteractions"
+              description="Trigger-feedback patterns: loaders, validation, transitions with code."
+              cta="See examples →"
+            />
+          </div>
+        </div>
+      </section>
+      
+      {/* Quick Tools Row - Inline utilities without navigation */}
+      <section className="border-b-3 border-ink">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="grid lg:grid-cols-3">
+            {/* Contrast checker inline */}
+            <div className="p-6 border-b-3 lg:border-b-0 lg:border-r-3 border-ink">
+              <p className="font-mono text-xs text-ink-40 mb-3">CONTRAST CHECKER</p>
+              <QuickContrastCheck />
+              <p className="text-xs text-ink-40 mt-3">
+                WCAG AA requires 4.5:1 for normal text.{' '}
+                <Link href="/patterns?tab=colors" className="underline hover:text-ink">
+                  More color tools →
+                </Link>
+              </p>
+            </div>
+            
+            {/* Quick diagnosis */}
+            <div className="p-6 border-b-3 lg:border-b-0 lg:border-r-3 border-ink">
+              <QuickDiagnosis />
+              <p className="text-xs text-ink-40 mt-3">
+                <Link href="/patterns" className="underline hover:text-ink">
+                  Full pattern analysis →
+                </Link>
+              </p>
+            </div>
+            
+            {/* Usability reminder */}
+            <div className="p-6 bg-paper-bright">
+              <p className="font-mono text-xs text-vermilion mb-3">USABILITY REMINDER</p>
+              <p className="text-sm text-ink-60 mb-3">
+                <strong className="text-ink">Aesthetics can mask problems.</strong> Research shows 
+                attractive designs feel more usable—even when they're not.
+              </p>
+              <p className="text-sm text-ink-60">
+                After applying these patterns, test with real users. Does it work, or just look good?
+              </p>
+              <Link href="/patterns?tab=usability" className="font-mono text-xs text-vermilion mt-3 block">
+                Usability checklist →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Featured Examples - Not a grid of identical cards */}
+      <section className="border-b-3 border-ink">
+        <div className="max-w-[1400px] mx-auto p-6 lg:p-8">
+          <div className="flex items-end justify-between mb-6">
+            <div>
+              <p className="font-mono text-xs text-ink-40 mb-2">FEATURED EXAMPLES</p>
+              <h2 className="font-display text-xl">Sites that avoid the slop patterns</h2>
+            </div>
+            <Link href="/gallery" className="font-mono text-sm text-vermilion">
+              All {websites.length} sites →
+            </Link>
+          </div>
+          
+          {/* Varied layout - not uniform grid */}
+          <div className="grid lg:grid-cols-[1fr,1fr,1fr] gap-4">
+            {websites.slice(0, 3).map((site, i) => (
               <Link 
                 key={site.slug}
                 href={`/site/${site.slug}`}
-                className="group border-3 border-ink bg-paper-bright hover:bg-paper transition-colors"
+                className={`group border-3 border-ink overflow-hidden hover:border-vermilion transition-colors ${
+                  i === 0 ? 'lg:row-span-2' : ''
+                }`}
               >
-                <div className="grid grid-cols-[200px,1fr]">
-                  {/* Thumbnail */}
-                  <div className="relative aspect-[4/3] border-r-3 border-ink overflow-hidden">
-                    {site.thumbnail ? (
-                      <Image
-                        src={site.thumbnail}
-                        alt={`Screenshot of ${site.name}`}
-                        fill
-                        className="object-cover"
-                        sizes="200px"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-ink-40" />
-                    )}
-                  </div>
-                  
-                  {/* Content */}
-                  <div className="p-5">
-                    <p className="font-mono text-xs text-ink-40 mb-1">
-                      {site.url.replace('https://', '').replace('www.', '')}
-                    </p>
-                    <h3 className="font-display text-xl mb-2 group-hover:text-vermilion transition-colors">
-                      {site.name}
-                    </h3>
-                    <p className="text-sm text-ink-60 mb-3 line-clamp-2">
-                      {getAnalysisSummary(site.styles)}
-                    </p>
-                    <div className="flex flex-wrap gap-1">
-                      {site.styles.slice(0, 3).map(style => (
-                        <span key={style} className="tag text-[10px]">
-                          {style}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                <div className={`relative ${i === 0 ? 'aspect-[4/3]' : 'aspect-video'} border-b-3 border-ink`}>
+                  {site.thumbnail && (
+                    <Image
+                      src={site.thumbnail}
+                      alt={site.name}
+                      fill
+                      className="object-cover"
+                    />
+                  )}
+                </div>
+                <div className="p-4">
+                  <h3 className="font-semibold group-hover:text-vermilion transition-colors">{site.name}</h3>
+                  <p className="text-xs text-ink-40 font-mono mt-1">{site.styles.slice(0, 2).join(' · ')}</p>
                 </div>
               </Link>
             ))}
           </div>
-          
-          <div className="mt-8 text-center">
-            <Link href="/gallery" className="btn btn-outline">
-              View all {websites.length} sites →
-            </Link>
+        </div>
+      </section>
+      
+      {/* Tailwind Customization Guidance */}
+      <section className="border-b-3 border-ink">
+        <div className="max-w-[1400px] mx-auto p-6 lg:p-8">
+          <div className="grid lg:grid-cols-2 gap-8">
+            <div>
+              <p className="font-mono text-xs text-ink-40 mb-2">ESCAPE THE DEFAULTS</p>
+              <h2 className="font-display text-xl mb-4">Tailwind's theme is a starting point, not a destination</h2>
+              <p className="text-ink-60 mb-4">
+                Websites using the same framework converge visually because they share default 
+                values. The fix isn't avoiding Tailwind—it's customizing the theme.
+              </p>
+              <ul className="space-y-2 text-sm">
+                <li className="flex items-start gap-2">
+                  <span className="text-teal">→</span>
+                  <span>Override <code className="font-mono bg-ink/10 px-1">borderRadius</code> to remove xl/2xl/3xl</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-teal">→</span>
+                  <span>Define custom colors instead of using slate/gray/zinc</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-teal">→</span>
+                  <span>Create bespoke spacing values (not just 4/8/12/16)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-teal">→</span>
+                  <span>Remove default shadows—use borders or transforms instead</span>
+                </li>
+              </ul>
+            </div>
+            <div className="code-block p-4 text-sm">
+              <pre>{`// tailwind.config.ts
+const config = {
+  theme: {
+    // OVERRIDE defaults, don't extend
+    borderRadius: {
+      'none': '0',
+      'sm': '2px',
+      // Intentionally omit xl, 2xl, 3xl
+    },
+    extend: {
+      colors: {
+        // YOUR brand colors, not Tailwind's
+        ink: '#0d0c0b',
+        paper: '#f5f2eb',
+        accent: '#c42a0e',
+      },
+      // Remove default shadows
+      boxShadow: {
+        'none': 'none',
+      },
+    },
+  },
+};`}</pre>
+            </div>
           </div>
         </div>
       </section>
       
-      {/* Section 4: About (WHO is behind this) */}
+      {/* About + Project Info */}
       <section className="dark-section">
-        <div className="max-w-[1400px] mx-auto p-8 lg:p-12">
-          <div className="grid lg:grid-cols-[2fr,1fr] gap-12">
+        <div className="max-w-[1400px] mx-auto p-6 lg:p-8">
+          <div className="grid lg:grid-cols-[2fr,1fr] gap-8">
             <div>
-              <p className="font-mono text-xs uppercase tracking-wider text-paper/50 mb-4">
-                About this project
+              <p className="font-mono text-xs text-paper/50 mb-2">ABOUT THIS PROJECT</p>
+              <h2 className="font-display text-xl mb-4">Built by developers tired of AI sameness</h2>
+              <p className="text-paper/70 mb-4">
+                Anti-Slop started as prompt snippets to steer AI away from defaults. It grew into 
+                these tools when we realized the problem isn't AI—it's lack of intentional design education.
               </p>
-              <h2 className="font-display text-2xl lg:text-3xl mb-6">
-                Built by developers who were tired of AI-generated sameness.
-              </h2>
-              <div className="space-y-4 text-paper/70">
-                <p>
-                  Anti-Slop started as a collection of prompts to steer AI coding assistants 
-                  away from default patterns. It grew into this toolkit after we realized 
-                  the problem wasn't just AI—it was the lack of intentional design education.
-                </p>
-                <p>
-                  <strong className="text-paper">The gallery data comes from godly.website</strong>, 
-                  a curated collection of award-winning web design. We add analysis: explaining 
-                  why each site works, connecting examples to patterns, and providing actionable 
-                  prompts you can use.
-                </p>
-                <p>
-                  This site practices what it preaches: no rounded corners, no shadows, 
-                  no gradients. Every design choice is documented in the pattern library.
-                </p>
-              </div>
+              <p className="text-paper/70">
+                <strong className="text-paper">Gallery data from godly.website.</strong> We add 
+                analysis: explaining why sites work, connecting to patterns, generating prompts.
+              </p>
             </div>
-            <div className="space-y-6">
-              <div className="border-3 border-paper/30 p-6">
-                <p className="font-mono text-xs uppercase tracking-wider text-paper/50 mb-3">
-                  Open source
-                </p>
-                <a 
-                  href="https://github.com/rohunvora/anti-slop-lib"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-display text-xl hover:text-vermilion-light transition-colors"
-                >
-                  github.com/rohunvora/anti-slop-lib →
-                </a>
-              </div>
-              <div className="border-3 border-paper/30 p-6">
-                <p className="font-mono text-xs uppercase tracking-wider text-paper/50 mb-3">
-                  npm package
-                </p>
-                <a 
-                  href="https://www.npmjs.com/package/anti-slop"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-display text-xl hover:text-vermilion-light transition-colors"
-                >
-                  npm install anti-slop →
-                </a>
-              </div>
+            <div className="space-y-4">
+              <a href="https://github.com/rohunvora/anti-slop-lib" target="_blank" rel="noopener noreferrer" 
+                className="block border-3 border-paper/30 p-4 hover:border-paper/60 transition-colors">
+                <p className="font-mono text-xs text-paper/50 mb-1">GITHUB</p>
+                <p className="text-paper">rohunvora/anti-slop-lib →</p>
+              </a>
+              <a href="https://npmjs.com/package/anti-slop" target="_blank" rel="noopener noreferrer"
+                className="block border-3 border-paper/30 p-4 hover:border-paper/60 transition-colors">
+                <p className="font-mono text-xs text-paper/50 mb-1">NPM</p>
+                <p className="text-paper">npm install anti-slop →</p>
+              </a>
             </div>
           </div>
         </div>
@@ -435,44 +356,9 @@ function HomeContent() {
   );
 }
 
-// Generate analysis summary based on site styles
-function getAnalysisSummary(styles: string[]): string {
-  if (styles.includes('Minimal')) {
-    return 'Uses restraint as a design tool. Every element earns its place through necessity, not decoration.';
-  }
-  if (styles.includes('Dark')) {
-    return 'Dark theme done right: true blacks, not dark grays. Single accent color creates focus.';
-  }
-  if (styles.includes('Animation')) {
-    return 'Animation serves communication, not decoration. Each motion guides attention or confirms action.';
-  }
-  if (styles.includes('Editorial')) {
-    return 'Typography-first design. Serif headlines create editorial weight; generous whitespace aids reading.';
-  }
-  if (styles.includes('Unusual Layout')) {
-    return 'Breaks the grid intentionally. Asymmetry creates visual tension and memorability.';
-  }
-  if (styles.includes('3D')) {
-    return 'Three-dimensional elements serve the content, not just spectacle. Fast loading, graceful fallbacks.';
-  }
-  return 'Distinctive design choices that set it apart from template-based sites.';
-}
-
-function HomeLoading() {
-  return (
-    <div className="max-w-[1400px] mx-auto p-12">
-      <div className="animate-pulse space-y-8">
-        <div className="h-8 bg-ink/10 w-1/2" />
-        <div className="h-4 bg-ink/10 w-3/4" />
-        <div className="h-4 bg-ink/10 w-2/3" />
-      </div>
-    </div>
-  );
-}
-
 export default function Home() {
   return (
-    <Suspense fallback={<HomeLoading />}>
+    <Suspense fallback={<div className="p-12 text-center">Loading...</div>}>
       <HomeContent />
     </Suspense>
   );

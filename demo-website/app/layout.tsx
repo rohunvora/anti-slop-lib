@@ -42,19 +42,25 @@ export default function RootLayout({
                   <nav className="flex items-center" role="navigation" aria-label="Main">
                     <Link 
                       href="/patterns" 
-                      className="px-4 py-2 text-sm font-semibold uppercase tracking-wider text-ink-60 hover:text-ink hover:bg-paper-bright transition-colors"
+                      className="px-3 py-2 text-xs lg:text-sm font-semibold uppercase tracking-wider text-ink-60 hover:text-ink hover:bg-paper-bright transition-colors"
                     >
                       Patterns
                     </Link>
                     <Link 
                       href="/prompts" 
-                      className="px-4 py-2 text-sm font-semibold uppercase tracking-wider text-ink-60 hover:text-ink hover:bg-paper-bright transition-colors"
+                      className="px-3 py-2 text-xs lg:text-sm font-semibold uppercase tracking-wider text-ink-60 hover:text-ink hover:bg-paper-bright transition-colors"
                     >
                       Prompts
                     </Link>
                     <Link 
+                      href="/microinteractions" 
+                      className="px-3 py-2 text-xs lg:text-sm font-semibold uppercase tracking-wider text-ink-60 hover:text-ink hover:bg-paper-bright transition-colors hidden md:block"
+                    >
+                      Micro
+                    </Link>
+                    <Link 
                       href="/gallery" 
-                      className="px-4 py-2 text-sm font-semibold uppercase tracking-wider text-ink-60 hover:text-ink hover:bg-paper-bright transition-colors"
+                      className="px-3 py-2 text-xs lg:text-sm font-semibold uppercase tracking-wider text-ink-60 hover:text-ink hover:bg-paper-bright transition-colors"
                     >
                       Gallery
                     </Link>
@@ -62,7 +68,7 @@ export default function RootLayout({
                       href="https://github.com/rohunvora/anti-slop-lib" 
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="ml-4 px-4 py-2 text-sm font-semibold uppercase tracking-wider border-3 border-ink hover:bg-ink hover:text-paper transition-colors"
+                      className="ml-2 lg:ml-4 px-3 lg:px-4 py-2 text-xs lg:text-sm font-semibold uppercase tracking-wider border-3 border-ink hover:bg-ink hover:text-paper transition-colors"
                       aria-label="View source on GitHub"
                     >
                       GitHub
