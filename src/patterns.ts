@@ -15,6 +15,11 @@ export interface SlopPattern {
   description: string;
   whyItsBad: string;
   alternatives: string[];
+  quickFix?: {
+    remove?: string;      // Classes/patterns to remove
+    replace?: string;     // Code snippet to replace with
+    example?: string;     // Example of fixed code
+  };
   detect: {
     tailwindClasses?: string[];
     cssProperties?: Record<string, string[]>;
@@ -363,6 +368,11 @@ export const PATTERNS: SlopPattern[] = [
     description: 'Using Inter or similar generic grotesque fonts',
     whyItsBad: 'Inter is the #1 most common AI-generated font choice. It\'s neutral to the point of being invisible and makes your site look like every other AI site.',
     alternatives: ALTERNATIVE_FONTS.headers.slice(0, 5),
+    quickFix: {
+      remove: 'font-sans, Inter',
+      replace: 'font-body',
+      example: '// Replace: className="font-sans"\n// With: className="font-body"\n// Or use: font-display for headlines',
+    },
     detect: {
       fontPatterns: ['Inter', 'inter', 'font-sans'],
       cssProperties: {
@@ -378,6 +388,11 @@ export const PATTERNS: SlopPattern[] = [
     description: 'Using Space Grotesk (the "I\'m different but not really" choice)',
     whyItsBad: 'Space Grotesk has become the go-to "alternative" to Inter, making it equally clichéd.',
     alternatives: ALTERNATIVE_FONTS.headers.slice(5, 10),
+    quickFix: {
+      remove: 'Space Grotesk, space-grotesk',
+      replace: 'font-body',
+      example: '// Replace: className="font-sans" (if using Space Grotesk)\n// With: className="font-body"\n// Try: Satoshi, General Sans, or IBM Plex Sans',
+    },
     detect: {
       fontPatterns: ['Space Grotesk', 'space-grotesk'],
     },
@@ -397,6 +412,11 @@ export const PATTERNS: SlopPattern[] = [
       'Go monochrome with strong contrast',
       'Use your actual brand colors',
     ],
+    quickFix: {
+      remove: 'bg-gradient-to-r from-purple-500 to-pink-500',
+      replace: 'bg-primary',
+      example: '// Replace: className="bg-gradient-to-r from-purple-500 to-pink-500"\n// With: className="bg-primary"\n// Or: className="bg-[#B8860B]" for warm editorial',
+    },
     detect: {
       tailwindClasses: [
         'from-purple', 'from-violet', 'from-indigo',
@@ -421,6 +441,11 @@ export const PATTERNS: SlopPattern[] = [
       'Add subtle texture or noise to the background',
       'Go fully black (#000) for brutalist effect',
     ],
+    quickFix: {
+      remove: 'bg-slate-950, bg-zinc-950, bg-gray-950',
+      replace: 'bg-background',
+      example: '// Replace: className="bg-slate-950"\n// With: className="bg-background"\n// Or try: bg-[#FAF7F2] for warm editorial, bg-[#000] for noir',
+    },
     detect: {
       tailwindClasses: ['bg-slate-950', 'bg-slate-900', 'bg-gray-950', 'bg-gray-900', 'bg-zinc-950', 'bg-zinc-900'],
       colorPatterns: SLOP_COLORS.darkBackgrounds,
@@ -441,6 +466,11 @@ export const PATTERNS: SlopPattern[] = [
       'Mix sharp and rounded strategically',
       'Add unique border treatments instead',
     ],
+    quickFix: {
+      remove: 'rounded-xl, rounded-2xl, rounded-3xl',
+      replace: 'rounded-sm or rounded-none',
+      example: '// Replace: className="rounded-xl"\n// With: className="rounded-sm"\n// Or: className="rounded-none border-2 border-foreground"',
+    },
     detect: {
       tailwindClasses: ['rounded-lg', 'rounded-xl', 'rounded-2xl', 'rounded-3xl'],
     },
@@ -458,6 +488,11 @@ export const PATTERNS: SlopPattern[] = [
       'Use background color differentiation',
       'Embrace flat design',
     ],
+    quickFix: {
+      remove: 'shadow-sm, shadow-md, shadow-lg, shadow-xl',
+      replace: 'border border-border',
+      example: '// Replace: className="shadow-md"\n// With: className="border border-border"\n// Or: className="border-2 border-foreground" for bold',
+    },
     detect: {
       tailwindClasses: ['shadow-sm', 'shadow-md', 'shadow-lg', 'shadow-xl'],
     },
@@ -474,6 +509,11 @@ export const PATTERNS: SlopPattern[] = [
       'Try subtle gradients without blur',
       'Use color blocking instead',
     ],
+    quickFix: {
+      remove: 'backdrop-blur, bg-white/10, bg-black/10',
+      replace: 'bg-background border border-border',
+      example: '// Replace: className="backdrop-blur-md bg-white/10"\n// With: className="bg-background border border-border"',
+    },
     detect: {
       tailwindClasses: ['backdrop-blur', 'backdrop-blur-sm', 'backdrop-blur-md', 'backdrop-blur-lg', 'bg-white/10', 'bg-black/10', 'bg-white/20', 'bg-black/20'],
     },
@@ -494,6 +534,11 @@ export const PATTERNS: SlopPattern[] = [
       'Use a split layout with image',
       'Try a more editorial approach',
     ],
+    quickFix: {
+      remove: 'text-center, mx-auto, items-center, justify-center',
+      replace: 'text-left grid grid-cols-1 md:grid-cols-[1fr_1.5fr]',
+      example: '// Replace: <section className="text-center mx-auto">\n// With: <section className="grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-8">\n// Move text to left column, image to right',
+    },
     detect: {
       htmlPatterns: ['<section.*class=".*text-center.*"', '<div.*class=".*text-center.*mx-auto'],
       tailwindClasses: ['text-center', 'mx-auto', 'items-center', 'justify-center'],
@@ -513,6 +558,11 @@ export const PATTERNS: SlopPattern[] = [
       'Use subtle, neutral shadows if needed',
       'Try hard shadows for a retro feel',
     ],
+    quickFix: {
+      remove: 'shadow-purple, shadow-indigo, shadow-violet',
+      replace: 'shadow-none or border border-border',
+      example: '// Replace: className="shadow-purple-500"\n// With: className="border border-border"\n// Or: className="shadow-none"',
+    },
     detect: {
       tailwindClasses: ['shadow-purple', 'shadow-indigo', 'shadow-violet', 'shadow-blue'],
       cssProperties: {
@@ -534,6 +584,11 @@ export const PATTERNS: SlopPattern[] = [
       'Go minimal with solid colors',
       'Create custom illustrations',
     ],
+    quickFix: {
+      remove: 'blur-3xl, blur-2xl, blob, orb, sphere',
+      replace: '<div className="absolute inset-0 bg-[url(\'/grid.svg\')] opacity-5" />',
+      example: '// Replace: <div className="blur-3xl bg-gradient-to-r from-purple-500">\n// With: <div className="absolute inset-0 bg-[url(\'/grid.svg\')] opacity-5" />\n// Or: Use actual product image',
+    },
     detect: {
       tailwindClasses: ['blur-3xl', 'blur-2xl'],
       htmlPatterns: ['blob', 'orb', 'sphere'],
@@ -549,6 +604,11 @@ export const PATTERNS: SlopPattern[] = [
     description: 'Headlines like "AI-Powered X" or "Transform your Y"',
     whyItsBad: 'These headlines could apply to literally any product. They say nothing specific.',
     alternatives: ALTERNATIVE_COPY_APPROACHES,
+    quickFix: {
+      remove: 'AI-Powered, Transform your, Supercharge your, Unlock the power',
+      replace: 'Be specific about what your product actually does',
+      example: '// Replace: "AI-Powered Analytics"\n// With: "Track your team\'s sprint velocity"\n// Replace: "Transform your workflow"\n// With: "Ship features 3x faster with automated testing"',
+    },
     detect: {
       textPatterns: SLOP_COPY_PATTERNS.map(p => p.source),
     },
@@ -566,6 +626,11 @@ export const PATTERNS: SlopPattern[] = [
       'Be direct: "Buy now" or "Sign up"',
       'Match your brand voice',
     ],
+    quickFix: {
+      remove: 'Get Started Free, Start Free Trial, Try Free',
+      replace: 'Be specific or match your brand voice',
+      example: '// Replace: "Get Started Free"\n// With: "Create your first dashboard"\n// Or: "Let\'s build something"\n// Or: "Start building"',
+    },
     detect: {
       textPatterns: [
         'Get Started',
@@ -592,4 +657,5 @@ export function getPatternsBySeverity(severity: Severity): SlopPattern[] {
 export function getCriticalPatterns(): SlopPattern[] {
   return PATTERNS.filter(p => p.severity === 'critical');
 }
+
 

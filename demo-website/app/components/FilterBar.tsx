@@ -30,3 +30,4 @@ export function FilterBar({ activeCategory, onCategoryChange }: FilterBarProps) 
   );
 }
 
+

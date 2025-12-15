@@ -216,3 +216,4 @@ export function DetailModal({ example, onClose }: DetailModalProps) {
   );
 }
 
+

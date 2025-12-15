@@ -27,6 +27,8 @@ import {
   CARD_ALTERNATIVES,
   suggestFontPairing 
 } from './alternatives.js';
+import { getKit, listKitNames, type KitName } from './design-kits/index.js';
+import { validateKit } from './design-kits/validator.js';
 
 // ============================================================================
 // CLI SETUP
@@ -121,14 +123,15 @@ program
     // Print results
     printHeader('SCAN RESULTS');
     
-    console.log(`Files scanned:  ${chalk.bold(files.length)}`);
-    console.log(`Slop score:     ${formatScore(averageScore)}`);
-    console.log(`Grade:          ${formatGrade(overallGrade)}`);
-    console.log(`Issues found:   ${chalk.bold(totalDetections)}`);
+    const distinctivenessScore = Math.max(0, 100 - averageScore);
+    console.log(`Files scanned:        ${chalk.bold(files.length)}`);
+    console.log(`Distinctiveness:      ${formatScore(distinctivenessScore)}/100`);
+    console.log(`Grade:                ${formatGrade(overallGrade)}`);
+    console.log(`Issues found:         ${chalk.bold(totalDetections)}`);
     console.log();
 
     if (totalDetections === 0) {
-      console.log(chalk.green('✨ No slop patterns detected! Your design looks distinctive.'));
+      console.log(chalk.green('✨ Your design looks distinctive! No generic patterns detected.'));
       return;
     }
 
@@ -194,14 +197,17 @@ program
     const result = quickCheck(content);
 
     if (result.isSlop) {
-      console.log(chalk.red(`\n❌ SLOP DETECTED (${result.confidence} confidence)\n`));
+      const distinctivenessScore = 100 - (result.confidence === 'high' ? 70 : result.confidence === 'medium' ? 40 : 20);
+      console.log(chalk.yellow(`\n⚠️  This looks similar to many AI-generated sites (distinctiveness: ${distinctivenessScore}/100)\n`));
       console.log('Top issues:');
       for (const issue of result.topIssues) {
         console.log(chalk.yellow(`  • ${issue}`));
       }
+      console.log(chalk.dim('\n💡 Tip: Use "anti-slop kit <name>" to get a distinctive design system'));
       process.exit(1);
     } else {
-      console.log(chalk.green('\n✅ Looks good! No major slop patterns detected.\n'));
+      const distinctivenessScore = 100 - (result.confidence === 'high' ? 70 : result.confidence === 'medium' ? 40 : 20);
+      console.log(chalk.green(`\n✅ Looks distinctive! Distinctiveness score: ${distinctivenessScore}/100\n`));
     }
   });
 
@@ -388,6 +394,87 @@ program
   });
 
 // ============================================================================
+// KIT COMMAND
+// ============================================================================
+
+program
+  .command('kit <name>')
+  .description('Get a complete design kit (warm-editorial, swiss-precision, brutalist-raw, forest-organic, noir-luxury, vibrant-play)')
+  .option('--json', 'Output as JSON')
+  .option('--validate', 'Validate the kit passes anti-slop')
+  .action((name, options) => {
+    try {
+      const kit = getKit(name as KitName);
+
+      if (options.validate) {
+        const validation = validateKit(kit);
+        if (validation.slopScore === 0) {
+          console.log(chalk.green(`\n✅ Kit "${kit.name}" passes validation (slopScore: 0)\n`));
+        } else {
+          console.log(chalk.red(`\n❌ Kit "${kit.name}" has issues (slopScore: ${validation.slopScore})\n`));
+          console.log(chalk.yellow(`Unique font sizes: ${validation.uniqueFontSizes} (max 8)`));
+          console.log(chalk.yellow(`Has all components: ${validation.hasAllComponents}`));
+          console.log(chalk.yellow(`Dark mode complete: ${validation.darkModeComplete}`));
+          process.exit(1);
+        }
+      }
+
+      if (options.json) {
+        console.log(JSON.stringify(kit, null, 2));
+        return;
+      }
+
+      // Pretty print
+      printHeader(`DESIGN KIT: ${kit.name.toUpperCase()}`);
+      console.log(chalk.cyan(`Vibe: ${kit.vibe}`));
+      console.log(chalk.dim(`Description: ${kit.description}\n`));
+
+      console.log(chalk.bold('Fonts:'));
+      console.log(`  Display: ${chalk.cyan(kit.fonts.display.name)}`);
+      console.log(`  Body: ${chalk.cyan(kit.fonts.body.name)}`);
+      if (kit.fonts.mono) {
+        console.log(`  Mono: ${chalk.cyan(kit.fonts.mono.name)}`);
+      }
+      console.log();
+
+      console.log(chalk.bold('Colors:'));
+      console.log(`  Primary: ${chalk.hex(kit.tokens.colors.primary)('████')} ${kit.tokens.colors.primary}`);
+      console.log(`  Background: ${chalk.hex(kit.tokens.colors.background)('████')} ${kit.tokens.colors.background}`);
+      console.log(`  Accent: ${chalk.hex(kit.tokens.colors.accent)('████')} ${kit.tokens.colors.accent}`);
+      console.log();
+
+      console.log(chalk.bold('References:'));
+      for (const ref of kit.references.gold) {
+        console.log(`  ${chalk.cyan(ref.name)}: ${ref.url}`);
+        if (ref.stealThis.length > 0) {
+          console.log(chalk.dim(`    Steal: ${ref.stealThis[0]}`));
+        }
+      }
+      console.log();
+
+      console.log(chalk.dim('Run with --json for full kit data, or --validate to check anti-slop compliance.'));
+    } catch (error: any) {
+      console.error(chalk.red(`Error: ${error.message}`));
+      console.log(chalk.dim(`\nAvailable kits: ${listKitNames().join(', ')}`));
+      process.exit(1);
+    }
+  });
+
+program
+  .command('kits')
+  .description('List all available design kits')
+  .action(() => {
+    printHeader('AVAILABLE DESIGN KITS');
+    const kits = listKitNames();
+    for (const kitName of kits) {
+      const kit = getKit(kitName);
+      console.log(chalk.bold(kitName));
+      console.log(chalk.dim(`  ${kit.description}`));
+      console.log();
+    }
+  });
+
+// ============================================================================
 // HELPERS
 // ============================================================================
 
@@ -453,4 +540,5 @@ function scoreToGrade(score: number): 'A' | 'B' | 'C' | 'D' | 'F' {
 // ============================================================================
 
 program.parse();
+
 

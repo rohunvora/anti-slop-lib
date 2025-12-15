@@ -4,8 +4,8 @@ import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Anti-Slop | Tools for intentional web design",
-  description: "Identify AI-generated design patterns, learn why they fail, and build distinctive websites with purpose.",
+  title: "Anti-Slop | Remove the tells that make your site look mass-produced",
+  description: "Detect template signals in your UI. Get minimal patches. Verify the fix. Built for vibecoders who ship fast and still want design credibility.",
 };
 
 export default function RootLayout({
@@ -38,25 +38,19 @@ export default function RootLayout({
                     <span className="hidden sm:block">Anti-Slop</span>
                   </Link>
                   
-                  {/* Navigation */}
+                  {/* Navigation - Updated to match new IA */}
                   <nav className="flex items-center" role="navigation" aria-label="Main">
                     <Link 
-                      href="/patterns" 
+                      href="/signals" 
                       className="px-3 py-2 text-xs lg:text-sm font-semibold uppercase tracking-wider text-ink-60 hover:text-ink hover:bg-paper-bright transition-colors"
                     >
-                      Patterns
+                      Signals
                     </Link>
                     <Link 
-                      href="/prompts" 
+                      href="/#install" 
                       className="px-3 py-2 text-xs lg:text-sm font-semibold uppercase tracking-wider text-ink-60 hover:text-ink hover:bg-paper-bright transition-colors"
                     >
-                      Prompts
-                    </Link>
-                    <Link 
-                      href="/microinteractions" 
-                      className="px-3 py-2 text-xs lg:text-sm font-semibold uppercase tracking-wider text-ink-60 hover:text-ink hover:bg-paper-bright transition-colors hidden md:block"
-                    >
-                      Micro
+                      Install
                     </Link>
                     <Link 
                       href="/gallery" 
@@ -83,10 +77,61 @@ export default function RootLayout({
               {children}
             </main>
             
-            {/* Footer - minimal */}
+            {/* Footer - Updated with new structure */}
             <footer className="border-t-3 border-ink">
-              <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-6">
-                <div className="flex flex-col sm:flex-row justify-between gap-4 text-sm text-ink-60">
+              <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-8">
+                <div className="grid md:grid-cols-4 gap-8 mb-8">
+                  {/* Product */}
+                  <div>
+                    <p className="font-mono text-xs text-ink-40 mb-3">PRODUCT</p>
+                    <ul className="space-y-2 text-sm">
+                      <li><Link href="/" className="text-ink-60 hover:text-ink">Home</Link></li>
+                      <li><Link href="/signals" className="text-ink-60 hover:text-ink">Signals Index</Link></li>
+                      <li><Link href="/#install" className="text-ink-60 hover:text-ink">Install</Link></li>
+                      <li><Link href="/#verify" className="text-ink-60 hover:text-ink">Verify Fix</Link></li>
+                    </ul>
+                  </div>
+                  
+                  {/* Resources */}
+                  <div>
+                    <p className="font-mono text-xs text-ink-40 mb-3">RESOURCES</p>
+                    <ul className="space-y-2 text-sm">
+                      <li><Link href="/gallery" className="text-ink-60 hover:text-ink">Gallery</Link></li>
+                      <li><Link href="/patterns" className="text-ink-60 hover:text-ink">Pattern Lab</Link></li>
+                      <li><Link href="/prompts" className="text-ink-60 hover:text-ink">Prompt Builder</Link></li>
+                    </ul>
+                  </div>
+                  
+                  {/* Escape Hatches */}
+                  <div>
+                    <p className="font-mono text-xs text-ink-40 mb-3">ESCAPE HATCHES</p>
+                    <ul className="space-y-2 text-sm text-ink-60">
+                      <li>Editorial grammar</li>
+                      <li>Technical grammar</li>
+                      <li>Playful grammar</li>
+                    </ul>
+                    <p className="text-xs text-ink-40 mt-2">Use when stuck, not as defaults</p>
+                  </div>
+                  
+                  {/* Links */}
+                  <div>
+                    <p className="font-mono text-xs text-ink-40 mb-3">LINKS</p>
+                    <ul className="space-y-2 text-sm">
+                      <li>
+                        <a href="https://github.com/rohunvora/anti-slop-lib" target="_blank" rel="noopener noreferrer" className="text-ink-60 hover:text-ink">
+                          GitHub →
+                        </a>
+                      </li>
+                      <li>
+                        <a href="https://npmjs.com/package/anti-slop" target="_blank" rel="noopener noreferrer" className="text-ink-60 hover:text-ink">
+                          npm →
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div className="pt-6 border-t-3 border-ink flex flex-col sm:flex-row justify-between gap-4 text-sm text-ink-60">
                   <p>
                     Anti-Slop is open source. Gallery data from{" "}
                     <a 
@@ -98,8 +143,8 @@ export default function RootLayout({
                       godly.website
                     </a>.
                   </p>
-                  <p>
-                    No rounded corners. No shadows. No gradients.
+                  <p className="font-mono text-xs">
+                    We don't generate design — we remove the tells.
                   </p>
                 </div>
               </div>

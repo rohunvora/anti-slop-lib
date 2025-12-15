@@ -6,15 +6,17 @@
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "bin": {
-    "anti-slop": "./dist/cli.js"
+    "anti-slop": "./dist/cli.js",
+    "anti-slop-mcp": "./dist/mcp-server.js"
   },
   "scripts": {
-    "build": "tsup src/index.ts src/cli.ts --format cjs,esm --dts",
-    "dev": "tsup src/index.ts src/cli.ts --format cjs,esm --dts --watch",
+    "build": "tsup src/index.ts src/cli.ts src/mcp-server.ts --format cjs,esm --dts",
+    "dev": "tsup src/index.ts src/cli.ts src/mcp-server.ts --format cjs,esm --dts --watch",
     "test": "vitest",
     "lint": "eslint src/",
     "prepublishOnly": "npm run build",
-    "scrape:godly": "npx ts-node scripts/godly-scraper.ts"
+    "scrape:godly": "npx ts-node scripts/godly-scraper.ts",
+    "mcp": "node dist/mcp-server.js"
   },
   "keywords": [
     "ai",
@@ -35,6 +37,7 @@
     "vitest": "^1.0.0"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
     "chalk": "^5.3.0",
     "commander": "^11.1.0",
     "fast-glob": "^3.3.2"

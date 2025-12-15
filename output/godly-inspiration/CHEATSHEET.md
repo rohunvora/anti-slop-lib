@@ -147,3 +147,4 @@ add: gradient background or floating elements
 
 *Keep this open while prompting AI for designs*
 
+
