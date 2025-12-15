@@ -273,9 +273,9 @@ function verifyFix(original: string, fixed: string, tone: ToneMode = 'direct'): 
   const beforeIds = new Set(before.topSignals.map(s => s.id));
   const afterIds = new Set(after.topSignals.map(s => s.id));
   
-  const signalsRemoved = [...beforeIds].filter(id => !afterIds.has(id));
-  const signalsRemaining = [...afterIds].filter(id => beforeIds.has(id));
-  const regressions = [...afterIds].filter(id => !beforeIds.has(id));
+  const signalsRemoved = Array.from(beforeIds).filter(id => !afterIds.has(id));
+  const signalsRemaining = Array.from(afterIds).filter(id => beforeIds.has(id));
+  const regressions = Array.from(afterIds).filter(id => !beforeIds.has(id));
   
   const improved = after.templateScore < before.templateScore;
   
