@@ -1,0 +1,3328 @@
+{
+  "metadata": {
+    "source": "godly.website",
+    "scrapedAt": "2025-12-15T04:25:10.213Z",
+    "count": 100
+  },
+  "websites": [
+    {
+      "name": "Roasted",
+      "url": "https://roasted.design",
+      "slug": "roasted-1018",
+      "types": [
+        "Agency",
+        "Design"
+      ],
+      "styles": [
+        "Animation",
+        "Fun",
+        "Minimal",
+        "Single Page",
+        "Interactive",
+        "Light"
+      ],
+      "fonts": [
+        "Inter"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js",
+        "Radix UI",
+        "Tailwind CSS"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/dad000e2-5bf2-4cf6-92c2-4ceb09db3174.jpg",
+      "video": "https://cdn.godly.website/videos/640/40dd5971-e408-42f3-9fb1-50da0571356d.mp4",
+      "views": 40876,
+      "createdAt": "2024-09-27T18:54:33.563Z"
+    },
+    {
+      "name": "Kons",
+      "url": "https://kons.fyi",
+      "slug": "kons-1017",
+      "types": [
+        "Portfolio",
+        "Personal"
+      ],
+      "styles": [
+        "Fun",
+        "Minimal",
+        "Single Page",
+        "Unusual Layout",
+        "Interactive",
+        "Light"
+      ],
+      "fonts": [
+        "Inter"
+      ],
+      "frameworks": [
+        "Tailwind CSS"
+      ],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/25e8fe54-cad0-432c-ba31-e41b2e1a4077.jpg",
+      "video": "https://cdn.godly.website/videos/640/5521ba11-b618-46a7-8aa5-e0378104eec4.mp4",
+      "views": 30010,
+      "createdAt": "2024-06-03T05:20:09.666Z"
+    },
+    {
+      "name": "UNVEIL®",
+      "url": "https://unveil.fr",
+      "slug": "unveil-1016",
+      "types": [
+        "Agency",
+        "Portfolio",
+        "Design"
+      ],
+      "styles": [
+        "Fun",
+        "Minimal",
+        "Horizontal Layout",
+        "Infinite Scroll",
+        "Unusual Layout",
+        "Interactive",
+        "Clean",
+        "Transitions",
+        "Light"
+      ],
+      "fonts": [
+        "NB International"
+      ],
+      "frameworks": [
+        "GSAP",
+        "Svelte",
+        "Tailwind CSS",
+        "SvelteKit"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/36c65a01-779f-4b47-a9f3-fec26d18db0f.jpg",
+      "video": "https://cdn.godly.website/videos/640/28bc38d8-d36a-426a-a48b-2cf94c5ded8b.mp4",
+      "views": 32463,
+      "createdAt": "2024-05-27T10:52:47.084Z"
+    },
+    {
+      "name": "Superpower",
+      "url": "https://superpower.com",
+      "slug": "superpower-1015",
+      "types": [
+        "Health"
+      ],
+      "styles": [
+        "Big Background Image",
+        "Interactive",
+        "Scrolling Animation",
+        "Long Scrolling",
+        "Clean",
+        "Light"
+      ],
+      "fonts": [
+        "NB International",
+        "NB International Mono"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js",
+        "Tailwind CSS"
+      ],
+      "hosting": [
+        "Amazon Web Services"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/652396f5-467e-4db0-b87e-df7a694026a9.jpg",
+      "video": "https://cdn.godly.website/videos/640/2aacdf99-583a-439d-a4e1-243a8a761e95.mp4",
+      "views": 61045,
+      "createdAt": "2024-05-27T10:49:11.245Z"
+    },
+    {
+      "name": "Augen",
+      "url": "https://augen.pro",
+      "slug": "augen-1014",
+      "types": [
+        "AI",
+        "Hardware"
+      ],
+      "styles": [
+        "Minimal",
+        "Big Background Image",
+        "Scrolling Animation",
+        "Clean",
+        "Light"
+      ],
+      "fonts": [
+        "PP Neue Montreal"
+      ],
+      "frameworks": [
+        "GSAP",
+        "Nuxt.js",
+        "Vue.js"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/7416e92d-1a8e-4e03-bbc7-37e44d45dcb3.jpg",
+      "video": "https://cdn.godly.website/videos/640/df48e0d8-740f-432d-bb9b-95d521c33f2a.mp4",
+      "views": 63325,
+      "createdAt": "2024-05-27T10:47:00.051Z"
+    },
+    {
+      "name": "Notion",
+      "url": "https://notion.so",
+      "slug": "notion-1013",
+      "types": [
+        "Mobile App",
+        "Web App",
+        "Productivity",
+        "Desktop App"
+      ],
+      "styles": [
+        "Animation",
+        "Illustrative",
+        "Colourful",
+        "Interactive",
+        "Bento Grid",
+        "Light"
+      ],
+      "fonts": [
+        "Inter"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js"
+      ],
+      "hosting": [
+        "Amazon Web Services",
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/b5edbe07-9dfa-45eb-843d-76756e0f5a6f.jpg",
+      "video": "https://cdn.godly.website/videos/640/db4c63a7-b6d6-469f-adfb-f44778d51d7a.mp4",
+      "views": 43311,
+      "createdAt": "2024-05-27T10:33:54.979Z"
+    },
+    {
+      "name": "Limitless",
+      "url": "https://limitless.ai",
+      "slug": "limitless-1012",
+      "types": [
+        "Mobile App",
+        "Web App",
+        "Desktop App",
+        "AI",
+        "Hardware"
+      ],
+      "styles": [
+        "Gradient",
+        "Scrolling Animation",
+        "Clean",
+        "Custom Cursor",
+        "Light"
+      ],
+      "fonts": [
+        "Greycliff CF"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js",
+        "Radix UI",
+        "Tailwind CSS"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/9e5ac06f-ff08-4bfb-a8b4-8f9a96456571.jpg",
+      "video": "https://cdn.godly.website/videos/640/dd4776f2-72ae-4a59-986c-5886d258da5b.mp4",
+      "views": 39814,
+      "createdAt": "2024-04-18T04:27:48.604Z"
+    },
+    {
+      "name": "Daniel Sun",
+      "url": "https://danielsun.space",
+      "slug": "daniel-sun-1011",
+      "types": [
+        "Portfolio",
+        "Personal",
+        "Design"
+      ],
+      "styles": [
+        "Colourful",
+        "Pastel",
+        "Scrolling Animation",
+        "Transitions",
+        "Light"
+      ],
+      "fonts": [
+        "Inter",
+        "Caveat"
+      ],
+      "frameworks": [
+        "React"
+      ],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/646dea3c-998d-43b1-962a-c8f04fb31369.jpg",
+      "video": "https://cdn.godly.website/videos/640/b066a372-72dc-4303-b98f-66c9931ca4bc.mp4",
+      "views": 39583,
+      "createdAt": "2024-04-18T04:25:21.508Z"
+    },
+    {
+      "name": "SuperHi",
+      "url": "https://superhi.com",
+      "slug": "superhi-1010",
+      "types": [
+        "Startup",
+        "Education"
+      ],
+      "styles": [
+        "Animation",
+        "Colourful",
+        "Fun",
+        "Pastel",
+        "Interactive",
+        "Scrolling Animation",
+        "Light"
+      ],
+      "fonts": [
+        "Neue Haas Grotesk Text",
+        "Neue Haas Grotesk Display",
+        "Martian Mono Semi Expanded"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js",
+        "styled-components",
+        "Radix UI",
+        "Marko"
+      ],
+      "hosting": [
+        "Amazon Web Services",
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/da34a470-4ddc-4e3e-9a3e-4cb9addbf152.jpg",
+      "video": "https://cdn.godly.website/videos/640/afac6eb5-f2f2-4bf3-a28c-aee00c80ae5e.mp4",
+      "views": 38122,
+      "createdAt": "2024-04-18T04:23:43.165Z"
+    },
+    {
+      "name": "Duties",
+      "url": "https://www.duties.xyz",
+      "slug": "duties-1009",
+      "types": [
+        "Agency",
+        "Photography",
+        "Design",
+        "Development"
+      ],
+      "styles": [
+        "Minimal",
+        "Large Type",
+        "Monochromatic",
+        "Transitions"
+      ],
+      "fonts": [
+        "AS Therma Condensed",
+        "PP Neue Montreal Mono"
+      ],
+      "frameworks": [
+        "React",
+        "styled-components"
+      ],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/b65df32e-0463-41e1-b835-bd8baf85b276.jpg",
+      "video": null,
+      "views": 38120,
+      "createdAt": "2024-04-18T04:15:22.940Z"
+    },
+    {
+      "name": "SavoirFaire",
+      "url": "https://savoirfaire.nyc",
+      "slug": "savoirfaire-1008",
+      "types": [
+        "Agency",
+        "Photography",
+        "Design",
+        "Motion"
+      ],
+      "styles": [
+        "Dark",
+        "Large Type",
+        "Unusual Layout",
+        "Interactive",
+        "3D",
+        "Scrolling Animation",
+        "Transitions"
+      ],
+      "fonts": [
+        "Editorial New",
+        "Neue Haas Grotesk Display"
+      ],
+      "frameworks": [
+        "GSAP",
+        "Nuxt.js",
+        "Vue.js"
+      ],
+      "hosting": [
+        "Vercel",
+        "GoDaddy"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/96e479b1-f8af-47e2-9330-0d3ae585dfac.jpg",
+      "video": "https://cdn.godly.website/videos/640/2d2ca445-6174-4f12-9760-a4dc2c1dacff.mp4",
+      "views": 23848,
+      "createdAt": "2024-04-11T02:39:17.178Z"
+    },
+    {
+      "name": "Shuttle",
+      "url": "https://shuttle.zip",
+      "slug": "shuttle-1007",
+      "types": [
+        "Web App",
+        "SaaS"
+      ],
+      "styles": [
+        "Dark",
+        "Single Page",
+        "Interactive",
+        "Scrolling Animation"
+      ],
+      "fonts": [
+        "Manrope"
+      ],
+      "frameworks": [
+        "React",
+        "Radix UI",
+        "Tailwind CSS",
+        "Remix"
+      ],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/5151609e-7719-49ca-b01a-40ce1c6f3c1c.jpg",
+      "video": "https://cdn.godly.website/videos/640/1e5932ef-a0e5-40c7-82a9-6cfdeb6c86ca.mp4",
+      "views": 25431,
+      "createdAt": "2024-04-05T12:21:20.978Z"
+    },
+    {
+      "name": "KidSuper World",
+      "url": "https://kidsuper.world",
+      "slug": "kidsuper-world-1006",
+      "types": [
+        "E-commerce",
+        "Fashion"
+      ],
+      "styles": [
+        "Illustrative",
+        "Colourful",
+        "Fun",
+        "Pastel",
+        "Unusual Layout",
+        "Interactive",
+        "3D"
+      ],
+      "fonts": [
+        "Neue Haas Grotesk Display",
+        "ABC Diatype Mono"
+      ],
+      "frameworks": [
+        "GSAP",
+        "React",
+        "Next.js"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/3d5e1fd5-b7e5-483c-8507-1d640688f934.jpg",
+      "video": "https://cdn.godly.website/videos/640/8dbd471e-34e2-43b0-a3a0-ecfb4be19c48.mp4",
+      "views": 31735,
+      "createdAt": "2024-04-05T11:53:19.123Z"
+    },
+    {
+      "name": "Bigpicture Company",
+      "url": "https://www.bpco.kr",
+      "slug": "bigpicture-company-1005",
+      "types": [
+        "Agency",
+        "Marketing"
+      ],
+      "styles": [
+        "Animation",
+        "Large Type",
+        "3D",
+        "Long Scrolling",
+        "Transitions",
+        "Horizontal Scrolling",
+        "Light"
+      ],
+      "fonts": [
+        "Helvetica Neue",
+        "Supply",
+        "PP Supply Sans",
+        "Pretendard"
+      ],
+      "frameworks": [
+        "GSAP",
+        "React",
+        "Next.js"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/7053b80d-10da-42dd-a8ac-1463400fabc4.jpg",
+      "video": "https://cdn.godly.website/videos/640/3fbbda1a-d5b4-4042-be03-b6a3a154c09b.mp4",
+      "views": 22168,
+      "createdAt": "2024-04-04T14:41:48.086Z"
+    },
+    {
+      "name": "Max Yinger",
+      "url": "https://yinger.dev",
+      "slug": "max-yinger-1004",
+      "types": [
+        "Personal",
+        "Development"
+      ],
+      "styles": [
+        "Animation",
+        "Dark",
+        "Fun",
+        "Minimal",
+        "Single Page",
+        "Interactive",
+        "3D"
+      ],
+      "fonts": [
+        "Arbeit",
+        "Inline Variable"
+      ],
+      "frameworks": [
+        "GSAP",
+        "React",
+        "Next.js"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/36712d28-4586-4309-81fd-c434cf7639f9.jpg",
+      "video": "https://cdn.godly.website/videos/640/1bf258e3-07fd-4dde-9851-4599acae586f.mp4",
+      "views": 23716,
+      "createdAt": "2024-04-04T13:36:26.832Z"
+    },
+    {
+      "name": "Tatem",
+      "url": "https://tatem.com",
+      "slug": "tatem-1003",
+      "types": [
+        "Technology",
+        "SaaS",
+        "Marketing"
+      ],
+      "styles": [
+        "Scrolling Animation",
+        "Long Scrolling",
+        "Clean",
+        "Light"
+      ],
+      "fonts": [
+        "Inter"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js",
+        "Radix UI"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/037e089b-e826-415a-b06c-c00133fd85b1.jpg",
+      "video": "https://cdn.godly.website/videos/640/b7abff97-d593-463f-8d95-c34409d17fc9.mp4",
+      "views": 22519,
+      "createdAt": "2024-04-04T13:27:37.735Z"
+    },
+    {
+      "name": "Desktop.fm",
+      "url": "https://desktop.fm",
+      "slug": "desktop-fm-1002",
+      "types": [
+        "Motion"
+      ],
+      "styles": [
+        "Fun",
+        "Minimal",
+        "Single Page",
+        "Interactive",
+        "3D",
+        "Clean",
+        "Audio"
+      ],
+      "fonts": [
+        "System"
+      ],
+      "frameworks": [
+        "Nuxt.js",
+        "Vue.js"
+      ],
+      "hosting": [
+        "Netlify"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/50de42f9-2c67-4217-8c81-9d6828a2e544.jpg",
+      "video": "https://cdn.godly.website/videos/640/5625f188-cbd8-44b2-9116-4b544f0a8156.mp4",
+      "views": 14522,
+      "createdAt": "2024-04-04T13:18:41.939Z"
+    },
+    {
+      "name": "reboot",
+      "url": "https://reboot.studio",
+      "slug": "reboot-1001",
+      "types": [
+        "Agency",
+        "Design",
+        "Development"
+      ],
+      "styles": [
+        "Animation",
+        "Fun",
+        "Typographic",
+        "Minimal",
+        "Large Type",
+        "Single Page",
+        "Unusual Layout",
+        "Interactive",
+        "Scrolling Animation",
+        "Light"
+      ],
+      "fonts": [
+        "Inter"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js",
+        "Tailwind CSS"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/310bca5f-5b1b-41f6-970d-6fa301a63efa.jpg",
+      "video": "https://cdn.godly.website/videos/640/e9cee3b2-f90d-4d21-a900-7e8170a60b47.mp4",
+      "views": 18379,
+      "createdAt": "2024-03-28T13:34:06.824Z"
+    },
+    {
+      "name": "Metalab",
+      "url": "https://metalab.com",
+      "slug": "metalab-1000",
+      "types": [
+        "Agency",
+        "Portfolio",
+        "Design"
+      ],
+      "styles": [
+        "Dark",
+        "Big Background Video",
+        "Interactive",
+        "Scrolling Animation",
+        "Long Scrolling",
+        "Custom Cursor",
+        "Transitions",
+        "Light"
+      ],
+      "fonts": [
+        "Basis Grotesque",
+        "PP Eiko"
+      ],
+      "frameworks": [
+        "GSAP",
+        "React",
+        "Next.js"
+      ],
+      "hosting": [
+        "Amazon Web Services",
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/e305d9fe-c103-4dc1-a3c1-c5101a11ad73.jpg",
+      "video": "https://cdn.godly.website/videos/640/24f480ed-1d5a-46b6-871a-360c6b941463.mp4",
+      "views": 35324,
+      "createdAt": "2024-02-29T05:03:04.857Z"
+    },
+    {
+      "name": "Vercel Ship",
+      "url": "https://vercel.com/ship",
+      "slug": "vercel-ship-999",
+      "types": [
+        "Technology",
+        "Event",
+        "Development",
+        "AI"
+      ],
+      "styles": [
+        "Dark",
+        "Fun",
+        "Black &amp; White",
+        "Large Type",
+        "Single Page",
+        "Monochromatic",
+        "Interactive",
+        "Clean"
+      ],
+      "fonts": [
+        "Geist",
+        "Geist Mono"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js",
+        "Radix UI",
+        "Tailwind CSS"
+      ],
+      "hosting": [
+        "Amazon Web Services",
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/a70bf596-683b-466d-92f2-96b04550b7ff.jpg",
+      "video": "https://cdn.godly.website/videos/640/76053f48-0340-43f3-8728-c4d45226cb61.mp4",
+      "views": 28984,
+      "createdAt": "2024-02-29T04:08:56.234Z"
+    },
+    {
+      "name": "Acctual",
+      "url": "https://acctual.com",
+      "slug": "acctual-998",
+      "types": [
+        "Web App",
+        "Finance",
+        "Crypto"
+      ],
+      "styles": [
+        "Single Page",
+        "Scrolling Animation",
+        "Bento Grid",
+        "Light"
+      ],
+      "fonts": [
+        "Inter",
+        "Selecta"
+      ],
+      "frameworks": [
+        "React"
+      ],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/2a3bdfd2-b8b2-41f4-8f58-a1b965f27f44.jpg",
+      "video": "https://cdn.godly.website/videos/640/2fa43f61-4c5f-43c3-8760-f7716a9437bd.mp4",
+      "views": 34384,
+      "createdAt": "2024-02-20T12:05:55.017Z"
+    },
+    {
+      "name": "Raw Materials",
+      "url": "https://therawmaterials.com",
+      "slug": "raw-materials-997",
+      "types": [
+        "Agency",
+        "Portfolio",
+        "Design"
+      ],
+      "styles": [
+        "Animation",
+        "Colourful",
+        "Large Type",
+        "Single Page",
+        "Brutalist",
+        "Unusual Layout",
+        "Scrolling Animation",
+        "Long Scrolling",
+        "Bento Grid",
+        "Light"
+      ],
+      "fonts": [
+        "Moderat",
+        "Klarheit Kurrent"
+      ],
+      "frameworks": [
+        "GSAP"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/a8cb3fef-edcf-4d00-8659-a1d4ccf65480.jpg",
+      "video": "https://cdn.godly.website/videos/640/e8d5129a-f5d5-40f8-a5ba-2472c380f1b7.mp4",
+      "views": 22439,
+      "createdAt": "2024-02-20T09:51:00.343Z"
+    },
+    {
+      "name": "Logan Liffick",
+      "url": "https://loganliffick.com",
+      "slug": "logan-liffick-996",
+      "types": [
+        "Portfolio",
+        "Personal",
+        "Design"
+      ],
+      "styles": [
+        "Animation",
+        "Fun",
+        "Pastel",
+        "Minimal",
+        "Grid",
+        "Interactive",
+        "Clean",
+        "Transitions"
+      ],
+      "fonts": [
+        "Figtree"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js",
+        "Tailwind CSS"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/f9312b91-4346-4af4-b94f-2af59826880e.jpg",
+      "video": "https://cdn.godly.website/videos/640/64062232-f0fc-4199-a57e-985ddab7d333.mp4",
+      "views": 16608,
+      "createdAt": "2024-02-20T08:02:27.360Z"
+    },
+    {
+      "name": "Height",
+      "url": "https://height.app",
+      "slug": "height-995",
+      "types": [
+        "Web App",
+        "Productivity",
+        "Desktop App",
+        "SaaS",
+        "AI"
+      ],
+      "styles": [
+        "Animation",
+        "Dark",
+        "Illustrative",
+        "Colourful",
+        "Minimal",
+        "Clean"
+      ],
+      "fonts": [
+        "Inter"
+      ],
+      "frameworks": [
+        "React",
+        "Express"
+      ],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/3549d2b7-9fa8-45b7-83c8-7ec64b63913e.jpg",
+      "video": "https://cdn.godly.website/videos/640/f44c850c-d8a4-4861-adc4-f9f5d51657b3.mp4",
+      "views": 21902,
+      "createdAt": "2024-02-19T16:03:17.598Z"
+    },
+    {
+      "name": "Lovi",
+      "url": "https://lovi.care",
+      "slug": "lovi-994",
+      "types": [
+        "Mobile App",
+        "Beauty",
+        "AI"
+      ],
+      "styles": [
+        "Colourful",
+        "Large Type",
+        "Single Page",
+        "Interactive",
+        "Scrolling Animation",
+        "Long Scrolling",
+        "Clean",
+        "Bento Grid",
+        "Light"
+      ],
+      "fonts": [
+        "Inter",
+        "ES Rebond Grotesque"
+      ],
+      "frameworks": [
+        "React"
+      ],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/865d88d6-ff04-4e14-8b8d-d1bb3b5cab9f.jpg",
+      "video": "https://cdn.godly.website/videos/640/38ed8182-83c9-433d-9ff8-51b62effda35.mp4",
+      "views": 30337,
+      "createdAt": "2024-02-19T15:49:55.161Z"
+    },
+    {
+      "name": "Status",
+      "url": "https://status.app",
+      "slug": "status-993",
+      "types": [
+        "Mobile App",
+        "Finance",
+        "Crypto",
+        "Web3"
+      ],
+      "styles": [
+        "Animation",
+        "Illustrative",
+        "Colourful",
+        "Pastel",
+        "Large Type",
+        "Bento Grid",
+        "Light"
+      ],
+      "fonts": [
+        "Inter"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js",
+        "Radix UI",
+        "Tailwind CSS"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/83598006-d2d7-435a-8da7-a763f3492cd8.jpg",
+      "video": "https://cdn.godly.website/videos/640/2104ee3d-0ea6-461a-8dea-d4db6f830975.mp4",
+      "views": 31757,
+      "createdAt": "2024-02-19T15:38:44.873Z"
+    },
+    {
+      "name": "Amie",
+      "url": "https://amie.so",
+      "slug": "amie-992",
+      "types": [
+        "Mobile App",
+        "Productivity",
+        "Desktop App",
+        "SaaS"
+      ],
+      "styles": [
+        "Illustrative",
+        "Colourful",
+        "Fun",
+        "Big Background Image",
+        "Interactive",
+        "3D",
+        "Scrolling Animation",
+        "Long Scrolling"
+      ],
+      "fonts": [
+        "Inter",
+        "Poppins"
+      ],
+      "frameworks": [
+        "GSAP",
+        "React",
+        "Next.js",
+        "Radix UI",
+        "Tailwind CSS"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/242d304a-affb-4b89-bc8d-8b7ee6938630.jpg",
+      "video": "https://cdn.godly.website/videos/640/5ad19e9a-4b56-4274-b021-327e65a7bd1b.mp4",
+      "views": 26354,
+      "createdAt": "2024-02-14T14:06:42.644Z"
+    },
+    {
+      "name": "AuthKit",
+      "url": "https://authkit.com",
+      "slug": "authkit-991",
+      "types": [
+        "Development",
+        "Security"
+      ],
+      "styles": [
+        "Animation",
+        "Dark",
+        "Illustrative",
+        "Monochromatic",
+        "Interactive",
+        "Gradient",
+        "Long Scrolling",
+        "Bento Grid"
+      ],
+      "fonts": [
+        "Untitled Sans",
+        "Aeonik Pro"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js",
+        "Knockout.js"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/63b17744-ff15-420d-8c86-1c678ca7e82b.jpg",
+      "video": "https://cdn.godly.website/videos/640/b6cf7e89-73d3-4410-bc4f-7c4b11d30cf0.mp4",
+      "views": 40425,
+      "createdAt": "2024-02-14T13:35:33.178Z"
+    },
+    {
+      "name": "Pedro Duarte",
+      "url": "https://ped.ro",
+      "slug": "pedro-duarte-990",
+      "types": [
+        "Portfolio",
+        "Personal",
+        "Design"
+      ],
+      "styles": [
+        "Dark",
+        "Fun",
+        "Typographic",
+        "Black &amp; White",
+        "Large Type",
+        "Monochromatic",
+        "Unusual Layout",
+        "Interactive"
+      ],
+      "fonts": [
+        "PP Editorial New",
+        "PP Neue Montreal"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js",
+        "Radix UI"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/acd0d2dc-78f1-4bab-8a7d-88ebbaaaf9e4.jpg",
+      "video": "https://cdn.godly.website/videos/640/916e660b-48c0-4c10-bb00-1ec0ceb827db.mp4",
+      "views": 24241,
+      "createdAt": "2024-02-14T13:08:55.045Z"
+    },
+    {
+      "name": "Lusion",
+      "url": "https://lusion.co",
+      "slug": "lusion-989",
+      "types": [
+        "Agency",
+        "Design",
+        "Development",
+        "Motion"
+      ],
+      "styles": [
+        "Large Type",
+        "Interactive",
+        "3D",
+        "WebGL",
+        "Scrolling Animation",
+        "Long Scrolling",
+        "Transitions",
+        "Light"
+      ],
+      "fonts": [
+        "Aeonik Pro",
+        "Aeonik"
+      ],
+      "frameworks": [
+        "GSAP",
+        "Astro"
+      ],
+      "hosting": [
+        "Netlify"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/k3hmpdepwmim1f6fzbap.jpg",
+      "video": "https://cdn.godly.website/videos/640/grkx1rufffkxez4qcrlu.mp4",
+      "views": 35836,
+      "createdAt": "2023-09-12T06:18:45.757Z"
+    },
+    {
+      "name": "Atlas",
+      "url": "https://atlascard.com",
+      "slug": "atlas-988",
+      "types": [
+        "Mobile App",
+        "Finance"
+      ],
+      "styles": [
+        "Pastel",
+        "Gradient",
+        "Long Scrolling",
+        "Light"
+      ],
+      "fonts": [
+        "Apercu Mono",
+        "Sequel Sans Display",
+        "Sequel Sans Headline"
+      ],
+      "frameworks": [
+        "Vue.js",
+        "Astro"
+      ],
+      "hosting": [
+        "Amazon Web Services"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/q8ooruutehujuhreaeje.jpg",
+      "video": "https://cdn.godly.website/videos/640/tahdqadtfichtz4hwidt.mp4",
+      "views": 36849,
+      "createdAt": "2023-08-24T01:18:32.504Z"
+    },
+    {
+      "name": "Opal Camera Inc.",
+      "url": "https://opalcamera.com",
+      "slug": "opal-camera-inc-987",
+      "types": [
+        "Technology"
+      ],
+      "styles": [
+        "Fun",
+        "Large Type",
+        "Big Background Image",
+        "WebGL",
+        "Light"
+      ],
+      "fonts": [
+        "Roobert"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js",
+        "Alpine.js",
+        "AdonisJS"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/nmvqc65hdiixl4nt0ppz.jpg",
+      "video": "https://cdn.godly.website/videos/640/x10pka7nec1yezelbnf7.mp4",
+      "views": 22117,
+      "createdAt": "2023-08-24T01:12:18.925Z"
+    },
+    {
+      "name": "Christopher Ireland",
+      "url": "https://christopherireland.net",
+      "slug": "christopher-ireland-986",
+      "types": [
+        "Portfolio",
+        "Personal",
+        "Photography",
+        "Motion"
+      ],
+      "styles": [
+        "Black &amp; White",
+        "Minimal",
+        "Clean",
+        "Transitions",
+        "Small Type",
+        "Horizontal Scrolling",
+        "Light"
+      ],
+      "fonts": [
+        "Circular Std"
+      ],
+      "frameworks": [],
+      "hosting": [
+        "Flywheel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/u3mu8gnrbckxsoiqinye.jpg",
+      "video": "https://cdn.godly.website/videos/640/s9sxefcxfgabpm3ewl8d.mp4",
+      "views": 11318,
+      "createdAt": "2023-08-24T01:04:32.048Z"
+    },
+    {
+      "name": "Spring/Summer",
+      "url": "https://springsummer.dk",
+      "slug": "spring-summer-985",
+      "types": [
+        "Agency",
+        "Portfolio",
+        "Design"
+      ],
+      "styles": [
+        "Colourful",
+        "Large Type",
+        "Monochromatic",
+        "Transitions",
+        "Light"
+      ],
+      "fonts": [
+        "PP Neue Montreal",
+        "Right Grotesk Compact",
+        "PP Supply Mono"
+      ],
+      "frameworks": [
+        "GSAP",
+        "Nuxt.js",
+        "Vue.js",
+        "Yii"
+      ],
+      "hosting": [
+        "Netlify",
+        "One.com"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/ih5caoodgmtlqc6alpev.jpg",
+      "video": "https://cdn.godly.website/videos/640/vldsvxgytuga57xtsis0.mp4",
+      "views": 30845,
+      "createdAt": "2023-08-24T00:49:16.442Z"
+    },
+    {
+      "name": "AndAgain",
+      "url": "https://andagain.uk",
+      "slug": "andagain-984",
+      "types": [
+        "Agency",
+        "Portfolio",
+        "Design"
+      ],
+      "styles": [
+        "Dark",
+        "Black &amp; White",
+        "Minimal",
+        "Large Type",
+        "Single Page",
+        "WebGL",
+        "Scrolling Animation"
+      ],
+      "fonts": [
+        "Spezia"
+      ],
+      "frameworks": [
+        "SolidStart",
+        "SolidJS"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/nxk0fvmtqlgbllhevurf.jpg",
+      "video": "https://cdn.godly.website/videos/640/vgum1l5foe3iporsvozr.mp4",
+      "views": 28572,
+      "createdAt": "2023-08-24T00:45:36.610Z"
+    },
+    {
+      "name": "Endless",
+      "url": "https://endless.design",
+      "slug": "endless-982",
+      "types": [
+        "Agency",
+        "Design",
+        "SaaS"
+      ],
+      "styles": [
+        "Fun",
+        "Black &amp; White",
+        "Minimal",
+        "Interactive",
+        "Gradient",
+        "Small Type",
+        "Light"
+      ],
+      "fonts": [
+        "Inter"
+      ],
+      "frameworks": [
+        "Emotion",
+        "React"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/08f30863-a547-44d8-97bf-91b65d026745.jpg",
+      "video": "https://cdn.godly.website/videos/640/xdavem29vp0y2msqizta.mp4",
+      "views": 29585,
+      "createdAt": "2023-07-06T10:36:31.102Z"
+    },
+    {
+      "name": "10x Designers",
+      "url": "https://10xdesigners.co",
+      "slug": "10x-designers-981",
+      "types": [
+        "Education",
+        "Community",
+        "Design",
+        "SaaS"
+      ],
+      "styles": [
+        "Dark",
+        "Illustrative",
+        "Single Page",
+        "Monochromatic",
+        "Scrolling Animation",
+        "Bento Grid"
+      ],
+      "fonts": [
+        "Manrope"
+      ],
+      "frameworks": [
+        "React"
+      ],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/a0bdafe9-33d8-4a4a-9b04-37263858e187.jpg",
+      "video": "https://cdn.godly.website/videos/640/kb9rn5uqr3znipjqrnlm.mp4",
+      "views": 45162,
+      "createdAt": "2023-07-06T10:25:48.775Z"
+    },
+    {
+      "name": "Phantom",
+      "url": "https://phantom.app",
+      "slug": "phantom-980",
+      "types": [
+        "Mobile App",
+        "Crypto",
+        "NFT"
+      ],
+      "styles": [
+        "Illustrative",
+        "Colourful",
+        "Pastel",
+        "Large Type",
+        "Scrolling Animation",
+        "Light"
+      ],
+      "fonts": [
+        "Phantom"
+      ],
+      "frameworks": [
+        "Emotion",
+        "React",
+        "Next.js",
+        "styled-components"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/19f44979-c368-4493-a257-2b0ee13d2163.jpg",
+      "video": "https://cdn.godly.website/videos/640/xi9ghp5bygni2u8vikzo.mp4",
+      "views": 36975,
+      "createdAt": "2023-07-06T10:20:15.549Z"
+    },
+    {
+      "name": "Threads",
+      "url": "https://threads.net",
+      "slug": "threads-979",
+      "types": [
+        "Startup",
+        "Web App",
+        "Desktop App"
+      ],
+      "styles": [
+        "Dark",
+        "Colourful",
+        "Minimal",
+        "Single Page",
+        "Interactive",
+        "Gradient",
+        "3D"
+      ],
+      "fonts": [
+        "System"
+      ],
+      "frameworks": [],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/04463d32-f814-40b8-9b9d-27a0945cc802.jpg",
+      "video": "https://cdn.godly.website/videos/640/lwlgu5q8kxn95ewcqyos.mp4",
+      "views": 29233,
+      "createdAt": "2023-07-06T09:53:02.533Z"
+    },
+    {
+      "name": "Cosmos",
+      "url": "https://cosmos.so",
+      "slug": "cosmos-978",
+      "types": [
+        "Mobile App",
+        "Web App",
+        "Community",
+        "Art",
+        "Photography",
+        "Design"
+      ],
+      "styles": [
+        "Dark",
+        "Minimal",
+        "Large Type",
+        "Interactive",
+        "3D",
+        "Scrolling Animation",
+        "Custom Cursor"
+      ],
+      "fonts": [
+        "GT Super Display",
+        "Favorit Std"
+      ],
+      "frameworks": [
+        "GSAP"
+      ],
+      "hosting": [
+        "Amazon Web Services"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/1a778626-2ae7-49ba-8a6a-470d250a867f.jpg",
+      "video": "https://cdn.godly.website/videos/640/fqqlhs42gmuprqbe4uaf.mp4",
+      "views": 37846,
+      "createdAt": "2023-06-29T08:32:08.977Z"
+    },
+    {
+      "name": "Paste",
+      "url": "https://pasteapp.io/new",
+      "slug": "paste-977",
+      "types": [
+        "Productivity",
+        "Desktop App"
+      ],
+      "styles": [
+        "Animation",
+        "Illustrative",
+        "Colourful",
+        "Scrolling Animation",
+        "Long Scrolling",
+        "Bento Grid",
+        "Light"
+      ],
+      "fonts": [
+        "System"
+      ],
+      "frameworks": [
+        "GSAP",
+        "React",
+        "Next.js"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/43980e60-5b6c-4814-9fbd-e67b27f95211.jpg",
+      "video": "https://cdn.godly.website/videos/640/ymjpbgo5cew5yngf7a0f.mp4",
+      "views": 18236,
+      "createdAt": "2023-06-29T08:28:13.278Z"
+    },
+    {
+      "name": "ChainZoku",
+      "url": "https://chainzoku.io",
+      "slug": "chainzoku-976",
+      "types": [
+        "Crypto",
+        "NFT",
+        "Web3"
+      ],
+      "styles": [
+        "Animation",
+        "Illustrative",
+        "Colourful",
+        "Large Type",
+        "Interactive",
+        "Scrolling Animation",
+        "Parallax",
+        "Light"
+      ],
+      "fonts": [
+        "Druk",
+        "Neue Haas Grotesk Display",
+        "Akzidenz Grotesk Extended"
+      ],
+      "frameworks": [
+        "GSAP",
+        "Nuxt.js",
+        "Vue.js"
+      ],
+      "hosting": [
+        "Netlify"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/376e42ff-e81e-4eba-8b9f-b3f491fbc4b0.jpg",
+      "video": "https://cdn.godly.website/videos/640/4bb203b9-755d-41f9-96a7-61859f5fd1b1.mp4",
+      "views": 29612,
+      "createdAt": "2023-06-19T00:33:47.543Z"
+    },
+    {
+      "name": "Umbrel",
+      "url": "https://umbrel.com",
+      "slug": "umbrel-975",
+      "types": [
+        "Startup",
+        "Technology"
+      ],
+      "styles": [
+        "Dark",
+        "Colourful",
+        "Scrolling Animation",
+        "Long Scrolling"
+      ],
+      "fonts": [
+        "Inter"
+      ],
+      "frameworks": [
+        "Emotion",
+        "React",
+        "Next.js"
+      ],
+      "hosting": [
+        "Amazon Web Services",
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/49f26e75-234f-4fb8-aa71-6d651b22ba29.jpg",
+      "video": "https://cdn.godly.website/videos/640/s4jjhklaojobxyxqxmai.mp4",
+      "views": 26145,
+      "createdAt": "2023-06-19T00:30:56.196Z"
+    },
+    {
+      "name": "Family ",
+      "url": "https://family.co",
+      "slug": "family-974",
+      "types": [
+        "Mobile App",
+        "Startup",
+        "Web3"
+      ],
+      "styles": [
+        "Animation",
+        "Illustrative",
+        "Colourful",
+        "Pastel",
+        "Clean",
+        "Bento Grid",
+        "Light"
+      ],
+      "fonts": [
+        "Inter",
+        "Haffer XH",
+        "LFE Sans"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js",
+        "styled-components"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/08534b77-80f8-45bf-8fc1-920c932c60e9.jpg",
+      "video": "https://cdn.godly.website/videos/640/ehfwkubzzv8fpsmh4uzx.mp4",
+      "views": 36384,
+      "createdAt": "2023-06-19T00:25:00.182Z"
+    },
+    {
+      "name": "Samara",
+      "url": "https://www.samara.com",
+      "slug": "samara-973",
+      "types": [
+        "Architecture",
+        "Real Estate"
+      ],
+      "styles": [
+        "Illustrative",
+        "Minimal",
+        "Large Type",
+        "Big Background Image",
+        "Interactive",
+        "Clean",
+        "Light"
+      ],
+      "fonts": [
+        "Regola Pro"
+      ],
+      "frameworks": [],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/4cd95dfb-63e9-45b9-a3d3-1cf66a59546e.jpg",
+      "video": "https://cdn.godly.website/videos/640/lbtyllvbgnyoybvvgpqi.mp4",
+      "views": 20000,
+      "createdAt": "2023-06-19T00:22:39.610Z"
+    },
+    {
+      "name": "Sammy",
+      "url": "https://www.usesammy.com",
+      "slug": "sammy-972",
+      "types": [
+        "Mobile App",
+        "Startup",
+        "Finance"
+      ],
+      "styles": [
+        "Dark",
+        "Illustrative",
+        "Colourful",
+        "Pastel",
+        "Large Type",
+        "Scrolling Animation",
+        "Parallax"
+      ],
+      "fonts": [
+        "Roobert",
+        "Clash Display"
+      ],
+      "frameworks": [],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/1ddaa65a-d6d0-4dca-8201-0ae9d3559ada.jpg",
+      "video": "https://cdn.godly.website/videos/640/geii5cb7o3xb6rs3fcub.mp4",
+      "views": 29580,
+      "createdAt": "2023-06-19T00:19:40.291Z"
+    },
+    {
+      "name": "Diagram",
+      "url": "https://diagram.com",
+      "slug": "diagram-971",
+      "types": [
+        "Startup",
+        "Technology",
+        "Design",
+        "AI"
+      ],
+      "styles": [
+        "Animation",
+        "Dark",
+        "Fun",
+        "Large Type",
+        "Interactive",
+        "Gradient",
+        "Clean",
+        "Custom Cursor",
+        "Transitions",
+        "Bento Grid"
+      ],
+      "fonts": [
+        "Satoshi"
+      ],
+      "frameworks": [
+        "Emotion",
+        "React",
+        "Next.js"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/a1a30e74-b76f-4aba-8b96-ab50c9cc2d8a.jpg",
+      "video": "https://cdn.godly.website/videos/640/flvuje3p1dsaf2uimwoh.mp4",
+      "views": 43779,
+      "createdAt": "2023-05-25T23:03:32.040Z"
+    },
+    {
+      "name": "Dul Zorigoo",
+      "url": "https://dzrgo.com",
+      "slug": "dul-zorigoo-970",
+      "types": [
+        "Personal",
+        "Design"
+      ],
+      "styles": [
+        "Dark",
+        "Minimal",
+        "Single Page",
+        "Unusual Layout",
+        "Clean",
+        "Small Type"
+      ],
+      "fonts": [
+        "Inter"
+      ],
+      "frameworks": [
+        "React"
+      ],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/c2bf9cdc-e138-4674-8185-fcfc4cf6f287.jpg",
+      "video": null,
+      "views": 12072,
+      "createdAt": "2023-05-09T07:16:14.572Z"
+    },
+    {
+      "name": "Pam",
+      "url": "https://thisispam.com",
+      "slug": "pam-969",
+      "types": [
+        "Agency",
+        "Portfolio",
+        "E-commerce",
+        "Design"
+      ],
+      "styles": [
+        "Black &amp; White",
+        "Minimal",
+        "Large Type",
+        "Light"
+      ],
+      "fonts": [
+        "Neue Montreal"
+      ],
+      "frameworks": [],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/d4b9e070-3f33-484c-978e-17bb296a3800.jpg",
+      "video": null,
+      "views": 29014,
+      "createdAt": "2023-05-04T08:14:37.261Z"
+    },
+    {
+      "name": "Reflect",
+      "url": "https://reflect.app/home",
+      "slug": "reflect-968",
+      "types": [
+        "Mobile App",
+        "Startup",
+        "Productivity",
+        "Desktop App",
+        "SaaS"
+      ],
+      "styles": [
+        "Animation",
+        "Dark",
+        "Interactive",
+        "Gradient",
+        "Scrolling Animation"
+      ],
+      "fonts": [
+        "Inter",
+        "Aeonik Pro"
+      ],
+      "frameworks": [
+        "Qwik"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/7a1f58c3-e160-4004-8420-866d5b03b2a2.jpg",
+      "video": "https://cdn.godly.website/videos/640/ag7ir6qfcfazxaf0kdow.mp4",
+      "views": 47379,
+      "createdAt": "2023-05-01T05:45:01.104Z"
+    },
+    {
+      "name": "JP",
+      "url": "https://www.jp.works",
+      "slug": "jp-967",
+      "types": [
+        "Portfolio",
+        "Personal",
+        "Design",
+        "Development"
+      ],
+      "styles": [
+        "Minimal",
+        "Unusual Layout",
+        "3D",
+        "Scrolling Animation",
+        "Long Scrolling",
+        "Light"
+      ],
+      "fonts": [
+        "Neue Montreal"
+      ],
+      "frameworks": [],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/c1972ee6-da6b-4175-a0e3-3761655b6270.jpg",
+      "video": "https://cdn.godly.website/videos/640/u4q0ngxyjbvhsadxygjp.mp4",
+      "views": 21362,
+      "createdAt": "2023-04-26T10:37:04.330Z"
+    },
+    {
+      "name": "herding.app",
+      "url": "https://www.herdi.ng",
+      "slug": "herding-app-966",
+      "types": [
+        "Web App",
+        "Productivity"
+      ],
+      "styles": [
+        "Animation",
+        "Fun",
+        "Single Page",
+        "Grid",
+        "Interactive",
+        "Clean",
+        "Drag &amp; Drop",
+        "Bento Grid",
+        "Light"
+      ],
+      "fonts": [
+        "Styrene B"
+      ],
+      "frameworks": [],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/8fa3430c-a3be-4060-9c70-f4d1bacc08d0.jpg",
+      "video": "https://cdn.godly.website/videos/640/yhcvf4cn6fhqalzqvgno.mp4",
+      "views": 17161,
+      "createdAt": "2023-04-26T10:22:13.637Z"
+    },
+    {
+      "name": "Haptic",
+      "url": "https://haptic.app",
+      "slug": "haptic-965",
+      "types": [
+        "Mobile App"
+      ],
+      "styles": [
+        "Dark",
+        "Large Type",
+        "Single Page",
+        "Scrolling Animation",
+        "Clean"
+      ],
+      "fonts": [
+        "Inter",
+        "SF Pro Display"
+      ],
+      "frameworks": [
+        "Emotion",
+        "React",
+        "Backbone.js"
+      ],
+      "hosting": [
+        "GoDaddy"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/849bd0cd-27a5-4047-a598-fd9ff9c99476.jpg",
+      "video": "https://cdn.godly.website/videos/640/q9abcg3hl8q21eobvufc.mp4",
+      "views": 16168,
+      "createdAt": "2023-04-18T23:31:26.616Z"
+    },
+    {
+      "name": "SILENCIO",
+      "url": "https://silencio.es",
+      "slug": "silencio-964",
+      "types": [
+        "Agency",
+        "Design"
+      ],
+      "styles": [
+        "Black &amp; White",
+        "3D",
+        "Scrolling Animation",
+        "Long Scrolling",
+        "Clean",
+        "Audio",
+        "Small Type",
+        "Light"
+      ],
+      "fonts": [
+        "Neue Haas Grotesk Display",
+        "PT Mono"
+      ],
+      "frameworks": [
+        "GSAP"
+      ],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/d32d006a-4ce2-4218-8e7f-3050c441d76f.jpg",
+      "video": "https://cdn.godly.website/videos/640/grku80tcltbvk1m71cvi.mp4",
+      "views": 13923,
+      "createdAt": "2023-04-18T21:34:23.663Z"
+    },
+    {
+      "name": "Traffic Productions",
+      "url": "https://www.traffic.productions",
+      "slug": "traffic-productions-963",
+      "types": [
+        "Agency",
+        "Design"
+      ],
+      "styles": [
+        "Minimal",
+        "Large Type",
+        "Interactive",
+        "Custom Cursor",
+        "Light"
+      ],
+      "fonts": [
+        "Suisse Intl"
+      ],
+      "frameworks": [
+        "GSAP",
+        "React",
+        "Next.js",
+        "styled-components"
+      ],
+      "hosting": [
+        "Vercel",
+        "IONOS"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/f1a0cfab-ad11-478a-8c87-92c5b5299bf6.jpg",
+      "video": "https://cdn.godly.website/videos/640/gjkojy9ccusmibhfzpxv.mp4",
+      "views": 11488,
+      "createdAt": "2023-04-18T21:14:57.825Z"
+    },
+    {
+      "name": "Mixpanel",
+      "url": "https://mixpanel.com",
+      "slug": "mixpanel-962",
+      "types": [
+        "Web App",
+        "Development",
+        "SaaS"
+      ],
+      "styles": [
+        "Illustrative",
+        "Colourful",
+        "Gradient",
+        "Scrolling Animation",
+        "Parallax",
+        "Light"
+      ],
+      "fonts": [
+        "Garnett",
+        "Apercu",
+        "Apercu Mono"
+      ],
+      "frameworks": [
+        "GSAP",
+        "React",
+        "Backbone.js",
+        "Next.js",
+        "styled-components"
+      ],
+      "hosting": [
+        "WP Engine"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/c66927cd-22e1-4bfe-a818-f82be29481ec.jpg",
+      "video": "https://cdn.godly.website/videos/640/wajqkqkofh9defkbvlh8.mp4",
+      "views": 24082,
+      "createdAt": "2023-04-18T02:18:45.512Z"
+    },
+    {
+      "name": "Stripe Sessions",
+      "url": "https://stripe.com/sessions",
+      "slug": "stripe-sessions-961",
+      "types": [
+        "Technology",
+        "Finance",
+        "Event"
+      ],
+      "styles": [
+        "Illustrative",
+        "Colourful",
+        "Large Type",
+        "Monochromatic",
+        "Interactive",
+        "WebGL",
+        "Scrolling Animation",
+        "Light"
+      ],
+      "fonts": [
+        "Söhne"
+      ],
+      "frameworks": [
+        "React"
+      ],
+      "hosting": [
+        "Amazon Web Services"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/117b26d6-84a1-43c9-a10c-bb5aff501db6.jpg",
+      "video": "https://cdn.godly.website/videos/640/uggogysepkl5dkr9zqkx.mp4",
+      "views": 29758,
+      "createdAt": "2023-04-18T01:41:01.044Z"
+    },
+    {
+      "name": "Evervault: Customers",
+      "url": "https://evervault.com/customers",
+      "slug": "evervault-customers-960",
+      "types": [
+        "Startup",
+        "Development",
+        "SaaS",
+        "Security"
+      ],
+      "styles": [
+        "Animation",
+        "Dark",
+        "Illustrative",
+        "Colourful",
+        "Interactive",
+        "Gradient",
+        "3D",
+        "Clean"
+      ],
+      "fonts": [
+        "Inter",
+        "Roobert"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js"
+      ],
+      "hosting": [
+        "Amazon Web Services",
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/4a65be95-6e68-4388-a51c-a8240133a70f.jpg",
+      "video": "https://cdn.godly.website/videos/640/gqz25gcerkr122otoi89.mp4",
+      "views": 29540,
+      "createdAt": "2023-04-07T05:11:26.460Z"
+    },
+    {
+      "name": "Mike Matas",
+      "url": "https://mikematas.com",
+      "slug": "mike-matas-959",
+      "types": [
+        "Portfolio",
+        "Personal",
+        "Design"
+      ],
+      "styles": [
+        "Minimal",
+        "Horizontal Layout",
+        "Interactive",
+        "Clean",
+        "Custom Cursor",
+        "Transitions",
+        "Light"
+      ],
+      "fonts": [
+        "Lab Grotesque"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/c890c394-fb3e-49a1-aca0-ffdf01db3385.jpg",
+      "video": "https://cdn.godly.website/videos/640/eyd5cb148pa10mily4el.mp4",
+      "views": 12769,
+      "createdAt": "2023-04-03T06:01:36.707Z"
+    },
+    {
+      "name": "Locomotive",
+      "url": "https://locomotive.ca/en",
+      "slug": "locomotive-958",
+      "types": [
+        "Agency",
+        "Design",
+        "Development"
+      ],
+      "styles": [
+        "Black &amp; White",
+        "Minimal",
+        "Large Type",
+        "Big Background Video",
+        "Interactive",
+        "Transitions",
+        "Light"
+      ],
+      "fonts": [
+        "Helvetica Now Display",
+        "PP Locomotive New"
+      ],
+      "frameworks": [
+        "GSAP"
+      ],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/85cf5b58-be7d-446c-b440-80cea985513d.jpg",
+      "video": "https://cdn.godly.website/videos/640/anltv8zyjjyt7esmr805.mp4",
+      "views": 12260,
+      "createdAt": "2023-04-03T05:12:09.420Z"
+    },
+    {
+      "name": "Twingate",
+      "url": "https://www.twingate.com",
+      "slug": "twingate-957",
+      "types": [
+        "Startup",
+        "SaaS",
+        "Security"
+      ],
+      "styles": [
+        "Dark",
+        "Interactive",
+        "Clean"
+      ],
+      "fonts": [
+        "Basis Grotesque Mono",
+        "TT Hoves"
+      ],
+      "frameworks": [
+        "Gatsby",
+        "React",
+        "styled-components"
+      ],
+      "hosting": [
+        "Netlify"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/9b3c7623-a00d-4199-a9ed-0a971d1f7b64.jpg",
+      "video": "https://cdn.godly.website/videos/640/frzd8jrswx7rluasa6i0.mp4",
+      "views": 16019,
+      "createdAt": "2023-04-01T00:03:50.314Z"
+    },
+    {
+      "name": "099",
+      "url": "https://099.supply",
+      "slug": "099-956",
+      "types": [
+        "Digital Product",
+        "E-commerce",
+        "Design"
+      ],
+      "styles": [
+        "Dark",
+        "Black &amp; White",
+        "Minimal",
+        "Grid",
+        "Clean",
+        "Transitions"
+      ],
+      "fonts": [
+        "Söhne Mono"
+      ],
+      "frameworks": [
+        "GSAP",
+        "React",
+        "Next.js",
+        "Google Web Toolkit"
+      ],
+      "hosting": [
+        "Amazon Web Services"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/52da8158-229f-4a31-b217-262d45295f25.jpg",
+      "video": "https://cdn.godly.website/videos/640/pkbvoj4mr6eyp537lc4l.mp4",
+      "views": 20129,
+      "createdAt": "2023-03-31T22:25:17.024Z"
+    },
+    {
+      "name": "SuperHi Plus",
+      "url": "https://superhi.plus",
+      "slug": "superhi-plus-955",
+      "types": [
+        "Startup",
+        "Education"
+      ],
+      "styles": [
+        "Illustrative",
+        "Fun",
+        "Large Type",
+        "Monochromatic",
+        "Brutalist",
+        "Interactive",
+        "Light"
+      ],
+      "fonts": [
+        "Neue Haas Grotesk Display"
+      ],
+      "frameworks": [
+        "GSAP",
+        "React",
+        "Next.js",
+        "Stitches"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/55a56750-0cd6-4ccb-88de-929a7095f9b4.jpg",
+      "video": "https://cdn.godly.website/videos/640/svrjsnzlkkulhbryozoq.mp4",
+      "views": 14977,
+      "createdAt": "2023-03-16T05:32:24.793Z"
+    },
+    {
+      "name": "Field Day Sound",
+      "url": "https://www.fielddaysound.tv",
+      "slug": "field-day-sound-954",
+      "types": [
+        "Agency",
+        "Music"
+      ],
+      "styles": [
+        "Minimal",
+        "Large Type",
+        "Big Background Video",
+        "Interactive",
+        "Custom Cursor",
+        "Transitions",
+        "Small Type",
+        "Light"
+      ],
+      "fonts": [
+        "Neue Montreal",
+        "Tusker Grotesk"
+      ],
+      "frameworks": [
+        "GSAP",
+        "Nuxt.js",
+        "Vue.js"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/acc92a8b-c05b-4d1a-a976-29d9f16a71df.jpg",
+      "video": "https://cdn.godly.website/videos/640/iz5gcmv5qt8ljcethsgq.mp4",
+      "views": 12859,
+      "createdAt": "2023-03-16T04:56:28.038Z"
+    },
+    {
+      "name": "Concrete Club Studio",
+      "url": "https://concreteclub.studio",
+      "slug": "concrete-club-studio-953",
+      "types": [
+        "Agency",
+        "Design"
+      ],
+      "styles": [
+        "Pastel",
+        "Large Type",
+        "Infinite Scroll",
+        "Scrolling Animation",
+        "Light"
+      ],
+      "fonts": [
+        "Neue Montreal",
+        "TRJN Da Vinci Display"
+      ],
+      "frameworks": [
+        "GSAP",
+        "Nuxt.js",
+        "Vue.js"
+      ],
+      "hosting": [
+        "Netlify"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/251dba72-9719-4bcc-99f0-78478ef10dff.jpg",
+      "video": "https://cdn.godly.website/videos/640/rsugifb0zy74qozzmysi.mp4",
+      "views": 13813,
+      "createdAt": "2023-03-16T04:43:52.665Z"
+    },
+    {
+      "name": "Swag",
+      "url": "https://swagapp.com",
+      "slug": "swag-952",
+      "types": [
+        "Mobile App",
+        "Startup",
+        "Finance"
+      ],
+      "styles": [
+        "Animation",
+        "Illustrative",
+        "Colourful",
+        "Pastel",
+        "Interactive",
+        "Parallax",
+        "Light"
+      ],
+      "fonts": [
+        "Roobert",
+        "Rebond Grotesque"
+      ],
+      "frameworks": [
+        "GSAP"
+      ],
+      "hosting": [
+        "Kinsta"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/daacece6-4f98-4435-8981-ffa482d9ed0a.jpg",
+      "video": "https://cdn.godly.website/videos/640/r4gepm6h61qab7rexr31.mp4",
+      "views": 28618,
+      "createdAt": "2023-03-14T07:00:37.558Z"
+    },
+    {
+      "name": "Wise Design",
+      "url": "https://wise.design",
+      "slug": "wise-design-951",
+      "types": [
+        "Finance",
+        "Design"
+      ],
+      "styles": [
+        "Animation",
+        "Illustrative",
+        "Colourful",
+        "Large Type",
+        "Scrolling Animation",
+        "Long Scrolling",
+        "Light"
+      ],
+      "fonts": [
+        "Inter",
+        "Worldwise Sans",
+        "Zen Kaku Gothic New"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js"
+      ],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/aa25ade0-f9e4-4184-972a-0683bfcf6861.jpg",
+      "video": "https://cdn.godly.website/videos/640/rwgc9wy8puhhgnhp3l8n.mp4",
+      "views": 20148,
+      "createdAt": "2023-03-14T06:59:06.713Z"
+    },
+    {
+      "name": "Chronicle",
+      "url": "https://chroniclehq.com",
+      "slug": "chronicle-950",
+      "types": [
+        "Startup",
+        "Design"
+      ],
+      "styles": [
+        "Animation",
+        "Dark",
+        "Illustrative",
+        "Interactive",
+        "Scrolling Animation",
+        "Custom Cursor",
+        "Bento Grid"
+      ],
+      "fonts": [
+        "Labil Grotesk"
+      ],
+      "frameworks": [
+        "GSAP",
+        "React",
+        "Next.js"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/ad2ba9e7-3d75-4781-84ad-5ec85833e0a6.jpg",
+      "video": "https://cdn.godly.website/videos/640/uelankdetvplcgsdai7r.mp4",
+      "views": 17496,
+      "createdAt": "2023-03-04T19:44:47.218Z"
+    },
+    {
+      "name": "OFFICE",
+      "url": "https://offficestud.io",
+      "slug": "office-949",
+      "types": [
+        "Agency",
+        "Design"
+      ],
+      "styles": [
+        "Dark",
+        "Fun",
+        "Black &amp; White",
+        "Large Type",
+        "Interactive",
+        "3D",
+        "WebGL",
+        "Scrolling Animation"
+      ],
+      "fonts": [
+        "Akkurat",
+        "Gascogne"
+      ],
+      "frameworks": [],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/333dd06e-089e-42cb-9cee-fe9b6d36c8ed.jpg",
+      "video": "https://cdn.godly.website/videos/640/l6qfbejurzdvzv6oham6.mp4",
+      "views": 12285,
+      "createdAt": "2023-02-16T04:31:01.816Z"
+    },
+    {
+      "name": "Stryds",
+      "url": "https://stryds.com",
+      "slug": "stryds-948",
+      "types": [
+        "Mobile App",
+        "Sports"
+      ],
+      "styles": [
+        "Dark",
+        "Large Type",
+        "Scrolling Animation",
+        "Long Scrolling",
+        "Clean",
+        "Custom Cursor"
+      ],
+      "fonts": [
+        "SF Pro Display"
+      ],
+      "frameworks": [],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/9f187c95-36c3-4347-a962-7e3a18fc4e9b.jpg",
+      "video": "https://cdn.godly.website/videos/640/ddxc25epiwvhpmcdgdma.mp4",
+      "views": 17076,
+      "createdAt": "2023-02-16T04:19:18.215Z"
+    },
+    {
+      "name": "Roman Tesliuk",
+      "url": "https://www.pixelwrld.co/roman",
+      "slug": "roman-tesliuk-947",
+      "types": [
+        "Portfolio",
+        "Personal",
+        "Design"
+      ],
+      "styles": [
+        "Animation",
+        "Dark",
+        "Illustrative",
+        "Unusual Layout",
+        "Interactive",
+        "3D",
+        "Custom Cursor",
+        "Transitions",
+        "Bento Grid"
+      ],
+      "fonts": [
+        "Archia"
+      ],
+      "frameworks": [],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/ac493e4e-bcec-4a11-ae55-df249d36cc09.jpg",
+      "video": "https://cdn.godly.website/videos/640/d30mhj1bavkfrghjjh5n.mp4",
+      "views": 16414,
+      "createdAt": "2023-02-15T06:24:41.352Z"
+    },
+    {
+      "name": "Carl Beaverson",
+      "url": "https://carlbeaverson.com",
+      "slug": "carl-beaverson-946",
+      "types": [
+        "Portfolio",
+        "Personal",
+        "Development"
+      ],
+      "styles": [
+        "Minimal",
+        "Single Page",
+        "Grid",
+        "Clean",
+        "Small Type",
+        "Light"
+      ],
+      "fonts": [
+        "System"
+      ],
+      "frameworks": [
+        "Gatsby",
+        "React"
+      ],
+      "hosting": [
+        "Netlify"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/07d1c141-edc0-44b3-ad93-4b782d697fb3.jpg",
+      "video": null,
+      "views": 13415,
+      "createdAt": "2023-02-13T05:30:54.525Z"
+    },
+    {
+      "name": "Lorenzo Dal Dosso",
+      "url": "https://www.lorenzodaldosso.it",
+      "slug": "lorenzo-dal-dosso-945",
+      "types": [
+        "Personal",
+        "Security"
+      ],
+      "styles": [
+        "Typographic",
+        "Large Type",
+        "Monochromatic",
+        "Unusual Layout",
+        "Interactive",
+        "Transitions",
+        "Light"
+      ],
+      "fonts": [
+        "Neue Montreal"
+      ],
+      "frameworks": [
+        "Nuxt.js",
+        "Vue.js"
+      ],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/81f29a9b-bd3d-4735-901e-2439e8f73a61.jpg",
+      "video": "https://cdn.godly.website/videos/640/vs4cltli8gm4j3tcvakh.mp4",
+      "views": 6436,
+      "createdAt": "2023-02-10T06:39:18.887Z"
+    },
+    {
+      "name": "Haus Otto",
+      "url": "https://www.hausotto.com",
+      "slug": "haus-otto-944",
+      "types": [
+        "Interior Design"
+      ],
+      "styles": [
+        "Typographic",
+        "Minimal",
+        "Interactive",
+        "Clean",
+        "Transitions",
+        "Small Type",
+        "Light"
+      ],
+      "fonts": [
+        "Arial"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/522dd0a2-3e24-4a2e-bbee-4747aa588e34.jpg",
+      "video": "https://cdn.godly.website/videos/640/tmuhpqbjv1ryeutakd5g.mp4",
+      "views": 6367,
+      "createdAt": "2023-02-10T06:27:21.224Z"
+    },
+    {
+      "name": "Two Create Studio",
+      "url": "https://www.twocreate.com",
+      "slug": "two-create-studio-943",
+      "types": [
+        "Agency",
+        "Portfolio",
+        "Design"
+      ],
+      "styles": [
+        "Minimal",
+        "Large Type",
+        "Long Scrolling",
+        "Transitions",
+        "Light"
+      ],
+      "fonts": [
+        "PP Neue Montreal"
+      ],
+      "frameworks": [
+        "Gatsby",
+        "React"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/15d985ec-96ef-424a-98cb-75a90e1f40ef.jpg",
+      "video": "https://cdn.godly.website/videos/640/pmp5gq8kjycgwal2bdv6.mp4",
+      "views": 15673,
+      "createdAt": "2023-02-10T06:10:18.996Z"
+    },
+    {
+      "name": "Genius",
+      "url": "https://genius.design",
+      "slug": "genius-942",
+      "types": [
+        "Design",
+        "AI"
+      ],
+      "styles": [
+        "Animation",
+        "Dark",
+        "Illustrative",
+        "Fun",
+        "Single Page",
+        "Interactive",
+        "Gradient"
+      ],
+      "fonts": [
+        "Satoshi"
+      ],
+      "frameworks": [],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/f517fade-94ff-4aa2-9bd4-385d8ffb7d09.jpg",
+      "video": "https://cdn.godly.website/videos/640/o8203qzek2evmnmw46wg.mp4",
+      "views": 8462,
+      "createdAt": "2023-02-09T18:55:42.859Z"
+    },
+    {
+      "name": "Liveblocks",
+      "url": "https://liveblocks.io",
+      "slug": "liveblocks-941",
+      "types": [
+        "Startup",
+        "Development",
+        "SaaS"
+      ],
+      "styles": [
+        "Dark",
+        "Illustrative",
+        "Colourful",
+        "Large Type",
+        "Grid",
+        "Interactive",
+        "Gradient",
+        "Bento Grid"
+      ],
+      "fonts": [
+        "Inter",
+        "Familjen Grotesk"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/97561701-72a6-4786-8f2a-89cfac89ece4.jpg",
+      "video": "https://cdn.godly.website/videos/640/acycum2zz8gwjpfuepjn.mp4",
+      "views": 17353,
+      "createdAt": "2023-02-06T23:18:39.941Z"
+    },
+    {
+      "name": "Skiff",
+      "url": "https://skiff.com",
+      "slug": "skiff-940",
+      "types": [
+        "Startup",
+        "Productivity",
+        "SaaS",
+        "Communication"
+      ],
+      "styles": [
+        "Animation",
+        "Interactive",
+        "Clean",
+        "Bento Grid",
+        "Light"
+      ],
+      "fonts": [
+        "ABC Diatype Semi-Mono",
+        "Skiff Mono",
+        "Universal Sans Display"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js"
+      ],
+      "hosting": [
+        "Amazon Web Services"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/da2f961d-b178-4b9f-8d67-e660a52d3628.jpg",
+      "video": "https://cdn.godly.website/videos/640/cpimboyotpgqmlmgk2tr.mp4",
+      "views": 17512,
+      "createdAt": "2023-02-06T23:16:47.230Z"
+    },
+    {
+      "name": "Chester",
+      "url": "https://chester.how",
+      "slug": "chester-939",
+      "types": [
+        "Portfolio",
+        "Personal",
+        "Development"
+      ],
+      "styles": [
+        "Fun",
+        "Minimal",
+        "Grid",
+        "Unusual Layout",
+        "Interactive",
+        "Clean",
+        "Transitions",
+        "Small Type",
+        "Light"
+      ],
+      "fonts": [
+        "Inter",
+        "Fraunces"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/6cd8dd98-dc99-4372-a1ba-a2389769a0a9.jpg",
+      "video": "https://cdn.godly.website/videos/640/x2dsvx1jyj5fqekuf1va.mp4",
+      "views": 10967,
+      "createdAt": "2023-02-05T22:54:15.813Z"
+    },
+    {
+      "name": "Compound: Membership",
+      "url": "https://withcompound.com/membership",
+      "slug": "compound-membership-938",
+      "types": [
+        "Startup",
+        "Web App",
+        "Finance"
+      ],
+      "styles": [
+        "Animation",
+        "Interactive",
+        "Clean",
+        "Light"
+      ],
+      "fonts": [
+        "Monument Grotesk"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js"
+      ],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/555f07e0-997b-41b1-bcb0-b3eb66f238b2.jpg",
+      "video": "https://cdn.godly.website/videos/640/yw5isofaqunnt0mi6x94.mp4",
+      "views": 13084,
+      "createdAt": "2023-02-05T22:38:15.839Z"
+    },
+    {
+      "name": "Wope",
+      "url": "https://wope.com",
+      "slug": "wope-937",
+      "types": [
+        "Startup",
+        "Desktop App",
+        "SaaS",
+        "Marketing"
+      ],
+      "styles": [
+        "Animation",
+        "Dark",
+        "Illustrative",
+        "Colourful",
+        "Monochromatic",
+        "Interactive",
+        "Gradient",
+        "Bento Grid"
+      ],
+      "fonts": [
+        "Inter",
+        "ES Rebond Grotesque"
+      ],
+      "frameworks": [
+        "Qwik"
+      ],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/862b33ed-44d2-4a5e-b876-f733e75ac331.jpg",
+      "video": "https://cdn.godly.website/videos/640/fqp4kcvlrh5ub9hctdwk.mp4",
+      "views": 18930,
+      "createdAt": "2023-02-04T00:43:31.643Z"
+    },
+    {
+      "name": "Linear: Change",
+      "url": "https://linear.app/change",
+      "slug": "linear-change-936",
+      "types": [
+        "Web App",
+        "Productivity",
+        "Desktop App",
+        "SaaS"
+      ],
+      "styles": [
+        "Illustrative",
+        "Black &amp; White",
+        "Large Type",
+        "Retro",
+        "Unusual Layout",
+        "Interactive",
+        "Gradient",
+        "Light"
+      ],
+      "fonts": [
+        "Inter",
+        "IA Writer Quattro",
+        "Redaction",
+        "Redaction 20"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js",
+        "styled-components"
+      ],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/87b108c4-5c7f-4bb4-bba4-51af1cc0486a.jpg",
+      "video": "https://cdn.godly.website/videos/640/laox798xz9unjckrtywk.mp4",
+      "views": 9370,
+      "createdAt": "2023-02-03T00:36:00.289Z"
+    },
+    {
+      "name": "Eco",
+      "url": "https://eco.com",
+      "slug": "eco-935",
+      "types": [
+        "Mobile App",
+        "Startup",
+        "Technology",
+        "Finance"
+      ],
+      "styles": [
+        "Animation",
+        "Illustrative",
+        "Large Type",
+        "Interactive",
+        "Gradient",
+        "Scrolling Animation",
+        "Transitions",
+        "Light"
+      ],
+      "fonts": [
+        "Founders Grotesk",
+        "Atlas Typewriter Web"
+      ],
+      "frameworks": [],
+      "hosting": [
+        "Amazon Web Services"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/1b1d40c5-5a4d-48ae-a092-041f198c9ca1.jpg",
+      "video": "https://cdn.godly.website/videos/640/akk6f2j7r8qyqzqkpb0q.mp4",
+      "views": 15156,
+      "createdAt": "2023-02-01T07:04:34.748Z"
+    },
+    {
+      "name": "EPIC Agency",
+      "url": "https://www.epic.net",
+      "slug": "epic-agency-934",
+      "types": [
+        "Agency",
+        "Portfolio",
+        "Design"
+      ],
+      "styles": [
+        "Illustrative",
+        "Colourful",
+        "Large Type",
+        "Monochromatic",
+        "Interactive",
+        "WebGL",
+        "Transitions",
+        "Light"
+      ],
+      "fonts": [
+        "System",
+        "Inter",
+        "Sang Bleu"
+      ],
+      "frameworks": [
+        "GSAP",
+        "Vue.js",
+        "Express"
+      ],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/0adcc73e-b745-4ecd-85a4-c53a5cb82821.jpg",
+      "video": "https://cdn.godly.website/videos/640/bwyn75ov8osuccnbu5ts.mp4",
+      "views": 9375,
+      "createdAt": "2023-02-01T06:37:21.684Z"
+    },
+    {
+      "name": "Aino",
+      "url": "https://aino.agency",
+      "slug": "aino-933",
+      "types": [
+        "Agency",
+        "Technology",
+        "Design"
+      ],
+      "styles": [
+        "Animation",
+        "Minimal",
+        "Large Type",
+        "Scrolling Animation",
+        "Small Type",
+        "Light"
+      ],
+      "fonts": [
+        "ABC Diatype"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/f5d39537-002a-428d-a78c-3178064d2a65.jpg",
+      "video": "https://cdn.godly.website/videos/640/mnfmbokufnz4q8wt7vah.mp4",
+      "views": 9270,
+      "createdAt": "2023-02-01T06:32:13.763Z"
+    },
+    {
+      "name": "Bankn",
+      "url": "https://bankn.tech",
+      "slug": "bankn-932",
+      "types": [
+        "Mobile App",
+        "Finance"
+      ],
+      "styles": [
+        "Colourful",
+        "Single Page",
+        "Gradient",
+        "Scrolling Animation",
+        "Clean",
+        "Light"
+      ],
+      "fonts": [
+        "Favorit Mono Std",
+        "Tosh A"
+      ],
+      "frameworks": [
+        "GSAP"
+      ],
+      "hosting": [
+        "Netlify"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/f254024f-a06a-41e9-a703-041ff4a20096.jpg",
+      "video": "https://cdn.godly.website/videos/640/ygfwse30py0wezx5t2ak.mp4",
+      "views": 11838,
+      "createdAt": "2023-02-01T06:28:46.774Z"
+    },
+    {
+      "name": "OHM",
+      "url": "https://ohm.studio",
+      "slug": "ohm-931",
+      "types": [
+        "E-commerce",
+        "Furniture"
+      ],
+      "styles": [
+        "Minimal",
+        "Large Type",
+        "Clean",
+        "Light"
+      ],
+      "fonts": [
+        "Helvetica Neue",
+        "Favorit Pro",
+        "ITC Garamond Std Narrow"
+      ],
+      "frameworks": [
+        "GSAP"
+      ],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/dcc8cdd8-d5e5-47a5-a9cc-b0e9560fd0a5.jpg",
+      "video": "https://cdn.godly.website/videos/640/mvhbhvtqts1dhp6nilqm.mp4",
+      "views": 10945,
+      "createdAt": "2023-02-01T06:24:24.341Z"
+    },
+    {
+      "name": "Maëlan Le Meur",
+      "url": "https://maelanlemeur.com",
+      "slug": "maelan-le-meur-930",
+      "types": [
+        "Portfolio",
+        "Personal",
+        "Design"
+      ],
+      "styles": [
+        "Dark",
+        "Minimal",
+        "Large Type",
+        "Single Page",
+        "Monochromatic",
+        "Scrolling Animation"
+      ],
+      "fonts": [
+        "Neue Montreal"
+      ],
+      "frameworks": [
+        "GSAP"
+      ],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/79c48676-7823-4e31-9e3d-05f5cdeec333.jpg",
+      "video": "https://cdn.godly.website/videos/640/wj5fig0d4uozge2z8bon.mp4",
+      "views": 11354,
+      "createdAt": "2023-02-01T06:15:34.351Z"
+    },
+    {
+      "name": "Crosswire",
+      "url": "https://crosswire.io",
+      "slug": "crosswire-929",
+      "types": [
+        "Technology",
+        "Security"
+      ],
+      "styles": [
+        "Animation",
+        "Illustrative",
+        "Colourful",
+        "Large Type",
+        "Interactive",
+        "Gradient",
+        "3D",
+        "WebGL",
+        "Scrolling Animation",
+        "Long Scrolling",
+        "Transitions",
+        "Light"
+      ],
+      "fonts": [
+        "TWK Lausanne",
+        "Parabole"
+      ],
+      "frameworks": [
+        "GSAP"
+      ],
+      "hosting": [
+        "Amazon Web Services"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/8587f0da-c236-4974-ac9d-1992610f80e3.jpg",
+      "video": "https://cdn.godly.website/videos/640/lfi0fd0k2llqukcana05.mp4",
+      "views": 13134,
+      "createdAt": "2023-01-27T05:32:48.805Z"
+    },
+    {
+      "name": "Campsite",
+      "url": "https://www.campsite.design",
+      "slug": "campsite-928",
+      "types": [
+        "Desktop App",
+        "Design"
+      ],
+      "styles": [
+        "Interactive",
+        "Clean",
+        "Light"
+      ],
+      "fonts": [
+        "Author Variable"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/c74d225a-1522-46c6-a41a-48ae0b97736c.jpg",
+      "video": null,
+      "views": 9579,
+      "createdAt": "2023-01-27T05:16:17.834Z"
+    },
+    {
+      "name": "Evervault",
+      "url": "https://evervault.com",
+      "slug": "evervault-927",
+      "types": [
+        "Development",
+        "SaaS",
+        "Security"
+      ],
+      "styles": [
+        "Animation",
+        "Dark",
+        "Interactive",
+        "Gradient",
+        "Clean"
+      ],
+      "fonts": [
+        "Inter",
+        "Roobert"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/260f4522-82e2-453b-8335-b93def2770d7.jpg",
+      "video": "https://cdn.godly.website/videos/640/qb5vgzsqpej7juf5gc56.mp4",
+      "views": 14731,
+      "createdAt": "2023-01-27T03:28:16.769Z"
+    },
+    {
+      "name": "Philipp Antoni",
+      "url": "https://phlntn.com",
+      "slug": "philipp-antoni-926",
+      "types": [
+        "Portfolio",
+        "Personal",
+        "Design",
+        "Development"
+      ],
+      "styles": [
+        "Animation",
+        "Dark",
+        "Minimal",
+        "Single Page",
+        "Unusual Layout",
+        "Interactive",
+        "WebGL"
+      ],
+      "fonts": [
+        "Sirograf"
+      ],
+      "frameworks": [],
+      "hosting": [
+        "Netlify"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/4c24c475-e46c-487c-8c9a-54eb64883c57.jpg",
+      "video": "https://cdn.godly.website/videos/640/eogfmbwprslb224tpp7k.mp4",
+      "views": 12135,
+      "createdAt": "2023-01-27T03:23:16.041Z"
+    },
+    {
+      "name": "Sketch",
+      "url": "https://sketch.com",
+      "slug": "sketch-925",
+      "types": [
+        "Startup",
+        "Desktop App",
+        "Design"
+      ],
+      "styles": [
+        "Illustrative",
+        "Fun",
+        "Unusual Layout",
+        "Interactive",
+        "Drag &amp; Drop",
+        "Light"
+      ],
+      "fonts": [
+        "Caveat",
+        "Marfa"
+      ],
+      "frameworks": [
+        "Stimulus"
+      ],
+      "hosting": [
+        "Amazon Web Services",
+        "Netlify"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/f0018024-e1cf-4016-9d8b-3c7eb9178cf1.jpg",
+      "video": "https://cdn.godly.website/videos/640/fl9wocuwlfiykosqybye.mp4",
+      "views": 4392,
+      "createdAt": "2023-01-27T03:11:27.324Z"
+    },
+    {
+      "name": "Healthy Together",
+      "url": "https://www.healthytogether.co",
+      "slug": "healthy-together-924",
+      "types": [
+        "Mobile App",
+        "Web App",
+        "Health"
+      ],
+      "styles": [
+        "Animation",
+        "Illustrative",
+        "Colourful",
+        "Large Type",
+        "Interactive",
+        "Gradient",
+        "Scrolling Animation",
+        "Light"
+      ],
+      "fonts": [
+        "Inter"
+      ],
+      "frameworks": [
+        "GSAP"
+      ],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/1b395155-bdd6-46e3-b300-6a5d5f235465.jpg",
+      "video": "https://cdn.godly.website/videos/640/c0pzrjvxzignwdxd0bd0.mp4",
+      "views": 15659,
+      "createdAt": "2023-01-19T04:40:55.591Z"
+    },
+    {
+      "name": "Flying Papers",
+      "url": "https://www.flyingpapers.com",
+      "slug": "flying-papers-923",
+      "types": [
+        "E-commerce"
+      ],
+      "styles": [
+        "Animation",
+        "Illustrative",
+        "Colourful",
+        "Fun",
+        "Large Type",
+        "Interactive",
+        "Scrolling Animation",
+        "Long Scrolling",
+        "Transitions",
+        "Light"
+      ],
+      "fonts": [
+        "Degular Display",
+        "Bergen Mono",
+        "Degular Variable None",
+        "Obviously Variable None"
+      ],
+      "frameworks": [
+        "React",
+        "Next.js",
+        "styled-components"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/2ae86560-f62d-4e2d-b951-e5d193ae991e.jpg",
+      "video": "https://cdn.godly.website/videos/640/xcrfpwrgnuumrjfyytga.mp4",
+      "views": 17483,
+      "createdAt": "2023-01-19T04:32:01.122Z"
+    },
+    {
+      "name": "Terminal",
+      "url": "https://terminal27.com",
+      "slug": "terminal-922",
+      "types": [
+        "E-commerce",
+        "Fashion"
+      ],
+      "styles": [
+        "Minimal",
+        "Large Type",
+        "Big Background Video",
+        "Unusual Layout",
+        "Small Type",
+        "Light"
+      ],
+      "fonts": [
+        "Syndicat Grotesk"
+      ],
+      "frameworks": [
+        "Nuxt.js",
+        "Vue.js"
+      ],
+      "hosting": [
+        "Netlify"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/0ae84689-fcd8-4759-a052-6dec4142a4ba.jpg",
+      "video": "https://cdn.godly.website/videos/640/rtpiaeqwlasaqkiowlw8.mp4",
+      "views": 12622,
+      "createdAt": "2023-01-19T04:28:00.466Z"
+    },
+    {
+      "name": "HLE ",
+      "url": "https://hle.io",
+      "slug": "hle-921",
+      "types": [
+        "Agency",
+        "Design",
+        "Motion"
+      ],
+      "styles": [
+        "Dark",
+        "Illustrative",
+        "Fun",
+        "Large Type",
+        "Monochromatic",
+        "Unusual Layout",
+        "Interactive",
+        "3D",
+        "Custom Cursor",
+        "Transitions"
+      ],
+      "fonts": [
+        "Supply",
+        "PP Supply Sans"
+      ],
+      "frameworks": [
+        "GSAP",
+        "Nuxt.js",
+        "Vue.js"
+      ],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/14897995-0ef1-4719-b555-eb80aaaa66e9.jpg",
+      "video": "https://cdn.godly.website/videos/640/kr7owqru9sb1bqxoplwu.mp4",
+      "views": 5725,
+      "createdAt": "2023-01-18T21:50:06.330Z"
+    },
+    {
+      "name": "Maciej Zadykowicz",
+      "url": "https://www.maciej.co",
+      "slug": "maciej-zadykowicz-920",
+      "types": [
+        "Portfolio",
+        "Personal",
+        "Design"
+      ],
+      "styles": [
+        "Animation",
+        "Dark",
+        "Illustrative",
+        "Colourful",
+        "Large Type",
+        "Single Page",
+        "Grid",
+        "Long Scrolling",
+        "Clean",
+        "Bento Grid"
+      ],
+      "fonts": [
+        "Replica Mono",
+        "Replica Pro"
+      ],
+      "frameworks": [],
+      "hosting": [
+        "Netlify"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/16a6ac7b-b21e-4b0a-b178-f3002bf64789.jpg",
+      "video": null,
+      "views": 13051,
+      "createdAt": "2023-01-18T21:38:36.455Z"
+    },
+    {
+      "name": "Andreas Antonsson",
+      "url": "https://www.andreasantonsson.dev",
+      "slug": "andreas-antonsson-919",
+      "types": [
+        "Portfolio",
+        "Personal",
+        "Design",
+        "Development"
+      ],
+      "styles": [
+        "Dark",
+        "Large Type",
+        "Unusual Layout",
+        "Interactive",
+        "Scrolling Animation",
+        "Clean",
+        "Custom Cursor",
+        "Transitions"
+      ],
+      "fonts": [
+        "Inter",
+        "Dahlia"
+      ],
+      "frameworks": [
+        "GSAP",
+        "Nuxt.js",
+        "Vue.js"
+      ],
+      "hosting": [
+        "Vercel"
+      ],
+      "thumbnail": "https://cdn.godly.website/images/1280/50f043ea-f25e-4033-9d1a-ff349d2ae137.jpg",
+      "video": "https://cdn.godly.website/videos/640/yykac9k1bbswfuxbzv3b.mp4",
+      "views": 10899,
+      "createdAt": "2023-01-11T13:01:31.686Z"
+    },
+    {
+      "name": "Unseen Studio",
+      "url": "https://unseen.co",
+      "slug": "unseen-studio-918",
+      "types": [
+        "Agency",
+        "Design",
+        "Motion"
+      ],
+      "styles": [
+        "Animation",
+        "Large Type",
+        "Interactive",
+        "3D",
+        "WebGL",
+        "Custom Cursor",
+        "Transitions",
+        "Light"
+      ],
+      "fonts": [
+        "Neue Montreal",
+        "Saol Display"
+      ],
+      "frameworks": [
+        "GSAP"
+      ],
+      "hosting": [],
+      "thumbnail": "https://cdn.godly.website/images/1280/6d584fb7-9872-446b-822d-e9620f02be4e.jpg",
+      "video": "https://cdn.godly.website/videos/640/cfykjgotzmuwinhlw4tb.mp4",
+      "views": 14876,
+      "createdAt": "2023-01-09T06:20:56.035Z"
+    }
+  ],
+  "styleInstructions": {
+    "Animation": "Implement smooth, purposeful animations throughout the site. Use CSS transitions, keyframes, or libraries like Framer Motion/GSAP.",
+    "Fun": "Create a playful, engaging experience with unexpected interactions, bold colors, and delightful micro-animations.",
+    "Minimal": "Strip design to essential elements. Use a limited color palette (2-3 colors), simple geometric shapes, and ample negative space.",
+    "Single Page": "Build an immersive single-page experience with smooth scrolling and section-based navigation.",
+    "Interactive": "Implement cursor-following effects, hover state animations, and micro-interactions throughout. Elements should respond to user input.",
+    "Light": "Use a predominantly light color scheme with white/off-white backgrounds. Add depth through subtle shadows and muted accent colors.",
+    "Dark": "Implement a dark theme with deep backgrounds (#0a0a0a to #1a1a1a). Use high-contrast text and glowing accent colors.",
+    "Big Background Image": "Use a full-viewport hero section with a high-quality, atmospheric background image. Apply subtle overlays for text readability.",
+    "Scrolling Animation": "Use scroll-triggered animations with libraries like GSAP ScrollTrigger, Framer Motion, or CSS scroll-driven animations.",
+    "Long Scrolling": "Design an immersive single-page experience with distinct sections that flow narratively. Use sticky elements and parallax effects.",
+    "Clean": "Maintain generous whitespace, clear visual hierarchy, and minimal decorative elements. Focus on typography and content clarity.",
+    "Bold Typography": "Feature oversized display text, mix font weights dramatically, and use typography as a primary design element.",
+    "Gradient": "Apply smooth color gradients for backgrounds, text, or UI elements. Use mesh gradients or multi-stop linear gradients.",
+    "3D": "Incorporate 3D elements using Three.js, WebGL, or CSS 3D transforms. Add depth through perspective and spatial animations.",
+    "Brutalist": "Embrace raw, unpolished aesthetics with exposed structural elements, harsh contrasts, and unconventional layouts.",
+    "Glassmorphism": "Use frosted glass effects with backdrop-blur, subtle borders, and layered transparent surfaces.",
+    "Grid Layout": "Structure content in a clear grid system. Use CSS Grid for complex layouts with clear visual rhythm.",
+    "Asymmetric": "Break from conventional layouts with intentionally unbalanced compositions. Create visual tension and interest.",
+    "Video Background": "Use looping video backgrounds for immersive hero sections. Ensure videos are optimized and have fallbacks.",
+    "Noise/Grain": "Add subtle noise textures to backgrounds or images for a tactile, film-like quality.",
+    "Retro": "Incorporate nostalgic design elements like serif fonts, muted color palettes, and classic layout patterns.",
+    "Experimental": "Push boundaries with unconventional navigation, abstract visuals, and innovative interaction patterns."
+  },
+  "fontSuggestions": {
+    "Inter": "Highly legible sans-serif for UI. Modern and versatile. Pairs with: Fraunces, Playfair Display, or Space Grotesk.",
+    "NB International": "Modern geometric sans-serif. Pairs well with: GT America, Inter, or a serif like Editorial New.",
+    "Space Grotesk": "Tech-forward sans-serif with distinctive character shapes.",
+    "Manrope": "Modern geometric sans-serif, open-source alternative to paid fonts.",
+    "SF Pro": "Apple's system font. Clean and professional.",
+    "Söhne": "Contemporary Swiss-style sans-serif. Elegant and versatile.",
+    "GT Walsheim": "Friendly geometric sans-serif with personality.",
+    "Neue Montreal": "Modern grotesk with character. Works well at large sizes."
+  },
+  "frameworkTips": {
+    "React": "Use React with hooks for state management. Consider Framer Motion for animations.",
+    "Next.js": "Leverage App Router, Server Components, and next/image for optimization.",
+    "Tailwind CSS": "Use utility-first classes. Consider tailwind-animate or @tailwindcss/typography plugins.",
+    "Radix UI": "Use unstyled, accessible components as a foundation for custom UI.",
+    "Framer": "Use Framer's visual builder for rapid prototyping with code-level customization.",
+    "GSAP": "Industry-standard animation library. Use ScrollTrigger for scroll-based animations.",
+    "Three.js": "WebGL library for 3D graphics. Consider React Three Fiber for React integration.",
+    "Vercel": "Deploy with Vercel for optimal Next.js performance, edge functions, and analytics."
+  }
+}
