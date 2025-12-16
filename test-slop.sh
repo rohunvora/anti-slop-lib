@@ -21,3 +21,6 @@ echo ""
 # Use the CLI directly
 node /Users/satoshi/anti-slop-lib/dist/cli.js scan "$FILE" --verbose
 
+
+
+

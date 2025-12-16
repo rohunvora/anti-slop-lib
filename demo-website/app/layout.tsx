@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { SlopProvider } from "./components/SlopContext";
 import { ToastProvider } from "./components/Toast";
 import Link from "next/link";
 import { LabsNav } from "./components/LabsNav";
@@ -19,8 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-paper text-ink">
-        <SlopProvider>
-          <ToastProvider>
+        <ToastProvider>
           {/* Skip link for keyboard users */}
           <a href="#main-content" className="skip-link">
             Skip to main content
@@ -157,7 +155,6 @@ export default function RootLayout({
             </footer>
           </div>
           </ToastProvider>
-        </SlopProvider>
       </body>
     </html>
   );
