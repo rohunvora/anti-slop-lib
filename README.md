@@ -95,6 +95,30 @@ console.log(kit.fonts);  // ['JetBrains Mono', 'Space Mono']
 console.log(kit.colors); // ['#000000', '#FF0000', '#FFFFFF']
 ```
 
+## How It Works
+
+```mermaid
+flowchart LR
+    Input["HTML/CSS\nInput"] --> Scanner
+    
+    subgraph Scanner["🔍 Pattern Scanner"]
+        direction TB
+        C[Colors]
+        T[Typography]
+        L[Layout]
+        E[Effects]
+        Copy[Copy]
+    end
+    
+    Scanner --> Score["Slop Score\nA-F Grade"]
+    Score --> Alt["Design\nAlternatives"]
+    
+    style Input fill:#18181b,stroke:#f43f5e,color:#fff
+    style Scanner fill:#18181b,stroke:#fbbf24,color:#fff
+    style Score fill:#18181b,stroke:#22c55e,color:#fff
+    style Alt fill:#18181b,stroke:#3b82f6,color:#fff
+```
+
 ## What Gets Flagged
 
 The analyzer looks for patterns like:
