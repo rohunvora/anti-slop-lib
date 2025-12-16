@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { SlopProvider } from "./components/SlopContext";
+import { ToastProvider } from "./components/Toast";
 import Link from "next/link";
+import { LabsNav } from "./components/LabsNav";
+import { DarkModeToggle } from "./components/DarkModeToggle";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -17,6 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-paper text-ink">
         <SlopProvider>
+          <ToastProvider>
           {/* Skip link for keyboard users */}
           <a href="#main-content" className="skip-link">
             Skip to main content
@@ -52,12 +56,14 @@ export default function RootLayout({
                     >
                       Install
                     </Link>
+                    <LabsNav />
                     <Link 
                       href="/gallery" 
                       className="px-3 py-2 text-xs lg:text-sm font-semibold uppercase tracking-wider text-ink-60 hover:text-ink hover:bg-paper-bright transition-colors"
                     >
                       Gallery
                     </Link>
+                    <DarkModeToggle />
                     <a 
                       href="https://github.com/rohunvora/anti-slop-lib" 
                       target="_blank"
@@ -150,6 +156,7 @@ export default function RootLayout({
               </div>
             </footer>
           </div>
+          </ToastProvider>
         </SlopProvider>
       </body>
     </html>

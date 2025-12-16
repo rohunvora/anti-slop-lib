@@ -504,6 +504,158 @@ function TypographyPlayground() {
   );
 }
 
+// Contrast checker
+function ContrastChecker() {
+  const [foreground, setForeground] = useState('#000000');
+  const [background, setBackground] = useState('#ffffff');
+  const [textSize, setTextSize] = useState<'normal' | 'large'>('normal');
+  
+  // Convert hex to RGB
+  function hexToRgb(hex: string): [number, number, number] {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? [
+      parseInt(result[1], 16),
+      parseInt(result[2], 16),
+      parseInt(result[3], 16)
+    ] : [0, 0, 0];
+  }
+  
+  // Calculate relative luminance
+  function getLuminance(rgb: [number, number, number]): number {
+    const [r, g, b] = rgb.map(val => {
+      val = val / 255;
+      return val <= 0.03928 ? val / 12.92 : Math.pow((val + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  }
+  
+  // Calculate contrast ratio
+  function getContrastRatio(fg: string, bg: string): number {
+    const fgRgb = hexToRgb(fg);
+    const bgRgb = hexToRgb(bg);
+    const fgLum = getLuminance(fgRgb);
+    const bgLum = getLuminance(bgRgb);
+    const lighter = Math.max(fgLum, bgLum);
+    const darker = Math.min(fgLum, bgLum);
+    return (lighter + 0.05) / (darker + 0.05);
+  }
+  
+  const contrastRatio = getContrastRatio(foreground, background);
+  const requiredRatio = textSize === 'normal' ? 4.5 : 3;
+  const passes = contrastRatio >= requiredRatio;
+  
+  return (
+    <div className="space-y-6">
+      <div className="max-w-2xl">
+        <p className="text-ink-60 mb-6">
+          WCAG 2.1 requires a contrast ratio of at least 4.5:1 for normal text and 3:1 for large text (18pt+ or 14pt+ bold).
+          This tool helps ensure your color choices remain accessible.
+        </p>
+        
+        <div className="grid md:grid-cols-2 gap-6 mb-6">
+          {/* Foreground */}
+          <div>
+            <label className="block text-sm font-semibold mb-2">Foreground Color</label>
+            <div className="flex gap-3 items-center">
+              <input
+                type="color"
+                value={foreground}
+                onChange={(e) => setForeground(e.target.value)}
+                className="w-16 h-16 border-3 border-ink cursor-pointer"
+              />
+              <input
+                type="text"
+                value={foreground}
+                onChange={(e) => setForeground(e.target.value)}
+                className="flex-1 font-mono text-sm p-2 border-3 border-ink"
+                placeholder="#000000"
+              />
+            </div>
+          </div>
+          
+          {/* Background */}
+          <div>
+            <label className="block text-sm font-semibold mb-2">Background Color</label>
+            <div className="flex gap-3 items-center">
+              <input
+                type="color"
+                value={background}
+                onChange={(e) => setBackground(e.target.value)}
+                className="w-16 h-16 border-3 border-ink cursor-pointer"
+              />
+              <input
+                type="text"
+                value={background}
+                onChange={(e) => setBackground(e.target.value)}
+                className="flex-1 font-mono text-sm p-2 border-3 border-ink"
+                placeholder="#ffffff"
+              />
+            </div>
+          </div>
+        </div>
+        
+        {/* Text size selector */}
+        <div className="mb-6">
+          <label className="block text-sm font-semibold mb-2">Text Size</label>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setTextSize('normal')}
+              className={`px-4 py-2 text-sm border-3 transition-colors ${
+                textSize === 'normal'
+                  ? 'bg-ink text-paper border-ink'
+                  : 'border-ink-40 text-ink-60 hover:border-ink'
+              }`}
+            >
+              Normal (4.5:1 required)
+            </button>
+            <button
+              onClick={() => setTextSize('large')}
+              className={`px-4 py-2 text-sm border-3 transition-colors ${
+                textSize === 'large'
+                  ? 'bg-ink text-paper border-ink'
+                  : 'border-ink-40 text-ink-60 hover:border-ink'
+              }`}
+            >
+              Large (3:1 required)
+            </button>
+          </div>
+        </div>
+        
+        {/* Preview */}
+        <div 
+          className="p-8 border-3 border-ink mb-6"
+          style={{ backgroundColor: background, color: foreground }}
+        >
+          <p className={`${textSize === 'large' ? 'text-2xl font-bold' : 'text-base'}`}>
+            Sample text preview. Does this look readable?
+          </p>
+        </div>
+        
+        {/* Results */}
+        <div className={`p-6 border-3 ${passes ? 'border-teal bg-teal/10' : 'border-vermilion bg-vermilion/10'}`}>
+          <div className="flex items-center justify-between mb-2">
+            <p className={`font-semibold ${passes ? 'text-teal' : 'text-vermilion'}`}>
+              {passes ? '✓ Passes WCAG 2.1' : '✗ Fails WCAG 2.1'}
+            </p>
+            <span className="text-2xl font-bold font-mono">
+              {contrastRatio.toFixed(2)}:1
+            </span>
+          </div>
+          <p className="text-sm text-ink-60">
+            Contrast ratio: <strong>{contrastRatio.toFixed(2)}:1</strong> | 
+            Required: <strong>{requiredRatio}:1</strong> for {textSize === 'normal' ? 'normal' : 'large'} text
+          </p>
+          {!passes && (
+            <p className="text-sm text-ink-60 mt-2">
+              Increase the difference between foreground and background colors to meet accessibility standards.
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // Usability checklist
 function UsabilityChecklist() {
   const [checks, setChecks] = useState<Record<string, boolean>>({});
@@ -593,6 +745,7 @@ function PatternsContent() {
               { id: 'radius', label: 'Borders & Radius' },
               { id: 'colors', label: 'Colors' },
               { id: 'type', label: 'Typography' },
+              { id: 'contrast', label: 'Contrast Checker' },
               { id: 'usability', label: 'Usability Check' },
             ].map(tab => (
               <button
@@ -614,6 +767,7 @@ function PatternsContent() {
         {activeTab === 'radius' && <RadiusPlayground />}
         {activeTab === 'colors' && <ColorPlayground />}
         {activeTab === 'type' && <TypographyPlayground />}
+        {activeTab === 'contrast' && <ContrastChecker />}
         {activeTab === 'usability' && <UsabilityChecklist />}
       </section>
     </>

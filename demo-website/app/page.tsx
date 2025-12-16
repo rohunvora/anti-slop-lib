@@ -2,6 +2,7 @@
 
 import { useState, useCallback, Suspense } from 'react';
 import Link from 'next/link';
+import { useToast } from './components/Toast';
 
 // ============================================================================
 // TYPES (matching analyzer output)
@@ -26,7 +27,7 @@ interface DetectedSignal {
   whyItReadsGeneric: string;
   perception: string;
   quickFixes: QuickFix[];
-  evidence: Array<{ type: string; snippet: string }>;
+  evidence: Array<{ type: string; snippet: string; lineNumber?: number }>;
 }
 
 interface AnalysisResult {
@@ -190,15 +191,19 @@ const TEMPLATE_SIGNALS: Array<{
 
 function analyzeCode(code: string, tone: ToneMode = 'direct'): AnalysisResult {
   const detectedSignals: DetectedSignal[] = [];
+  const lines = code.split('\n');
   
   for (const signal of TEMPLATE_SIGNALS) {
-    const evidence: Array<{ type: string; snippet: string }> = [];
+    const evidence: Array<{ type: string; snippet: string; lineNumber?: number }> = [];
     
     for (const pattern of signal.detect.patterns) {
-      const matches = code.match(pattern);
-      if (matches) {
-        evidence.push({ type: 'match', snippet: matches[0] });
-      }
+      // Check each line for matches
+      lines.forEach((line, index) => {
+        const matches = line.match(pattern);
+        if (matches) {
+          evidence.push({ type: 'match', snippet: matches[0], lineNumber: index + 1 });
+        }
+      });
     }
     
     if (evidence.length > 0) {
@@ -380,12 +385,11 @@ function RiskIndicator({ risk, score }: { risk: RiskLevel; score: number }) {
 }
 
 function CopyButton({ text, label = 'Copy' }: { text: string; label?: string }) {
-  const [copied, setCopied] = useState(false);
+  const { showToast } = useToast();
   
   const handleCopy = async () => {
     await navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    showToast('Copied to clipboard');
   };
   
   return (
@@ -393,12 +397,12 @@ function CopyButton({ text, label = 'Copy' }: { text: string; label?: string }) 
       onClick={handleCopy}
       className="text-xs font-mono px-2 py-1 border-2 border-ink hover:bg-ink hover:text-paper transition-colors"
     >
-      {copied ? '✓ Copied' : label}
+      {label}
     </button>
   );
 }
 
-function SignalCard({ signal, showPatch = true }: { signal: DetectedSignal; showPatch?: boolean }) {
+function SignalCard({ signal, showPatch = true, onApplyPatch, originalCode }: { signal: DetectedSignal; showPatch?: boolean; onApplyPatch?: (patch: string, originalCode: string) => void; originalCode?: string }) {
   const [expanded, setExpanded] = useState(false);
   const [selectedFix, setSelectedFix] = useState(0);
   
@@ -410,7 +414,7 @@ function SignalCard({ signal, showPatch = true }: { signal: DetectedSignal; show
             <SalienceBadge salience={signal.salience} />
             <h3 className="font-semibold">{signal.label}</h3>
           </div>
-          <button
+              <button 
             onClick={() => setExpanded(!expanded)}
             className="text-xs font-mono text-ink-60 hover:text-ink"
           >
@@ -421,9 +425,14 @@ function SignalCard({ signal, showPatch = true }: { signal: DetectedSignal; show
         
         {/* Evidence */}
         {signal.evidence.length > 0 && (
-          <div className="flex flex-wrap gap-1 mb-3">
+          <div className="flex flex-wrap gap-2 mb-3">
             {signal.evidence.slice(0, 3).map((e, i) => (
-              <code key={i} className="text-[10px] bg-ink/10 px-1.5 py-0.5 font-mono">
+              <code 
+                key={i} 
+                className="text-[10px] bg-ink/10 px-2 py-1 font-mono border border-ink-20"
+                title={e.lineNumber ? `Found at line ${e.lineNumber}` : undefined}
+              >
+                {e.lineNumber && <span className="text-ink-40">L{e.lineNumber}: </span>}
                 {e.snippet.length > 30 ? e.snippet.slice(0, 30) + '…' : e.snippet}
               </code>
             ))}
@@ -434,7 +443,7 @@ function SignalCard({ signal, showPatch = true }: { signal: DetectedSignal; show
         {showPatch && (
           <div className="flex flex-wrap gap-2">
             {signal.quickFixes.map((fix, i) => (
-              <button
+              <button 
                 key={i}
                 onClick={() => { setSelectedFix(i); setExpanded(true); }}
                 className={`text-xs px-2 py-1 border-2 transition-colors ${
@@ -457,7 +466,17 @@ function SignalCard({ signal, showPatch = true }: { signal: DetectedSignal; show
             <span className="text-xs font-mono text-paper/60">
               {signal.quickFixes[selectedFix].effort.toUpperCase()} EFFORT FIX
             </span>
-            <CopyButton text={signal.quickFixes[selectedFix].patch || ''} label="Copy patch" />
+            <div className="flex gap-2">
+              {onApplyPatch && originalCode && (
+                <button
+                  onClick={() => onApplyPatch(signal.quickFixes[selectedFix].patch || '', originalCode)}
+                  className="text-xs font-mono px-2 py-1 bg-teal text-paper hover:bg-teal-light transition-colors"
+                >
+                  Apply Patch
+                </button>
+              )}
+              <CopyButton text={signal.quickFixes[selectedFix].patch || ''} label="Copy patch" />
+            </div>
           </div>
           <pre className="text-xs font-mono overflow-x-auto whitespace-pre-wrap">
             {signal.quickFixes[selectedFix].patch}
@@ -467,7 +486,7 @@ function SignalCard({ signal, showPatch = true }: { signal: DetectedSignal; show
               ⚠️ {signal.quickFixes[selectedFix].tradeoffs}
             </p>
           )}
-        </div>
+      </div>
       )}
     </div>
   );
@@ -510,6 +529,9 @@ function HomeContent() {
   const [fixedCode, setFixedCode] = useState('');
   const [verifyResult, setVerifyResult] = useState<VerifyResult | null>(null);
   const [activeInstallTool, setActiveInstallTool] = useState<'cursor' | 'claude' | 'vscode'>('cursor');
+  const [patchMode, setPatchMode] = useState<'minimal' | 'structural' | 'alternative' | null>(null);
+  const [patchedCode, setPatchedCode] = useState('');
+  const [patchResult, setPatchResult] = useState<AnalysisResult | null>(null);
   
   const handleAnalyze = useCallback(() => {
     const codeToAnalyze = code.trim() || DEMO_CODE;
@@ -534,6 +556,35 @@ function HomeContent() {
     setFixedCode(FIXED_CODE);
     setVerifyMode(true);
   }, []);
+
+  const handleApplyPatch = useCallback((patch: string, originalCode: string) => {
+    // Simple patch application: replace patterns from patch instructions
+    // This is a simplified version - in production, you'd parse the patch more carefully
+    let patched = originalCode;
+    
+    // Extract the "After:" part from patch comments
+    const afterMatch = patch.match(/\/\/ After:\s*(.+)/);
+    if (afterMatch) {
+      const replacement = afterMatch[1].trim();
+      // Try to find and replace the "Before:" pattern
+      const beforeMatch = patch.match(/\/\/ Before:\s*(.+)/);
+      if (beforeMatch) {
+        const beforePattern = beforeMatch[1].trim();
+        patched = patched.replace(new RegExp(beforePattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), replacement);
+      }
+    }
+    
+    setPatchedCode(patched);
+    setPatchMode('minimal');
+    // Re-run analysis on patched code
+    const patchedResult = analyzeCode(patched, tone);
+    setPatchResult(patchedResult);
+    
+    // Scroll to patch widget
+    setTimeout(() => {
+      document.getElementById('patch-widget')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }, [tone]);
 
   const installSnippets = {
     cursor: `// Add to .cursor/mcp.json
@@ -630,8 +681,14 @@ npx anti-slop`,
                 <button onClick={handleAnalyze} className="btn">
                   Run Check
                 </button>
-                <button onClick={handleTryDemo} className="btn btn-outline">
-                  Try Demo Code
+                <button 
+                  onClick={handleTryDemo} 
+                  className="btn btn-outline border-vermilion text-vermilion hover:bg-vermilion hover:text-paper"
+                  style={{
+                    animation: 'pulse-border 2s ease-in-out infinite'
+                  }}
+                >
+                  ⚡ Try Demo Code
                 </button>
               </div>
               
@@ -732,9 +789,19 @@ npx anti-slop`,
             {/* Signal cards */}
             {result.topSignals.length > 0 ? (
               <div className="space-y-4">
-                <p className="font-mono text-xs text-ink-40">TOP SIGNALS (with patches)</p>
+                <div className="flex items-center justify-between mb-2">
+                  <p className="font-mono text-xs text-ink-40">TOP SIGNALS (with patches)</p>
+                  <Link href="/patterns" className="text-xs text-vermilion hover:underline font-mono">
+                    Want to experiment? Try the Pattern Lab →
+                </Link>
+                </div>
                 {result.topSignals.map((signal) => (
-                  <SignalCard key={signal.id} signal={signal} />
+                  <SignalCard 
+                    key={signal.id} 
+                    signal={signal} 
+                    onApplyPatch={handleApplyPatch}
+                    originalCode={code.trim() || DEMO_CODE}
+                  />
                 ))}
               </div>
             ) : (
@@ -758,6 +825,115 @@ npx anti-slop`,
                 </span>
               </div>
             )}
+          </div>
+        </section>
+      )}
+
+      {/* ================================================================
+          INLINE PATCH WIDGET
+          ================================================================ */}
+      {patchMode && patchedCode && (
+        <section className="border-b-3 border-ink bg-paper-bright" id="patch-widget">
+          <div className="max-w-[1400px] mx-auto p-6 lg:p-8">
+            <p className="font-mono text-xs text-ink-40 mb-2">PATCH APPLICATION</p>
+            <h2 className="font-display text-xl lg:text-2xl mb-4">Before → After Comparison</h2>
+            
+            <div className="grid lg:grid-cols-2 gap-6 mb-6">
+              {/* Original Code */}
+              <div>
+                <label className="block text-sm font-semibold mb-2">Original Code</label>
+                <div className="code-block p-4 h-64 overflow-auto">
+                  <pre className="text-xs font-mono whitespace-pre-wrap">{code.trim() || DEMO_CODE}</pre>
+                </div>
+                {result && (
+                  <div className="mt-3 p-3 bg-ink/5 border-2 border-ink-20">
+                    <p className="text-xs font-mono text-ink-40 mb-1">SCORE</p>
+                    <p className="text-lg font-bold">{result.templateScore}</p>
+                    <p className="text-xs text-ink-60">{result.summary.total} signals detected</p>
+                  </div>
+                )}
+              </div>
+              
+              {/* Patched Code */}
+              <div>
+                <label className="block text-sm font-semibold mb-2">Patched Code</label>
+                <textarea
+                  value={patchedCode}
+                  onChange={(e) => {
+                    setPatchedCode(e.target.value);
+                    // Re-run analysis on change
+                    const newResult = analyzeCode(e.target.value, tone);
+                    setPatchResult(newResult);
+                  }}
+                  className="w-full h-64 font-mono text-xs p-4 border-3 border-ink resize-none bg-paper"
+                  spellCheck={false}
+                />
+                {patchResult && (
+                  <div className={`mt-3 p-3 border-2 ${
+                    patchResult.templateScore < (result?.templateScore || 0) 
+                      ? 'bg-teal/10 border-teal' 
+                      : 'bg-ink/5 border-ink-20'
+                  }`}>
+                    <p className="text-xs font-mono text-ink-40 mb-1">SCORE</p>
+                    <p className="text-lg font-bold">{patchResult.templateScore}</p>
+                    <p className="text-xs text-ink-60">{patchResult.summary.total} signals detected</p>
+                    {patchResult.templateScore < (result?.templateScore || 0) && (
+                      <p className="text-xs text-teal mt-1">✓ Improvement detected</p>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            {/* Comparison Summary */}
+            {result && patchResult && (
+              <div className="border-t-3 border-ink pt-6">
+                <div className="grid md:grid-cols-3 gap-4 text-center">
+                  <div className="border-3 border-ink p-4">
+                    <p className="text-xs font-mono text-ink-40 mb-1">SIGNALS REMOVED</p>
+                    <p className="text-2xl font-bold text-teal">
+                      {result.summary.total - patchResult.summary.total}
+                    </p>
+                  </div>
+                  <div className="border-3 border-ink p-4">
+                    <p className="text-xs font-mono text-ink-40 mb-1">SCORE CHANGE</p>
+                    <p className={`text-2xl font-bold ${
+                      patchResult.templateScore < result.templateScore ? 'text-teal' : 'text-ink'
+                    }`}>
+                      {patchResult.templateScore < result.templateScore ? '-' : '+'}
+                      {Math.abs(patchResult.templateScore - result.templateScore)}
+                    </p>
+                  </div>
+                  <div className="border-3 border-ink p-4">
+                    <p className="text-xs font-mono text-ink-40 mb-1">REMAINING SIGNALS</p>
+                    <p className="text-2xl font-bold">{patchResult.summary.total}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            <div className="mt-6 flex gap-3">
+              <button
+                onClick={() => {
+                  setFixedCode(patchedCode);
+                  setVerifyMode(true);
+                  document.getElementById('verify')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+                className="btn"
+              >
+                Verify Fix →
+              </button>
+              <button
+                onClick={() => {
+                  setPatchMode(null);
+                  setPatchedCode('');
+                  setPatchResult(null);
+                }}
+                className="btn btn-outline"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </section>
       )}
@@ -853,7 +1029,7 @@ npx anti-slop`,
             <p className="text-paper/70 max-w-2xl">
               Anti-Slop is an MCP (Model Context Protocol) server that integrates directly with Cursor, Claude Code, and other AI coding tools. 
               Run checks on your code without leaving your editor.
-            </p>
+              </p>
           </div>
           
           {/* Tool selector tabs */}
@@ -1013,7 +1189,7 @@ npx anti-slop`,
                   <p><span className="text-teal">✓ Avoids:</span> {site.avoids.join(', ')}</p>
                   <p><span className="text-ink-60">→ Uses:</span> {site.uses}</p>
                 </div>
-              </div>
+                </div>
             ))}
           </div>
         </div>
@@ -1051,7 +1227,7 @@ npx anti-slop`,
                 <p className="text-sm text-ink-60">{faq.a}</p>
               </div>
             ))}
-          </div>
+            </div>
           
           <div className="mt-8 pt-6 border-t-3 border-ink">
             <p className="text-sm text-ink-60">

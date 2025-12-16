@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
+import { useToast } from '../components/Toast';
 
 // ============================================================================
 // SIGNAL DATA (matching the analyzer)
@@ -218,12 +219,11 @@ function CategoryBadge({ category }: { category: Category }) {
 }
 
 function CopyButton({ text }: { text: string }) {
-  const [copied, setCopied] = useState(false);
+  const { showToast } = useToast();
   
   const handleCopy = async () => {
     await navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    showToast('Copied to clipboard');
   };
   
   return (
@@ -231,7 +231,7 @@ function CopyButton({ text }: { text: string }) {
       onClick={handleCopy}
       className="text-xs font-mono px-2 py-1 border-2 border-ink hover:bg-ink hover:text-paper transition-colors"
     >
-      {copied ? '✓' : 'Copy'}
+      Copy
     </button>
   );
 }
@@ -260,7 +260,17 @@ function SignalCard({ signal }: { signal: Signal }) {
           </div>
           {signal.prevalence && (
             <div className="flex-1 min-w-[200px]">
-              <p className="font-mono text-xs text-ink-40 mb-1">PREVALENCE</p>
+              <div className="flex items-center gap-2 mb-1">
+                <p className="font-mono text-xs text-ink-40">PREVALENCE</p>
+                <a
+                  href="#methodology"
+                  className="text-ink-40 hover:text-ink text-xs"
+                  title="View methodology for how prevalence data is sourced"
+                  aria-label="View methodology"
+                >
+                  ℹ️
+                </a>
+              </div>
               <p className="text-ink-60">{signal.prevalence}</p>
             </div>
           )}
@@ -268,9 +278,12 @@ function SignalCard({ signal }: { signal: Signal }) {
         
         <button
           onClick={() => setExpanded(!expanded)}
-          className="text-sm font-semibold text-vermilion hover:underline"
+          className="flex items-center gap-2 text-sm font-semibold text-vermilion hover:underline"
         >
-          {expanded ? '− Hide fixes' : `+ Show ${signal.quickFixes.length} fixes`}
+          <span className={`inline-block transition-transform ${expanded ? 'rotate-90' : ''}`}>
+            ▶
+          </span>
+          {expanded ? 'Hide fixes' : `Show ${signal.quickFixes.length} fixes`}
         </button>
       </div>
       
@@ -493,7 +506,7 @@ export default function SignalsPage() {
       </section>
       
       {/* Methodology */}
-      <section className="border-t-3 border-ink bg-paper-bright">
+      <section className="border-t-3 border-ink bg-paper-bright" id="methodology">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-8">
           <h2 className="font-display text-xl mb-4">Methodology</h2>
           <div className="grid md:grid-cols-2 gap-6 text-sm text-ink-60">
@@ -516,11 +529,25 @@ export default function SignalsPage() {
             </div>
           </div>
           <div className="mt-6 pt-6 border-t-3 border-ink">
-            <p className="text-sm text-ink-60">
+            <p className="text-sm text-ink-60 mb-4">
               <strong className="text-ink">Salience ranking</strong> is based on how strongly a pattern triggers 
               "template site" perception. High-salience signals (like purple gradients) are extremely common in 
               AI/template outputs and immediately recognizable. Low-salience signals only compound existing issues.
             </p>
+            <div className="bg-ink/5 p-4 border-2 border-ink-20">
+              <p className="font-semibold text-ink mb-2">Prevalence Data Sources</p>
+              <p className="text-sm text-ink-60 mb-2">
+                Prevalence percentages (e.g., "~60% of v0/Vercel template outputs") are based on:
+              </p>
+              <ul className="text-sm text-ink-60 space-y-1 ml-4 list-disc">
+                <li>Analysis of publicly available starter templates (Tailwind UI, shadcn/ui, Vercel templates)</li>
+                <li>Pattern frequency in AI-generated UI outputs (v0, Cursor, Claude Code examples)</li>
+                <li>Heuristic correlation with template sites, not definitive proof of AI usage</li>
+              </ul>
+              <p className="text-xs text-ink-40 mt-3 italic">
+                Note: These are correlation indicators, not causation. Many high-quality sites intentionally use some of these patterns.
+              </p>
+            </div>
           </div>
         </div>
       </section>
