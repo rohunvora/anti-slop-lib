@@ -20,24 +20,24 @@ const config: Config = {
     extend: {
       colors: {
         ink: {
-          DEFAULT: "#0d0c0b",
-          80: "#2d2b29",
-          60: "#4d4a47",
-          40: "#7d7975",
+          DEFAULT: "var(--ink)",
+          80: "var(--ink-80)",
+          60: "var(--ink-60)",
+          40: "var(--ink-40)",
         },
         paper: {
-          DEFAULT: "#f5f2eb",
-          bright: "#fdfcfa",
+          DEFAULT: "var(--paper)",
+          bright: "var(--paper-bright)",
         },
         vermilion: {
-          DEFAULT: "#c42a0e",
-          light: "#e84a2e",
+          DEFAULT: "var(--vermilion)",
+          light: "var(--vermilion-light)",
         },
         teal: {
-          DEFAULT: "#0a6e66",
-          light: "#0d918a",
+          DEFAULT: "var(--teal)",
+          light: "var(--teal-light)",
         },
-        focus: "#0066cc",
+        focus: "var(--focus-ring)",
       },
       fontFamily: {
         display: ['"Instrument Serif"', 'Georgia', 'serif'],

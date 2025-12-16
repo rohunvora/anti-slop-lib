@@ -427,21 +427,25 @@ select:focus {
 
 /* Dark section - override CSS variables to always use light colors */
 .dark-section {
-  --paper: #f5f2eb;
-  --paper-bright: #fdfcfa;
-  --ink: #0d0c0b;
-  --ink-80: #2d2b29;
-  --ink-60: #4d4a47;
-  --ink-40: #7d7975;
+  background: #0d0c0b;
+  color: #f5f2eb;
+  
+  /* Force dark mode values for variables */
+  --ink: #f5f2eb; /* Cream text */
+  --ink-80: #e8e4dc;
+  --ink-60: #d4cfc4;
+  --ink-40: #b8b3a8;
+  
+  --paper: #0a0a0a; /* Dark bg */
+  --paper-bright: #141414;
+  
+  --code-bg: #0a0a0a;
 }
 
 [data-theme="dark"] .dark-section {
-  --paper: #f5f2eb;
-  --paper-bright: #fdfcfa;
-  --ink: #0d0c0b;
-  --ink-80: #2d2b29;
-  --ink-60: #4d4a47;
-  --ink-40: #7d7975;
+  /* Same as above, ensure it sticks */
+  --ink: #f5f2eb;
+  --paper: #0a0a0a;
 }
 
 /* ============================================
@@ -573,38 +577,7 @@ input[type="color"]::-webkit-color-swatch {
   border-width: 3px;
 }
 
-/* Color utilities from CSS variables */
-.text-ink { color: var(--ink); }
-.text-ink-80 { color: var(--ink-80); }
-.text-ink-60 { color: var(--ink-60); }
-.text-ink-40 { color: var(--ink-40); }
-.text-ink-20 { 
-  color: rgba(13, 12, 11, 0.2);
-}
-[data-theme="dark"] .text-ink-20 {
-  color: var(--ink-20, rgba(245, 242, 235, 0.2));
-}
-.text-paper { color: var(--paper); }
-.text-vermilion { color: var(--vermilion); }
-.text-teal { color: var(--teal); }
-
-.bg-ink { background-color: var(--ink); }
-.bg-paper { background-color: var(--paper); }
-.bg-paper-bright { background-color: var(--paper-bright); }
-.bg-vermilion { background-color: var(--vermilion); }
-.bg-teal { background-color: var(--teal); }
-
-.border-ink { border-color: var(--ink); }
-.border-ink-40 { border-color: var(--ink-40); }
-.border-ink-20 { 
-  border-color: rgba(13, 12, 11, 0.2);
-}
-[data-theme="dark"] .border-ink-20 {
-  border-color: var(--ink-20, rgba(245, 242, 235, 0.2));
-}
-.border-paper { border-color: var(--paper); }
-.border-vermilion { border-color: var(--vermilion); }
-.border-teal { border-color: var(--teal); }
+/* Utility classes handled by Tailwind config */
 
 /* ============================================
    PRINT STYLES
