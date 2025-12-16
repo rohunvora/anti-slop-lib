@@ -1,4 +1,3 @@
-import { nonExistentFunction } from './this-file-does-not-exist';
 'use client';
 
 import { useState, useCallback, Suspense } from 'react';
