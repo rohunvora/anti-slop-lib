@@ -4,6 +4,9 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { useState, useMemo } from 'react';
 import { getWebsiteBySlug, websites } from '../../data/websites';
+import { getSiteTokens, hasInteractiveStyles } from '../../lib/siteTokens';
+import { Tag } from '../../components/Tag';
+import { ensureMinContrast } from '../../lib/color';
 
 // Detailed analysis for each style
 const STYLE_ANALYSIS: Record<string, { 
@@ -141,6 +144,24 @@ export default function SiteDetail() {
     )
     .slice(0, 4);
 
+  // Get site tokens
+  const tokens = getSiteTokens(website);
+  const isInteractive = hasInteractiveStyles(website);
+  
+  // Map fontCategory to Tailwind classes
+  const fontClass =
+    tokens.fontCategory === 'serif'
+      ? 'font-display'
+      : tokens.fontCategory === 'monospace'
+        ? 'font-mono'
+        : 'font-body';
+  
+  // Radius class
+  const radiusClass = tokens.radiusStyle === 'rounded' ? 'rounded-lg' : '';
+  
+  // CTA text color with contrast check
+  const ctaTextColor = ensureMinContrast(tokens.primaryColor, '#ffffff', 4.5);
+
   return (
     <>
       {/* Breadcrumb */}
@@ -155,14 +176,26 @@ export default function SiteDetail() {
         </div>
       </div>
       
-      <div className="max-w-[1400px] mx-auto">
+      <div
+        className="max-w-[1400px] mx-auto"
+        style={{
+          ['--site-primary' as string]: tokens.primaryColor,
+          ['--site-secondary' as string]: tokens.secondaryColor,
+        }}
+      >
         <div className="grid lg:grid-cols-[1fr,400px]">
           {/* Main content */}
           <div className="p-6 lg:p-8 border-r-3 border-ink">
             {/* Hero */}
             <div className="mb-8">
               {website.thumbnail && (
-                <div className="relative aspect-video border-3 border-ink overflow-hidden mb-6">
+                <div
+                  className={`relative aspect-video border-3 overflow-hidden mb-6 ${radiusClass}`}
+                  style={{
+                    borderColor: tokens.primaryColor,
+                    borderLeftWidth: '8px',
+                  }}
+                >
                   {website.video ? (
                     <video
                       src={website.video}
@@ -181,19 +214,34 @@ export default function SiteDetail() {
                   )}
                 </div>
               )}
-              
+
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="font-mono text-sm text-ink-40 mb-1">
                     {website.url.replace('https://', '').replace('www.', '')}
                   </p>
-                  <h1 className="font-display text-3xl lg:text-4xl">{website.name}</h1>
+                  <h1 className={`${fontClass} text-3xl lg:text-4xl`} style={{ color: tokens.primaryColor }}>
+                    {website.name}
+                  </h1>
                 </div>
                 <a
                   href={website.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-small flex-shrink-0"
+                  className="btn btn-small flex-shrink-0 transition-colors"
+                  style={{
+                    backgroundColor: tokens.primaryColor,
+                    borderColor: tokens.primaryColor,
+                    color: ctaTextColor,
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = tokens.secondaryColor;
+                    e.currentTarget.style.borderColor = tokens.secondaryColor;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = tokens.primaryColor;
+                    e.currentTarget.style.borderColor = tokens.primaryColor;
+                  }}
                 >
                   Visit →
                 </a>
@@ -202,44 +250,50 @@ export default function SiteDetail() {
             
             {/* Tags */}
             <div className="flex flex-wrap gap-2 mb-8 pb-8 border-b-3 border-ink">
-              {website.types.map(t => (
-                <Link 
-                  key={t} 
+              {website.types.map((t) => (
+                <Tag
+                  key={t}
+                  color={tokens.primaryColor}
                   href={`/gallery?type=${encodeURIComponent(t)}`}
-                  className="tag hover:tag-filled transition-colors"
                 >
                   {t}
-                </Link>
+                </Tag>
               ))}
-              {website.styles.map(s => (
-                <Link 
-                  key={s} 
+              {website.styles.map((s) => (
+                <Tag
+                  key={s}
+                  color={tokens.secondaryColor}
                   href={`/gallery?style=${encodeURIComponent(s)}`}
-                  className="tag tag-teal"
                 >
                   {s}
-                </Link>
+                </Tag>
               ))}
-              {website.fonts.map(f => (
-                <span key={f} className="tag tag-vermilion">
+              {website.fonts.map((f) => (
+                <Tag key={f} color={tokens.primaryColor} variant="primary">
                   {f}
-                </span>
+                </Tag>
               ))}
             </div>
             
             {/* Analysis */}
             {analyses.length > 0 && (
               <div className="mb-8">
-                <h2 className="font-display text-2xl mb-6">Design Analysis</h2>
+                <h2 className={`${fontClass} text-2xl mb-6`}>Design Analysis</h2>
                 <p className="text-ink-60 mb-6">
                   What makes this site distinctive, and how to apply its principles.
                 </p>
-                
+
                 <div className="space-y-6">
-                  {analyses.map(analysis => (
-                    <div key={analysis.style} className="border-3 border-ink p-6">
+                  {analyses.map((analysis) => (
+                    <div
+                      key={analysis.style}
+                      className="border-3 p-6"
+                      style={{ borderColor: tokens.primaryColor }}
+                    >
                       <div className="flex items-center gap-3 mb-4">
-                        <span className="tag tag-teal text-xs">{analysis.style}</span>
+                        <Tag color={tokens.secondaryColor} className="text-xs">
+                          {analysis.style}
+                        </Tag>
                       </div>
                       
                       <div className="space-y-4">
@@ -267,42 +321,82 @@ export default function SiteDetail() {
             {/* Related */}
             {relatedSites.length > 0 && (
               <div>
-                <h2 className="font-display text-2xl mb-6">Similar Sites</h2>
+                <h2 className={`${fontClass} text-2xl mb-6`}>Similar Sites</h2>
                 <div className="grid grid-cols-2 gap-4">
-                  {relatedSites.map(site => (
-                    <Link
-                      key={site.slug}
-                      href={`/site/${site.slug}`}
-                      className="group border-3 border-ink overflow-hidden hover:border-vermilion transition-colors"
-                    >
-                      {site.thumbnail && (
-                        <div className="aspect-video border-b-3 border-ink overflow-hidden">
-                          <img
-                            src={site.thumbnail}
-                            alt={`Screenshot of ${site.name}`}
-                            className="w-full h-full object-cover"
-                          />
+                  {relatedSites.map((site) => {
+                    const siteTokens = getSiteTokens(site);
+                    const siteIsInteractive = hasInteractiveStyles(site);
+                    const siteFontClass =
+                      siteTokens.fontCategory === 'serif'
+                        ? 'font-display'
+                        : siteTokens.fontCategory === 'monospace'
+                          ? 'font-mono'
+                          : 'font-body';
+                    const siteRadiusClass = siteTokens.radiusStyle === 'rounded' ? 'rounded-lg' : '';
+
+                    return (
+                      <Link
+                        key={site.slug}
+                        href={`/site/${site.slug}`}
+                        className={`group border-3 overflow-hidden transition-all duration-150 ${
+                          siteIsInteractive
+                            ? 'hover:scale-[1.02] hover:-translate-y-1 motion-reduce:hover:scale-100 motion-reduce:hover:translate-y-0'
+                            : 'hover:opacity-90'
+                        } ${siteRadiusClass}`}
+                        style={{
+                          borderColor: siteTokens.primaryColor,
+                          borderLeftWidth: '6px',
+                        }}
+                      >
+                        {site.thumbnail && (
+                          <div
+                            className="aspect-video border-b-3 overflow-hidden"
+                            style={{ borderColor: siteTokens.primaryColor }}
+                          >
+                            <img
+                              src={site.thumbnail}
+                              alt={`Screenshot of ${site.name}`}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        )}
+                        <div className="p-3">
+                          <p
+                            className={`${siteFontClass} font-semibold text-sm truncate transition-colors`}
+                            style={{ color: siteTokens.primaryColor }}
+                          >
+                            {site.name}
+                          </p>
                         </div>
-                      )}
-                      <div className="p-3">
-                        <p className="font-semibold text-sm truncate group-hover:text-vermilion transition-colors">
-                          {site.name}
-                        </p>
-                      </div>
-                    </Link>
-                  ))}
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
             )}
           </div>
           
           {/* Sidebar - Prompt */}
-          <div className="p-6 lg:p-8 bg-paper-bright lg:sticky lg:top-14 lg:h-[calc(100vh-3.5rem)] lg:overflow-y-auto">
+          <div
+            className="p-6 lg:p-8 bg-paper-bright lg:sticky lg:top-14 lg:h-[calc(100vh-3.5rem)] lg:overflow-y-auto"
+            style={{
+              borderLeft: `4px solid ${tokens.primaryColor}`,
+            }}
+          >
             <div className="flex items-center justify-between mb-4">
-              <h2 className="font-display text-xl">AI Prompt</h2>
+              <h2 className={`${fontClass} text-xl`} style={{ color: tokens.primaryColor }}>
+                AI Prompt
+              </h2>
               <button
                 onClick={copyPrompt}
-                className={`btn btn-small ${copied ? 'bg-teal border-teal' : ''}`}
+                className={`btn btn-small transition-colors ${copied ? '' : ''}`}
+                style={{
+                  backgroundColor: copied ? tokens.secondaryColor : tokens.primaryColor,
+                  borderColor: copied ? tokens.secondaryColor : tokens.primaryColor,
+                  color: copied
+                    ? ensureMinContrast(tokens.secondaryColor, '#ffffff', 4.5)
+                    : ctaTextColor,
+                }}
               >
                 {copied ? '✓ Copied' : 'Copy'}
               </button>
@@ -329,9 +423,18 @@ export default function SiteDetail() {
             )}
             
             {/* Link to prompt builder */}
-            <Link 
-              href="/prompts" 
-              className="block mt-6 border-3 border-ink p-4 hover:border-vermilion transition-colors"
+            <Link
+              href="/prompts"
+              className="block mt-6 border-3 p-4 transition-colors"
+              style={{
+                borderColor: tokens.primaryColor,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = tokens.secondaryColor;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = tokens.primaryColor;
+              }}
             >
               <p className="font-semibold text-sm mb-1">Build a custom prompt</p>
               <p className="text-xs text-ink-60">

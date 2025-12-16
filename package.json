@@ -16,6 +16,7 @@
     "lint": "eslint src/",
     "prepublishOnly": "npm run build",
     "scrape:godly": "npx ts-node scripts/godly-scraper.ts",
+    "extract:site-styles": "npx ts-node scripts/extractSiteStyles.ts",
     "mcp": "node dist/mcp-server.js"
   },
   "keywords": [

@@ -4,6 +4,8 @@ import { useState, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Website } from '../data/websites';
+import { getSiteTokens, hasInteractiveStyles } from '../lib/siteTokens';
+import { Tag } from './Tag';
 
 interface WebsiteCardProps {
   website: Website;
@@ -14,6 +16,20 @@ export function WebsiteCard({ website, featured = false }: WebsiteCardProps) {
   const [isHovering, setIsHovering] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  
+  const tokens = getSiteTokens(website);
+  const isInteractive = hasInteractiveStyles(website);
+  
+  // Map fontCategory to Tailwind classes
+  const fontClass =
+    tokens.fontCategory === 'serif'
+      ? 'font-display'
+      : tokens.fontCategory === 'monospace'
+        ? 'font-mono'
+        : 'font-body';
+  
+  // Radius class
+  const radiusClass = tokens.radiusStyle === 'rounded' ? 'rounded-lg' : '';
 
   const handleMouseEnter = () => {
     setIsHovering(true);
@@ -36,12 +52,23 @@ export function WebsiteCard({ website, featured = false }: WebsiteCardProps) {
       className={featured ? 'lg:col-span-1' : ''}
     >
       <article 
-        className="group anti-card overflow-hidden h-full flex flex-col"
+        className={`group overflow-hidden h-full flex flex-col border-3 bg-paper-bright transition-all duration-150 ${
+          isInteractive
+            ? 'hover:scale-[1.02] hover:-translate-y-1 motion-reduce:hover:scale-100 motion-reduce:hover:translate-y-0'
+            : 'hover:bg-paper'
+        } ${radiusClass}`}
+        style={{
+          borderColor: tokens.primaryColor,
+          borderLeftWidth: '6px',
+        }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
         {/* Thumbnail / Video */}
-        <div className="relative aspect-[16/10] bg-ink-20 overflow-hidden border-b-2 border-ink">
+        <div
+          className="relative aspect-[16/10] bg-ink-20 overflow-hidden border-b-2"
+          style={{ borderColor: tokens.primaryColor }}
+        >
           {website.thumbnail && (
             <Image
               src={website.thumbnail}
@@ -83,7 +110,17 @@ export function WebsiteCard({ website, featured = false }: WebsiteCardProps) {
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="absolute top-3 right-3 flex items-center gap-2 px-3 py-2 text-xs font-semibold uppercase tracking-wider text-paper bg-ink opacity-0 group-hover:opacity-100 transition-all duration-150 hover:bg-vermilion"
+            className="absolute top-3 right-3 flex items-center gap-2 px-3 py-2 text-xs font-semibold uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-all duration-150"
+            style={{
+              backgroundColor: tokens.primaryColor,
+              color: '#ffffff',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = tokens.secondaryColor;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = tokens.primaryColor;
+            }}
             aria-label={`Visit ${website.name} website`}
           >
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -94,7 +131,12 @@ export function WebsiteCard({ website, featured = false }: WebsiteCardProps) {
           
           {/* Featured badge */}
           {featured && (
-            <div className="absolute top-3 left-3 px-2 py-1 text-xs font-bold uppercase tracking-wider bg-vermilion text-paper">
+            <div
+              className="absolute top-3 left-3 px-2 py-1 text-xs font-bold uppercase tracking-wider text-paper"
+              style={{
+                backgroundColor: tokens.primaryColor,
+              }}
+            >
               Featured
             </div>
           )}
@@ -102,32 +144,29 @@ export function WebsiteCard({ website, featured = false }: WebsiteCardProps) {
         
         {/* Info */}
         <div className="p-4 flex-1 flex flex-col">
-          <h3 className="font-semibold text-ink truncate group-hover:text-vermilion transition-colors">
+          <h3
+            className={`${fontClass} font-semibold truncate transition-colors`}
+            style={{ color: tokens.primaryColor }}
+          >
             {website.name}
           </h3>
-          
+
           {/* URL */}
           <p className="text-xs text-ink-40 font-mono truncate mt-1">
             {website.url.replace('https://', '').replace('www.', '')}
           </p>
-          
+
           {/* Tags */}
           <div className="mt-auto pt-4 flex flex-wrap gap-1.5">
             {website.types.slice(0, 1).map((type) => (
-              <span 
-                key={type} 
-                className="tag tag-primary text-[10px]"
-              >
+              <Tag key={type} color={tokens.primaryColor} className="text-[10px]">
                 {type}
-              </span>
+              </Tag>
             ))}
             {website.styles.slice(0, 2).map((style) => (
-              <span 
-                key={style} 
-                className="tag tag-teal text-[10px]"
-              >
+              <Tag key={style} color={tokens.secondaryColor} className="text-[10px]">
                 {style}
-              </span>
+              </Tag>
             ))}
             {(website.types.length + website.styles.length) > 3 && (
               <span className="text-[10px] text-ink-40 uppercase font-semibold tracking-wider px-1">

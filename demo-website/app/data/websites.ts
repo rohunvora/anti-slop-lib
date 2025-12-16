@@ -14,6 +14,11 @@ export interface Website {
   video: string | null;
   views?: number;
   createdAt?: string;
+  // Style tokens (optional, extracted from thumbnails)
+  primaryColor?: string;
+  secondaryColor?: string;
+  fontCategory?: 'serif' | 'sans' | 'monospace';
+  radiusStyle?: 'sharp' | 'rounded';
 }
 
 export interface WebsitesData {
