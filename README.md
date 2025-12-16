@@ -2,7 +2,7 @@
 
 **Detect and prevent AI-generated "slop" aesthetic in web projects.**
 
-You know the look: purple gradients, Inter font, floating 3D blobs, centered heroes. This library helps you avoid it.
+You know the look: purple gradients, Inter font, floating 3D blobs, centered heroes with "Get Started Free" buttons. This library helps you avoid it.
 
 ## What is "Slop"?
 
@@ -16,15 +16,362 @@ You know the look: purple gradients, Inter font, floating 3D blobs, centered her
 - 🎴 **rounded-xl cards with shadow-md**
 - 💬 **Generic copy** ("Transform your X", "AI-Powered Y")
 
-## About
+## Installation
 
-This project analyzes CSS and HTML for common AI-generated design patterns. It was built as an experiment in design tooling.
+```bash
+npm install anti-slop
+```
 
-## Features
+## Quick Start
 
-- Pattern detection for common AI aesthetics
-- Scoring system for "slop" indicators
-- Suggestions for alternatives
+### 1. Scan Your Project (CLI)
+
+```bash
+# Scan a directory
+npx anti-slop scan ./src
+
+# Quick check a file
+npx anti-slop check index.html
+
+# Get suggestions
+npx anti-slop suggest fonts
+npx anti-slop suggest colors
+
+# Output prompts for AI tools
+npx anti-slop prompts --system
+```
+
+### 2. Programmatic Analysis
+
+```typescript
+import { analyze, quickCheck, getSlopScore } from 'anti-slop';
+
+// Full analysis
+const result = analyze(htmlOrCssContent);
+console.log(result.grade);      // 'A' | 'B' | 'C' | 'D' | 'F'
+console.log(result.slopScore);  // 0-100 (higher = more slop)
+console.log(result.detections); // Array of detected patterns
+
+// Quick check
+const check = quickCheck(content);
+if (check.isSlop) {
+  console.log('Slop detected!', check.topIssues);
+}
+```
+
+### 3. Browser Bookmarklet
+
+Analyze any live website:
+
+1. Create a new bookmark
+2. Copy the bookmarklet URL: `npx anti-slop bookmarklet`
+3. Click it on any webpage to see a slop analysis panel
+
+### 4. AI Prompt Templates
+
+Get prompts to make AI tools generate better designs:
+
+```typescript
+import { ANTI_SLOP_SYSTEM_PROMPT, getPrompt, withAntiSlop } from 'anti-slop';
+
+// Add to your AI's system prompt
+console.log(ANTI_SLOP_SYSTEM_PROMPT);
+
+// Get task-specific prompts
+const prompt = getPrompt('landing-page', {
+  PRODUCT_NAME: 'My App',
+  PRODUCT_DESCRIPTION: 'A todo app for developers',
+  TARGET_AUDIENCE: 'Software engineers',
+  STYLE_DIRECTION: 'editorial'
+});
+
+// Or wrap any prompt
+const betterPrompt = withAntiSlop('Create a landing page for...');
+```
+
+## CLI Commands
+
+### `anti-slop scan [path]`
+
+Scan files for slop patterns.
+
+```bash
+anti-slop scan ./src          # Scan directory
+anti-slop scan --verbose      # Show details
+anti-slop scan --json         # Output JSON
+anti-slop scan --fix          # Show fix suggestions
+```
+
+### `anti-slop check <file>`
+
+Quick pass/fail check for a single file.
+
+### `anti-slop suggest <type>`
+
+Get anti-slop alternatives.
+
+```bash
+anti-slop suggest fonts    # Font alternatives to Inter
+anti-slop suggest colors   # Palettes that aren't purple
+anti-slop suggest buttons  # Button styles
+anti-slop suggest cards    # Card styles
+```
+
+### `anti-slop prompts`
+
+Output prompt templates for AI tools.
+
+```bash
+anti-slop prompts           # All prompts
+anti-slop prompts --system  # Just system prompt
+anti-slop prompts --quick   # Quick injection snippets
+```
+
+### `anti-slop patterns`
+
+List all detectable slop patterns.
+
+```bash
+anti-slop patterns           # All patterns
+anti-slop patterns --critical  # Only critical
+```
+
+### `anti-slop init`
+
+Create a config file (`.anti-slop.json`).
+
+## API Reference
+
+### Detection
+
+```typescript
+// Full analysis
+analyze(content: string, type?: 'html' | 'css' | 'jsx' | 'auto'): AnalysisResult
+
+// Quick check
+quickCheck(content: string): { isSlop: boolean, confidence: string, topIssues: string[] }
+
+// Score only
+getSlopScore(content: string): number  // 0-100
+getGrade(content: string): string      // A-F
+
+// Specific detectors
+detectInHTML(html: string, patterns: SlopPattern[]): Detection[]
+detectInCSS(css: string, patterns: SlopPattern[]): Detection[]
+detectInTailwindClasses(classes: string, patterns: SlopPattern[]): Detection[]
+detectSlopFonts(content: string): Detection[]
+detectSlopColors(content: string): Detection[]
+detectSlopCopy(text: string): Detection[]
+```
+
+### Patterns
+
+```typescript
+import {
+  PATTERNS,           // All pattern definitions
+  SLOP_FONTS,         // Array of slop font names
+  SLOP_COLORS,        // Object of slop color patterns
+  SLOP_COPY_PATTERNS, // Regex patterns for generic copy
+  getCriticalPatterns,
+  getPatternsByCategory,
+  getPatternsBySeverity,
+} from 'anti-slop';
+```
+
+### Prompts
+
+```typescript
+import {
+  ANTI_SLOP_SYSTEM_PROMPT,  // Add to AI system context
+  DESIGN_DIRECTION_PROMPTS, // editorial, brutalist, retro, etc.
+  PROMPTS,                  // Task-specific templates
+  QUICK_INJECTIONS,         // Quick snippets to add to any prompt
+  getPrompt,                // Get filled template
+  withAntiSlop,             // Wrap any prompt
+  getAllPromptsAsText,      // Export all prompts
+} from 'anti-slop';
+```
+
+### Alternatives
+
+```typescript
+import {
+  FONT_ALTERNATIVES,    // Fonts to use instead of Inter
+  COLOR_PALETTES,       // Non-purple color palettes
+  BUTTON_ALTERNATIVES,  // Button styles
+  CARD_ALTERNATIVES,    // Card styles
+  LAYOUT_ALTERNATIVES,  // Layout patterns
+  suggestFontPairing,   // Get random font pairing
+  getFontsForVibe,      // Find fonts by vibe
+  getPalettesForIndustry, // Find palettes by industry
+} from 'anti-slop';
+```
+
+## Grading Scale
+
+| Grade | Score | Meaning |
+|-------|-------|---------|
+| A | 0-10 | Distinctive, no slop detected |
+| B | 11-25 | Minor issues, mostly good |
+| C | 26-45 | Noticeable slop patterns |
+| D | 46-65 | Significant slop presence |
+| F | 66+ | Peak AI slop aesthetic |
+
+## Pattern Severity
+
+- **Critical** 🔴: Dead giveaways (purple gradients, 3D blobs)
+- **Warning** 🟡: Common issues (Inter font, glassmorphism)
+- **Info** 🔵: Minor concerns (rounded cards, centered layouts)
+
+## What Gets Detected
+
+### Typography
+- Inter, Space Grotesk, Plus Jakarta Sans, Manrope, DM Sans
+- Generic `font-sans` Tailwind class
+
+### Colors
+- Purple/violet/indigo gradients
+- Dark slate backgrounds (#0f0f0f, slate-950)
+- Pink/cyan accent combos
+
+### Components
+- `rounded-xl`, `rounded-2xl` cards
+- `shadow-sm`, `shadow-md`, `shadow-lg`
+- `backdrop-blur` glassmorphism
+
+### Effects
+- `bg-gradient-to-*` with purple
+- Glow effects (`shadow-purple`, etc.)
+- Large blur decorations (blob backgrounds)
+
+### Layout
+- Centered hero sections
+- `text-center mx-auto` patterns
+
+### Copy
+- "AI-Powered", "Transform your", "Supercharge"
+- "Get Started Free", "Start Free Trial"
+- "Trusted by X+ users"
+
+## Example Output
+
+```
+🔍 Scanning 23 file(s) for slop patterns...
+
+═══ SCAN RESULTS ════════════════════════════════════════
+
+Files scanned:  23
+Slop score:     47.3
+Grade:          D
+Issues found:   12
+
+═══ CRITICAL ISSUES ═════════════════════════════════════
+
+🔴 Purple/Violet Gradient
+   src/components/Hero.tsx
+   Fix: Use a single bold color instead of gradients
+
+🔴 3D Blob/Orb Backgrounds
+   src/components/Hero.tsx
+   Fix: Use actual imagery relevant to your product
+
+═══ WARNINGS ════════════════════════════════════════════
+
+🟡 Inter Font Usage
+   src/styles/globals.css
+   Fix: Fraunces
+
+🟡 Glassmorphism
+   src/components/Card.tsx
+   Fix: Use solid backgrounds
+
+═══ RECOMMENDATIONS ═════════════════════════════════════
+
+→ Purple/Violet Gradient:
+  Use a single bold color instead of gradients
+→ Inter Font Usage:
+  Fraunces
+→ Glassmorphism:
+  Use solid backgrounds
+```
+
+## 🎨 Godly Design Inspiration (NEW)
+
+Scrape award-winning websites from [godly.website](https://godly.website/) and generate LLM-friendly design prompts.
+
+### Quick Start
+
+```bash
+# Scrape 50 websites and generate prompts
+MAX_ITEMS=50 node scripts/godly-scraper.mjs
+```
+
+### Generated Files
+
+After running the scraper, check `output/godly-inspiration/`:
+
+| File | What It Contains |
+|------|------------------|
+| `UPGRADE-PROMPTS.md` | **Complete upgrade guide** - prompts for improving vibe-coded interfaces |
+| `CHEATSHEET.md` | **Quick reference** - one-liners to inject into any prompt |
+| `quick-prompts.md` | Ready-to-copy prompts for each scraped website |
+| `style-reference.md` | Style definitions with real examples |
+| `design-guide.md` | Full categorized guide |
+| `websites.json` | Raw JSON data for programmatic use |
+
+### Example: Upgrade a Vibe-Coded Hero
+
+```
+Redesign this hero section using premium dark aesthetics:
+
+BEFORE: [paste your current hero code]
+
+REFERENCE SITES:
+- https://linear.app - precision and polish
+- https://vercel.com - developer elegance
+
+REQUIREMENTS:
+- Background: #0a0a0a with subtle gradient mesh
+- Typography: 56-80px bold headline, tight letter-spacing
+- Single accent color with glow effect
+- Smooth scroll-reveal animation
+- Generous padding (min-height: 100vh)
+
+Output production-ready code with CSS variables.
+```
+
+### Browser Console Version
+
+For quick extraction without Node.js:
+
+1. Go to https://godly.website/
+2. Open DevTools Console
+3. Paste contents of `scripts/godly-browser-scraper.js`
+4. Run: `await scrapeGodly()`
+5. Copy: `copyPrompts()`
+
+### Style Categories from Godly
+
+The scraper extracts and categorizes by:
+
+- **Types**: Agency, Portfolio, SaaS, E-commerce, etc.
+- **Styles**: Minimal, Interactive, Dark, Animation, etc.
+- **Fonts**: Inter, NB International, Space Grotesk, etc.
+- **Frameworks**: React, Next.js, GSAP, Tailwind, etc.
+
+## Philosophy
+
+This tool isn't about gatekeeping AI-assisted design. It's about:
+
+1. **Awareness**: Recognizing when designs converge on AI defaults
+2. **Intentionality**: Making deliberate choices instead of accepting defaults
+3. **Distinctiveness**: Creating sites that feel human-designed
+
+The goal isn't to avoid AI tools—it's to use them better.
+
+## Contributing
+
+Found a new slop pattern? Have a better alternative suggestion? PRs welcome!
 
 ## License
 
