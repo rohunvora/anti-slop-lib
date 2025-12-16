@@ -699,7 +699,7 @@ npx anti-slop`,
             </div>
             
             {/* MCP Quick Install - Primary CTA */}
-            <div className="p-6 lg:p-8 bg-ink text-paper">
+            <div className="p-6 lg:p-8 dark-section">
               <p className="font-mono text-xs text-paper/50 mb-2">BEST EXPERIENCE</p>
               <h3 className="font-display text-xl mb-3">Install in Cursor</h3>
               <p className="text-paper/70 text-sm mb-4">
@@ -1019,7 +1019,7 @@ npx anti-slop`,
       {/* ================================================================
           INSTALL SECTION - MCP FOCUSED
           ================================================================ */}
-      <section className="border-b-3 border-ink bg-ink text-paper" id="install">
+      <section className="border-b-3 border-ink dark-section" id="install">
         <div className="max-w-[1400px] mx-auto p-6 lg:p-8">
           <div className="mb-8">
             <p className="font-mono text-xs text-paper/50 mb-2">MCP INSTALLATION</p>
