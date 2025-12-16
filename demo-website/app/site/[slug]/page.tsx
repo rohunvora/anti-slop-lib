@@ -228,19 +228,13 @@ export default function SiteDetail() {
                   href={website.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-small flex-shrink-0 transition-colors"
+                  className="btn btn-small flex-shrink-0"
                   style={{
-                    backgroundColor: tokens.primaryColor,
-                    borderColor: tokens.primaryColor,
-                    color: ctaTextColor,
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = tokens.secondaryColor;
-                    e.currentTarget.style.borderColor = tokens.secondaryColor;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = tokens.primaryColor;
-                    e.currentTarget.style.borderColor = tokens.primaryColor;
+                    ['--btn-bg' as string]: tokens.primaryColor,
+                    ['--btn-border' as string]: tokens.primaryColor,
+                    ['--btn-color' as string]: ctaTextColor,
+                    ['--btn-hover-bg' as string]: tokens.secondaryColor,
+                    ['--btn-hover-border' as string]: tokens.secondaryColor,
                   }}
                 >
                   Visit →
@@ -389,13 +383,15 @@ export default function SiteDetail() {
               </h2>
               <button
                 onClick={copyPrompt}
-                className={`btn btn-small transition-colors ${copied ? '' : ''}`}
+                className="btn btn-small"
                 style={{
-                  backgroundColor: copied ? tokens.secondaryColor : tokens.primaryColor,
-                  borderColor: copied ? tokens.secondaryColor : tokens.primaryColor,
-                  color: copied
+                  ['--btn-bg' as string]: copied ? tokens.secondaryColor : tokens.primaryColor,
+                  ['--btn-border' as string]: copied ? tokens.secondaryColor : tokens.primaryColor,
+                  ['--btn-color' as string]: copied
                     ? ensureMinContrast(tokens.secondaryColor, '#ffffff', 4.5)
                     : ctaTextColor,
+                  ['--btn-hover-bg' as string]: tokens.secondaryColor,
+                  ['--btn-hover-border' as string]: tokens.secondaryColor,
                 }}
               >
                 {copied ? '✓ Copied' : 'Copy'}

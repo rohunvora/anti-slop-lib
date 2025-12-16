@@ -204,17 +204,23 @@ select:focus-visible,
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border: 3px solid var(--ink);
-  background: var(--ink);
-  color: var(--paper);
+  /* Use CSS custom properties for theming - can be overridden inline */
+  --btn-bg: var(--ink);
+  --btn-border: var(--ink);
+  --btn-color: var(--paper);
+  border: 3px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-color);
   cursor: pointer;
   transition: all 0.1s ease;
   /* NO border-radius */
 }
 
 .btn:hover {
-  background: var(--vermilion);
-  border-color: var(--vermilion);
+  --btn-bg: var(--btn-hover-bg, var(--vermilion));
+  --btn-border: var(--btn-hover-border, var(--vermilion));
+  background: var(--btn-bg);
+  border-color: var(--btn-border);
 }
 
 .btn:active {
