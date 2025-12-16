@@ -1,3 +1,11 @@
+<div align="center">
+  <img src="/.github/social-preview.png" alt="anti-slop-lib" width="800" />
+  <p><strong>CLI tool that detects generic AI-generated design patterns (purple gradients, Inter font, etc.) in web projects.</strong></p>
+  <p>
+    <a href="https://demo-website-one-puce.vercel.app"><strong>🚀 Live Demo</strong></a>
+  </p>
+</div>
+
 # 🚫 Anti-Slop
 
 **Detect and prevent AI-generated "slop" aesthetic in web projects.** Scan your HTML/CSS for purple gradients, Inter font, glassmorphism, and other generic AI design patterns. Get a slop score and actionable alternatives to build more distinctive interfaces.
