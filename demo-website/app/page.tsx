@@ -77,8 +77,7 @@ const TEMPLATE_SIGNALS: Array<{
       ],
     },
     quickFixes: [
-      { effort: 'low', change: 'Replace gradient with solid brand color', patch: '// Before: bg-gradient-to-r from-purple-500 to-pink-500
-// After:  bg-[#your-brand-color]' },
+      { effort: 'low', change: 'Replace gradient with solid brand color', patch: '// Before: bg-gradient-to-r from-purple-500 to-pink-500\n// After:  bg-[#your-brand-color]' },
       { effort: 'medium', change: 'Use warm tones instead (terracotta, gold, forest green)', patch: '// Try: bg-amber-600, bg-emerald-700, bg-rose-600' },
     ],
   },
@@ -93,8 +92,7 @@ const TEMPLATE_SIGNALS: Array<{
     },
     quickFixes: [
       { effort: 'low', change: 'Remove entirely — empty space is fine', patch: '// Delete the blob div entirely' },
-      { effort: 'low', change: 'Use subtle grid/dot pattern instead', patch: '// Add a subtle grid background:
-// <div className="absolute inset-0 bg-[url(/grid.svg)] opacity-[0.02]" />' },
+      { effort: 'low', change: 'Use subtle grid/dot pattern instead', patch: '// Add a subtle grid background:\n// <div className="absolute inset-0 bg-[url(/grid.svg)] opacity-[0.02]" />' },
     ],
   },
   {
@@ -110,11 +108,9 @@ const TEMPLATE_SIGNALS: Array<{
       ],
     },
     quickFixes: [
-      { effort: 'medium', change: 'Switch to asymmetric split layout', patch: '// Before: <section className="text-center mx-auto">
-// After:  <section className="grid md:grid-cols-[1fr_1.2fr] gap-12">' },
+      { effort: 'medium', change: 'Switch to asymmetric split layout', patch: '// Before: <section className="text-center mx-auto">\n// After:  <section className="grid md:grid-cols-[1fr_1.2fr] gap-12">' },
       { effort: 'low', change: 'Left-align text, keep centered container', patch: '// Change: text-center → text-left' },
-      { effort: 'low', change: 'Make CTA specific to your product', patch: '// Before: "Get Started Free"
-// After:  "Create your first [thing]"' },
+      { effort: 'low', change: 'Make CTA specific to your product', patch: '// Before: "Get Started Free"\n// After:  "Create your first [thing]"' },
     ],
   },
   {
@@ -141,8 +137,7 @@ const TEMPLATE_SIGNALS: Array<{
       patterns: [/rounded-xl/i, /rounded-2xl/i, /rounded-3xl/i],
     },
     quickFixes: [
-      { effort: 'low', change: 'Go sharp (rounded-none or rounded-sm)', patch: '// Before: rounded-xl
-// After:  rounded-sm' },
+      { effort: 'low', change: 'Go sharp (rounded-none or rounded-sm)', patch: '// Before: rounded-xl\n// After:  rounded-sm' },
       { effort: 'low', change: 'Pick ONE radius and use consistently', patch: '// Define: borderRadius: { DEFAULT: "4px" }' },
     ],
   },
@@ -156,8 +151,7 @@ const TEMPLATE_SIGNALS: Array<{
       patterns: [/shadow-sm/i, /shadow-md/i, /shadow-lg/i, /shadow-xl/i],
     },
     quickFixes: [
-      { effort: 'low', change: 'Replace shadows with borders', patch: '// Before: shadow-md rounded-xl
-// After:  border border-border' },
+      { effort: 'low', change: 'Replace shadows with borders', patch: '// Before: shadow-md rounded-xl\n// After:  border border-border' },
       { effort: 'medium', change: 'Use hard/offset shadows for character', patch: '// After: shadow-[4px_4px_0_0_#000]' },
     ],
   },
@@ -171,8 +165,7 @@ const TEMPLATE_SIGNALS: Array<{
       patterns: [/backdrop-blur/i, /bg-white\/10/i, /bg-black\/10/i, /bg-white\/20/i],
     },
     quickFixes: [
-      { effort: 'low', change: 'Use solid backgrounds', patch: '// Before: backdrop-blur-md bg-white/10
-// After:  bg-background border' },
+      { effort: 'low', change: 'Use solid backgrounds', patch: '// Before: backdrop-blur-md bg-white/10\n// After:  bg-background border' },
     ],
   },
   {
@@ -189,10 +182,8 @@ const TEMPLATE_SIGNALS: Array<{
       ],
     },
     quickFixes: [
-      { effort: 'medium', change: 'Be specific about what your product does', patch: '// Before: "Transform your workflow"
-// After:  "Ship features 3x faster"' },
-      { effort: 'low', change: 'Lead with the outcome, not the mechanism', patch: '// Before: "AI-Powered Analytics"
-// After:  "Know which features users want"' },
+      { effort: 'medium', change: 'Be specific about what your product does', patch: '// Before: "Transform your workflow"\n// After:  "Ship features 3x faster"' },
+      { effort: 'low', change: 'Lead with the outcome, not the mechanism', patch: '// Before: "AI-Powered Analytics"\n// After:  "Know which features users want"' },
     ],
   },
 ];
